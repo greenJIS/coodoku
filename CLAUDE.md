@@ -7,8 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Solo sudoku game. Static web app, no backend, no accounts. Pick a difficulty, a puzzle is generated in the browser,
 the game gets a random name, and scores are kept in `localStorage`.
 
-**Status:** the project is scaffolded (Vite, React, Tailwind v4, Vitest, ESLint, Prettier, commitlint + husky). Game code
-is not written yet. The sections below describe the target. Anything marked _planned_ does not exist yet.
+**Status:** the project is scaffolded (Vite, React, Tailwind v4, Vitest, ESLint, Prettier, commitlint + husky) and the
+puzzle engine in `src/engine/` is built and tested. The game UI, store, and storage are not written yet. The sections
+below describe the target. Anything marked _planned_ does not exist yet.
 
 ## Environment
 
@@ -27,6 +28,8 @@ npm run lint      # eslint
 npm run format    # prettier --write .
 npm test          # vitest (watch mode)
 npx vitest run    # single test run
+npm run test:full # tests with the full seed counts (slower)
+npm run bench     # generation speed table and targets
 ```
 
 ## Design reference
@@ -41,9 +44,11 @@ rebuild it as React components with Tailwind v4 (`@theme {}` tokens, keyframes d
 
 Single-page static app. All state is client-side.
 
-- **Engine** (`src/engine/`, pure TS, no DOM, fully unit-tested): bitmask board and candidates, seedable PRNG, counting
-  solver (uniqueness check), generator (full grid, then carve), technique grader.
-- **Worker**: puzzle generation runs in a Web Worker. Prefetch the next puzzle during play and on the win screen.
+- **Engine** (`src/engine/`, pure TS, no DOM, fully unit-tested): bitmask solver (uniqueness check), generator (full
+  grid, then steered carving), technique grader, seedable PRNG. Import only from `src/engine/index.ts`: `generate`
+  (Web Worker, cancellable), `generatePuzzle`, `gradePuzzle`, `solve`, `countSolutions`.
+- **Worker**: `generate()` runs generation in a Web Worker and falls back to the main thread where none exists.
+  Aborting restarts the worker. Prefetch the next puzzle during play and on the win screen (the store's job).
 - **Store** (`src/store/`, Zustand): board, notes, selection, undo/redo, timer, hearts, hints, pause state.
 - **Storage** (`src/storage/`): versioned `localStorage` — `coodoku:settings:v1`, `coodoku:stats:v1`. Also persist the
   in-progress game so a refresh does not lose it _(planned)_.
@@ -56,10 +61,11 @@ Single-page static app. All state is client-side.
 - **Difficulty is graded by solving technique, not clue count.** Modes: Easy, Medium, Hard, Expert.
   - Easy: naked and hidden singles.
   - Medium: plus locked candidates and naked/hidden pairs and triples.
-  - Hard: plus X-wing.
-  - Expert: needs at least XY-wing or swordfish, and never requires guessing.
+  - Hard: exactly one advanced deduction (X-wing, XY-wing, or swordfish).
+  - Expert: two or more advanced deductions.
   - Puzzles must have exactly one solution. Reject puzzles that need guessing.
-  - Generation has a time budget (about 3 s for Expert). On timeout, return the hardest puzzle found.
+  - Generation has a time budget (1.5 s Easy/Medium, 2 s Hard, 3 s Expert). On timeout, return the hardest puzzle found
+    that is not harder than requested, with `exact: false` (Expert misses about 1 in 5).
 - **No third-party sudoku library or API.** The engine is written from scratch. Technique definitions come from public
   references (SudokuWiki, Sudopedia) but no code or text is copied.
 - **Hearts:** 5 per game, a wrong digit costs one, game over at 0 (Retry puzzle / New game).
@@ -136,9 +142,10 @@ The design is inspired by an existing game's board-and-pad layout only. To stay 
 
 Vitest + React Testing Library + jsdom. Config is in `vite.config.ts`, setup in `src/test/setup.ts`.
 
-Engine tests are property-based over many seeds: valid solution,
-exactly one solution, clues match the solution, same seed gives the same puzzle. Add fixture puzzles with known required
-techniques for each grader rule, and a per-difficulty generation benchmark.
+Engine tests loop over fixed seeds: valid solution, exactly one solution, clues match the solution, same seed gives the
+same puzzle. Hooks run a tenth of the seeds; `npm run test:full` runs them all. Technique tests use hand-built
+candidate states (`src/engine/grader/testing.ts`), and `src/engine/fixtures.ts` pins generated samples so grader changes
+are noticed. `npm run bench` prints generation timings and checks the speed targets.
 
 All tests must pass before committing.
 
