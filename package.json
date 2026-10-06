@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "test:full": "VITE_ENGINE_FULL=1 vitest run",
+    "bench": "VITE_ENGINE_BENCH=1 vitest run src/engine/generate.perf.test.ts --reporter=verbose",
+    "bench:engine": "VITE_ENGINE_BENCH=1 vitest run src/engine/generate.perf.test.ts --reporter=verbose",
     "format": "prettier --write .",
     "prepare": "husky"
   },
