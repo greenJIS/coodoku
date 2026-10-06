@@ -40,5 +40,3 @@ export function xyWing(state: State): Step | null {
   }
   return null;
 }
-
-export const findXyWing = xyWing;

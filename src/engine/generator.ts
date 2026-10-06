@@ -25,6 +25,7 @@ export interface CarveOutcome {
 /** A random complete, valid grid. */
 export function fullGrid(rng: Rng): Grid {
   const grid = solve(new Uint8Array(81), rng);
+  /* v8 ignore next */
   if (grid === null) throw new EngineError('Could not build a full grid');
   return grid;
 }

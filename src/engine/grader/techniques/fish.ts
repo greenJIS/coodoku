@@ -66,6 +66,3 @@ function fish(size: number, technique: Technique): TechniqueFn {
 
 export const xWing = fish(2, 'xWing');
 export const swordfish = fish(3, 'swordfish');
-
-export const findXWing = xWing;
-export const findSwordfish = swordfish;

@@ -11,7 +11,7 @@ type TechniqueFn = (state: State) => Step | null;
  * Those cells must hold those digits, so every other candidate leaves them.
  */
 function hiddenSubset(size: number, technique: Technique): TechniqueFn {
-  return (state) => {
+  return (state: State): Step | null => {
     for (const unit of UNITS) {
       const empties = unit.filter((cell) => state.cells[cell] === 0);
       const cellsOf = new Map<number, number[]>();
@@ -47,6 +47,3 @@ function hiddenSubset(size: number, technique: Technique): TechniqueFn {
 
 export const hiddenPair = hiddenSubset(2, 'hiddenPair');
 export const hiddenTriple = hiddenSubset(3, 'hiddenTriple');
-
-export const findHiddenPair = hiddenPair;
-export const findHiddenTriple = hiddenTriple;

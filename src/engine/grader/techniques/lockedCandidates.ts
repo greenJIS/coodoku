@@ -58,5 +58,3 @@ export function lockedCandidates(state: State): Step | null {
   }
   return null;
 }
-
-export const findLockedCandidates = lockedCandidates;

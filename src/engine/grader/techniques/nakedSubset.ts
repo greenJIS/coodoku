@@ -11,7 +11,7 @@ type TechniqueFn = (state: State) => Step | null;
  * Those digits belong to those cells, so they leave every other cell.
  */
 function nakedSubset(size: number, technique: Technique): TechniqueFn {
-  return (state) => {
+  return (state: State): Step | null => {
     for (const unit of UNITS) {
       const empties = unit.filter((cell) => state.cells[cell] === 0);
       const pool = empties.filter((cell) => {
@@ -39,6 +39,3 @@ function nakedSubset(size: number, technique: Technique): TechniqueFn {
 
 export const nakedPair = nakedSubset(2, 'nakedPair');
 export const nakedTriple = nakedSubset(3, 'nakedTriple');
-
-export const findNakedPair = nakedPair;
-export const findNakedTriple = nakedTriple;
