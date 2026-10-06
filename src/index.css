@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Brand — amber (copied from the cookie-people app) */
+  --color-brand-50: #fbf6ec;
+  --color-brand-100: #fdf1dc;
+  --color-brand-200: #fbe3b8;
+  --color-brand-300: #f8cd82;
+  --color-brand-400: #f7b84e;
+  --color-brand-500: #f5a524;
+  --color-brand-600: #e0940f;
+  --color-brand-700: #b45309;
+  --color-brand-800: #7a4f08;
+  --color-brand-900: #402312;
+
+  /* Accent — magenta (hearts, same-digit outline) */
+  --color-accent-50: #fdf2f7;
+  --color-accent-100: #fce7f0;
+  --color-accent-200: #fbcfdf;
+  --color-accent-500: #ec176c;
+  --color-accent-600: #d10e5e;
+  --color-accent-700: #a90849;
+
+  /* Cream — warm whites and tans */
+  --color-cream-50: #fffbf5;
+  --color-cream-100: #fdf6ec;
+  --color-cream-200: #f9ecd6;
+  --color-cream-300: #f3e0bd;
+
+  /* Ink — warm near-black (text) */
+  --color-ink-500: #6b6863;
+  --color-ink-600: #4a4744;
+  --color-ink-900: #1c1b1a;
+
+  /* Neutrals — warm stone for chrome and muted text */
+  --color-slate-50: #f4f3f1;
+  --color-slate-100: #efeeeb;
+  --color-slate-200: #ecebe8;
+  --color-slate-300: #e4e2de;
+  --color-slate-400: #a8a5a0;
+  --color-slate-500: #8a8781;
+  --color-slate-600: #57534e;
+  --color-slate-700: #44403c;
+
+  /* Game surface */
+  --color-paper: #fbf3e4;
+  --color-edge: #dcc79c;
+  --color-board-line: #5a4632;
+  --color-ok: #10b981;
+  --color-error: #e11d48;
+
+  /* Typography — self-hosted via @fontsource */
+  --font-sans: 'Nunito Variable', system-ui, -apple-system, sans-serif;
+  --font-hand: 'Patrick Hand', 'Nunito Variable', system-ui, sans-serif;
+}

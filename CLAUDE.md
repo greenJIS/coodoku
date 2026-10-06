@@ -1,0 +1,150 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Coodoku — Claude Code Guide
+
+Solo sudoku game. Static web app, no backend, no accounts. Pick a difficulty, a puzzle is generated in the browser,
+the game gets a random name, and scores are kept in `localStorage`.
+
+**Status:** the project is scaffolded (Vite, React, Tailwind v4, Vitest, ESLint, Prettier, commitlint + husky). Game code
+is not written yet. The sections below describe the target. Anything marked _planned_ does not exist yet.
+
+## Environment
+
+- **Node**: 24 (global default, `.nvmrc` needed)
+- **Package manager**: npm
+- **Stack**: React + TypeScript (`strict`, no `any`) + Vite + Tailwind CSS v4 + Zustand + Vitest
+- **Deploy**: static files only. Set `VITE_BASE=/coodoku/` when building for GitHub Pages (`vite.config.ts` reads it).
+
+## Commands
+
+```bash
+npm run dev       # dev server
+npm run build     # tsc -b && vite build
+npm run preview   # preview the production build
+npm run lint      # eslint
+npm run format    # prettier --write .
+npm test          # vitest (watch mode)
+npx vitest run    # single test run
+```
+
+## Design reference
+
+`docs/design/preview.html` is a standalone, playable mock of the approved design (vanilla JS, raw CSS). Open it in a
+browser. It is the source of truth for look, layout, animation, and settings behavior. Do not port its code verbatim:
+rebuild it as React components with Tailwind v4 (`@theme {}` tokens, keyframes declared inside `@theme`).
+
+`docs/` is git-ignored on purpose, so the preview exists in the local checkout only and is not pushed to GitHub.
+
+## Architecture
+
+Single-page static app. All state is client-side.
+
+- **Engine** (`src/engine/`, pure TS, no DOM, fully unit-tested): bitmask board and candidates, seedable PRNG, counting
+  solver (uniqueness check), generator (full grid, then carve), technique grader.
+- **Worker**: puzzle generation runs in a Web Worker. Prefetch the next puzzle during play and on the win screen.
+- **Store** (`src/store/`, Zustand): board, notes, selection, undo/redo, timer, hearts, hints, pause state.
+- **Storage** (`src/storage/`): versioned `localStorage` — `coodoku:settings:v1`, `coodoku:stats:v1`. Also persist the
+  in-progress game so a refresh does not lose it _(planned)_.
+- **Components** (`src/components/`): Board, Cell, NumberPad, Header, NotesSwitch, modals (Settings, Pause, Help, Win,
+  GameOver).
+
+### Key decisions
+
+- **Solo only.** No multiplayer, no server, no Discord. Never add an account system.
+- **Difficulty is graded by solving technique, not clue count.** Modes: Easy, Medium, Hard, Expert.
+  - Easy: naked and hidden singles.
+  - Medium: plus locked candidates and naked/hidden pairs and triples.
+  - Hard: plus X-wing.
+  - Expert: needs at least XY-wing or swordfish, and never requires guessing.
+  - Puzzles must have exactly one solution. Reject puzzles that need guessing.
+  - Generation has a time budget (about 3 s for Expert). On timeout, return the hardest puzzle found.
+- **No third-party sudoku library or API.** The engine is written from scratch. Technique definitions come from public
+  references (SudokuWiki, Sudopedia) but no code or text is copied.
+- **Hearts:** 5 per game, a wrong digit costs one, game over at 0 (Retry puzzle / New game).
+- **Hints:** 5 per game _(provisional — earned hints not decided)_.
+- **Changing difficulty in Settings starts a new game immediately.** Selecting the current difficulty does nothing.
+  Consider a confirm prompt only when the board has progress _(open)_.
+- **New game** generates a fresh random name (adjective + animal). The name is editable in Settings.
+- **Remaining count** on the 1–9 pad counts only correct placements. A pad button dims and disables at 0.
+- **Show timer off** hides the timer and the pause button together, and disables the `P` shortcut. The clock still runs.
+- **Timer pauses** while Settings, Help, or the Pause modal is open. The Pause modal blurs and hides the board.
+- **Reset puzzle / New game** in the Pause modal need a second tap to confirm.
+- **Settings** (persisted): game name, difficulty, mistake check (instant/off), auto-remove notes, highlight peers,
+  highlight same digits, show remaining count, show timer, sound + volume, vibration, reduce motion (defaults from
+  `prefers-reduced-motion`), theme (light/dark), digit size, left-handed layout. Stats: solved count and best time per
+  difficulty, reset with a two-tap confirm.
+
+### Board
+
+- 9x9 grid built as an **11x11 CSS grid**: `repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px …`. The two
+  5px tracks hold the 3x3 divider bars, so dividers never overlap cells and all 81 cells are the same size. Use
+  `minmax(0, 1fr)`, never plain `1fr`, or large digits clip the last row.
+- Outer border is thinner (3px) than the 3x3 dividers (5px).
+- Thin cell lines come from each cell's own inset 1px edge.
+- Highlights: selected cell, peers (row/column/box), same digit as the selected cell (magenta leaf outline: large radius
+  top-left and bottom-right, small radius top-right and bottom-left), just-entered digit (green circle).
+
+### Motion
+
+- Modals grow out of the element that opened them and shrink back into it (settings ← gear, pause ← pause button,
+  help ← the `?` badge, win ← last placed cell, game over ← hearts). Drive it with CSS variables for the origin offset.
+- Settings tabs use one sliding pill and panes slide in from the direction of travel.
+- Motion stays gentle: no large overshoot, confetti only on a win.
+- Honor `reduce motion` (setting and system preference) by disabling animations and transitions.
+
+### Sound
+
+Synthesized with the Web Audio API (oscillators), no audio files. Respect the sound toggle and volume setting.
+
+## Design system
+
+Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
+
+| Role                                         | Token / value                             |
+| -------------------------------------------- | ----------------------------------------- |
+| Accent (selection, active chips, notes knob) | brand-500 `#f5a524`                       |
+| Accent dark / user digits                    | brand-700 `#b45309`                       |
+| Peer shading / selected cell                 | brand-100 `#fdf1dc` / brand-300 `#f8cd82` |
+| Hearts, same-digit outline                   | accent-500 `#ec176c`                      |
+| Errors                                       | rose-600 `#e11d48`                        |
+| Just-entered circle                          | `#10b981`                                 |
+| Ink / muted                                  | ink-900 `#1c1b1a` / slate-500 `#8a8781`   |
+| Page background                              | warm cream `#fbf3e4` with faint grain     |
+
+- **Style:** "sticker" controls — cream face, 2px warm-tan border, solid offset shadow with no blur, press-down on
+  active. No gloss gradients, no blurry shadows. Dark theme uses the same brown family.
+- **Fonts:** Nunito (UI) and Patrick Hand (digits, timer), self-hosted through the `@fontsource` packages imported in
+  `src/main.tsx`. Color and font tokens live in the `@theme {}` block of `src/index.css`.
+- **Icons:** own line icons (stroke 2–3, round caps). A small otter mascot beside the game name.
+- **Layout:** board left, number pad right; header has home / name / settings, then difficulty / hearts / timer + pause.
+  Under 860px the pad stacks below the board.
+
+## IP and assets
+
+The design is inspired by an existing game's board-and-pad layout only. To stay clear of copyright and trade dress:
+
+- Own name, logo, mascot, palette, typography, icons, illustrations, and sounds only. Never copy assets, CSS, or code
+  from the original game or its bundle.
+- Do not commit screenshots of the original game. Keep reference images outside the repo.
+- Describe animations in words and write original keyframes and timing.
+- Third-party assets must be open source or CC0/CC-BY (never CC-NC). Record every asset, its source, and license in
+  `ASSETS.md` _(planned)_.
+
+## Testing
+
+Vitest + React Testing Library + jsdom. Config is in `vite.config.ts`, setup in `src/test/setup.ts`.
+
+Engine tests are property-based over many seeds: valid solution,
+exactly one solution, clues match the solution, same seed gives the same puzzle. Add fixture puzzles with known required
+techniques for each grader rule, and a per-difficulty generation benchmark.
+
+All tests must pass before committing.
+
+## Git
+
+- Protected branches: `main`, `master`, `dev`. Work on feature branches and open a PR.
+- Commit messages follow `type(scope): summary`. Husky enforces it: `commit-msg` runs commitlint, and `pre-commit` runs
+  lint, `prettier --check`, and the tests. Never use `--no-verify`.
+- Commit only when asked.
