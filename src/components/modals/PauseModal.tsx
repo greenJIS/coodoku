@@ -76,7 +76,7 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
       className="max-w-[360px]! text-center px-10! py-[30px]!"
     >
       <h2 className="text-[28px] font-extrabold text-ink-900 mb-1.5">Paused</h2>
-      <p className="text-slate-500 font-medium mb-4">
+      <p className="text-slate-500 font-semibold mb-4">
         Your board is hidden until you're back.
       </p>
 

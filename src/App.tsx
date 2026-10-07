@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import {
   GameOverModal,
   HelpModal,
+  type HelpTopic,
   PauseModal,
   SettingsModal,
   WinModal,
@@ -32,7 +33,8 @@ export function App() {
   const leftHanded = useSettingsStore((s) => s.leftHanded);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
+  const [helpTopic, setHelpTopic] = useState<HelpTopic | null>(null);
+  const helpOpen = helpTopic !== null;
 
   // Mount core app hooks
   useKeyboard();
@@ -52,7 +54,7 @@ export function App() {
     if (!helpOpen && pendingDifficulty === null) setPaused(false);
   };
   const closeHelp = () => {
-    setHelpOpen(false);
+    setHelpTopic(null);
     if (!settingsOpen && pendingDifficulty === null) setPaused(false);
   };
 
@@ -91,8 +93,8 @@ export function App() {
 
         <aside className="w-[min(88vw,380px)] min-[861px]:w-[300px] flex flex-col gap-[18px] items-center">
           <NumberPad />
-          <NotesSwitch onHelp={() => setHelpOpen(true)} />
-          <Toolbar onAboutHint={() => setHelpOpen(true)} />
+          <NotesSwitch onHelp={() => setHelpTopic('notes')} />
+          <Toolbar onAboutHint={() => setHelpTopic('hint')} />
         </aside>
       </main>
 
@@ -101,7 +103,11 @@ export function App() {
 
       <PauseModal open={isPauseOpen} onClose={() => setPaused(false)} />
 
-      <HelpModal open={helpOpen} onClose={closeHelp} />
+      <HelpModal
+        open={helpOpen}
+        onClose={closeHelp}
+        topic={helpTopic ?? 'notes'}
+      />
 
       <WinModal open={isWon} onNewGame={() => void newGame()} />
 

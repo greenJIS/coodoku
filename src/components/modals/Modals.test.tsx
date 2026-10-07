@@ -264,13 +264,28 @@ describe('Game Modals', () => {
   });
 
   describe('HelpModal', () => {
-    it('renders rules and close button', () => {
+    it('renders the notes topic and close button', () => {
       const onClose = vi.fn();
-      render(<HelpModal open={true} onClose={onClose} />);
+      render(<HelpModal open={true} onClose={onClose} topic="notes" />);
 
-      expect(screen.getByText('How to Play')).toBeInTheDocument();
+      expect(screen.getByText('Not sure yet?')).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Next' })).toBeNull();
       fireEvent.click(screen.getByRole('button', { name: 'Close help' }));
       expect(onClose).toHaveBeenCalledTimes(1);
+    });
+
+    it('pages through the hint topic', () => {
+      render(<HelpModal open={true} onClose={vi.fn()} topic="hint" />);
+
+      expect(screen.getByText('Feeling stuck?')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Previous' })).toBeDisabled();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByText('Hints are limited')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      fireEvent.click(screen.getByRole('button', { name: 'Previous' }));
+      expect(screen.getByText('Feeling stuck?')).toBeInTheDocument();
     });
   });
 });

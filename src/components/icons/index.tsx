@@ -314,3 +314,28 @@ export function PencilIcon({
     </svg>
   );
 }
+
+export function ChevronIcon({
+  direction,
+  size = 16,
+  strokeWidth = 2,
+  className,
+  'aria-hidden': ariaHidden = true,
+}: IconProps & { direction: 'left' | 'right' }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden={ariaHidden}
+      className={className}
+    >
+      <path d={direction === 'left' ? 'M15 6l-6 6 6 6' : 'M9 6l6 6-6 6'} />
+    </svg>
+  );
+}

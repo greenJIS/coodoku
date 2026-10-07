@@ -1,23 +1,121 @@
-import { CloseIcon } from '../icons';
+import { useEffect, useState } from 'react';
+import { ChevronIcon, CloseIcon } from '../icons';
+import { HeartRow } from '../HeartRow';
 import { IconButton } from '../ui';
 import { Modal } from './Modal';
+
+export type HelpTopic = 'notes' | 'hint';
 
 export interface HelpModalProps {
   open: boolean;
   onClose: () => void;
+  topic?: HelpTopic;
 }
 
-export function HelpModal({ open, onClose }: HelpModalProps) {
+interface MiniCell {
+  v?: number;
+  n?: number[];
+  hi?: boolean;
+}
+
+interface HelpSlide {
+  title: string;
+  grid?: MiniCell[];
+  hearts?: boolean;
+  text: string;
+}
+
+const HELP: Record<HelpTopic, HelpSlide[]> = {
+  notes: [
+    {
+      title: 'Not sure yet?',
+      grid: [
+        { n: [1, 4] },
+        { n: [4, 9] },
+        { v: 2 },
+        { v: 9 },
+        { v: 8 },
+        { n: [1, 5] },
+        { n: [1, 3] },
+        { v: 7 },
+        { n: [3, 5] },
+      ],
+      text: 'Turn on Notes to jot down possible digits in a cell. Placing a digit clears matching notes in its row, column, and box.',
+    },
+  ],
+  hint: [
+    {
+      title: 'Feeling stuck?',
+      grid: [
+        { v: 7 },
+        { hi: true },
+        { v: 3 },
+        {},
+        { v: 1 },
+        { v: 9 },
+        {},
+        {},
+        { v: 2 },
+      ],
+      text: 'Select an empty cell and tap Hint to reveal its correct digit.',
+    },
+    {
+      title: 'Hints are limited',
+      hearts: true,
+      text: 'You get 5 hints per game. Wrong guesses cost a heart, so use them wisely.',
+    },
+  ],
+};
+
+const NOTE_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+function MiniGrid({ cells }: { cells: MiniCell[] }) {
+  return (
+    <div className="grid grid-cols-3 grid-rows-3 gap-px w-[168px] h-[168px] mx-auto my-[14px] bg-hairline border-2 border-board-line rounded-[6px] overflow-hidden">
+      {cells.map((c, i) => (
+        <div
+          key={i}
+          className={`relative grid place-items-center text-[24px] font-medium ${
+            c.hi ? 'bg-[#ffe9b8] dark:bg-cream-50' : 'bg-white dark:bg-cream-50'
+          }`}
+        >
+          {c.v ? (
+            c.v
+          ) : c.n ? (
+            <em className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 not-italic text-[9px] font-semibold text-slate-500">
+              {NOTE_DIGITS.map((k) => (
+                <i key={k} className="not-italic grid place-items-center">
+                  {c.n?.includes(k) ? k : ''}
+                </i>
+              ))}
+            </em>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function HelpModal({ open, onClose, topic = 'notes' }: HelpModalProps) {
+  const [slide, setSlide] = useState(0);
+
+  useEffect(() => {
+    if (open) setSlide(0);
+  }, [open, topic]);
+
+  const pages = HELP[topic];
+  const page = pages[Math.min(slide, pages.length - 1)];
+
   return (
     <Modal
       open={open}
       onClose={onClose}
       label="Help and Rules"
-      className="relative text-left"
+      className="relative w-[min(90vw,380px)]! max-w-none! text-center px-7! pt-[26px]! pb-5!"
     >
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-3 right-3">
         <IconButton
-          icon={<CloseIcon size={16} />}
+          icon={<CloseIcon />}
           size="sm"
           variant="close"
           label="Close help"
@@ -25,53 +123,50 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
         />
       </div>
 
-      <h2 className="text-[20px] sm:text-[24px] font-extrabold text-ink-900 mb-4 text-center">
-        How to Play
-      </h2>
+      <h3 className="text-[20px] font-bold text-ink-900 mb-1">{page.title}</h3>
 
-      <div className="space-y-4 text-[14px] font-bold text-slate-600 dark:text-slate-300">
-        <section>
-          <h3 className="font-extrabold text-ink-900 mb-1">Sudoku Rules</h3>
-          <p className="leading-relaxed">
-            Fill the 9×9 grid so every row, column, and 3×3 box contains digits
-            1 to 9 with no repetition.
-          </p>
-        </section>
+      {page.hearts ? (
+        <HeartRow hearts={3} className="justify-center mt-[22px] mb-6" />
+      ) : (
+        <MiniGrid cells={page.grid ?? []} />
+      )}
 
-        <section>
-          <h3 className="font-extrabold text-ink-900 mb-1">
-            Hearts &amp; Hints
-          </h3>
-          <p className="leading-relaxed">
-            You start with 5 hearts and 5 hints. With mistake check on, placing
-            a wrong digit costs 1 heart. At 0 hearts the game is lost.
-          </p>
-        </section>
+      <p className="text-[14px] font-semibold leading-[1.45] text-slate-500">
+        {page.text}
+      </p>
 
-        <section>
-          <h3 className="font-extrabold text-ink-900 mb-1">
-            Keyboard Shortcuts
-          </h3>
-          <div className="grid grid-cols-2 gap-1.5 text-[12px]">
-            <span className="font-extrabold text-ink-900">1 – 9</span>
-            <span>Place digit / Note</span>
-            <span className="font-extrabold text-ink-900">Arrow keys</span>
-            <span>Move selection</span>
-            <span className="font-extrabold text-ink-900">Backspace / Del</span>
-            <span>Erase cell</span>
-            <span className="font-extrabold text-ink-900">N</span>
-            <span>Toggle notes mode</span>
-            <span className="font-extrabold text-ink-900">Ctrl / Cmd + Z</span>
-            <span>Undo last move</span>
-            <span className="font-extrabold text-ink-900">H</span>
-            <span>Reveal hint</span>
-            <span className="font-extrabold text-ink-900">P</span>
-            <span>Pause timer</span>
-            <span className="font-extrabold text-ink-900">Esc</span>
-            <span>Close modal</span>
+      {pages.length > 1 && (
+        <div className="flex items-center justify-center gap-[14px] mt-[14px]">
+          <button
+            type="button"
+            aria-label="Previous"
+            disabled={slide === 0}
+            onClick={() => setSlide(slide - 1)}
+            className="grid place-items-center w-7 h-7 p-0 rounded-full border-0 bg-slate-100 dark:bg-[#3a2f1e] text-board-line cursor-pointer disabled:opacity-30 disabled:cursor-default"
+          >
+            <ChevronIcon direction="left" />
+          </button>
+          <div className="flex gap-1.5">
+            {pages.map((_, i) => (
+              <i
+                key={i}
+                className={`w-2 h-2 rounded-full ${
+                  i === slide ? 'bg-brand-500' : 'bg-slate-300'
+                }`}
+              />
+            ))}
           </div>
-        </section>
-      </div>
+          <button
+            type="button"
+            aria-label="Next"
+            disabled={slide === pages.length - 1}
+            onClick={() => setSlide(slide + 1)}
+            className="grid place-items-center w-7 h-7 p-0 rounded-full border-0 bg-slate-100 dark:bg-[#3a2f1e] text-board-line cursor-pointer disabled:opacity-30 disabled:cursor-default"
+          >
+            <ChevronIcon direction="right" />
+          </button>
+        </div>
+      )}
     </Modal>
   );
 }
