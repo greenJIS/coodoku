@@ -60,6 +60,16 @@ let prefetchPromise: Promise<Puzzle> | null = null;
 let prefetchDifficulty: Difficulty | null = null;
 let prefetchedPuzzle: { difficulty: Difficulty; puzzle: Puzzle } | null = null;
 
+export function clearPrefetchCache(): void {
+  currentAbortController?.abort();
+  currentAbortController = null;
+  prefetchAbortController?.abort();
+  prefetchAbortController = null;
+  prefetchPromise = null;
+  prefetchDifficulty = null;
+  prefetchedPuzzle = null;
+}
+
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 
 function scheduleAutosave(state: GameState | null): void {
