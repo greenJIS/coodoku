@@ -45,6 +45,17 @@ export function App() {
     void boot();
   }, [boot]);
 
+  // Release the modal-induced pause in the same batch that closes the modal,
+  // otherwise the Pause modal mounts for a render and re-pauses the game.
+  const closeSettings = () => {
+    setSettingsOpen(false);
+    if (!helpOpen && pendingDifficulty === null) setPaused(false);
+  };
+  const closeHelp = () => {
+    setHelpOpen(false);
+    if (!settingsOpen && pendingDifficulty === null) setPaused(false);
+  };
+
   const isWon = game?.status === 'won';
   const isLost = game?.status === 'lost';
   const isPauseOpen =
@@ -86,14 +97,11 @@ export function App() {
       </main>
 
       {/* Modals */}
-      <SettingsModal
-        open={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-      />
+      <SettingsModal open={settingsOpen} onClose={closeSettings} />
 
       <PauseModal open={isPauseOpen} onClose={() => setPaused(false)} />
 
-      <HelpModal open={helpOpen} onClose={() => setHelpOpen(false)} />
+      <HelpModal open={helpOpen} onClose={closeHelp} />
 
       <WinModal open={isWon} onNewGame={() => void newGame()} />
 
