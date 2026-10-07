@@ -11,6 +11,8 @@ export interface CellProps {
   isPeer: boolean;
   isSameDigit: boolean;
   isJustEntered: boolean;
+  /** Wave delay steps when a completed unit sweeps through this cell. */
+  waveStep?: number;
   digitSize?: 'normal' | 'large';
   tabIndex: number;
   onClick: (index: number) => void;
@@ -26,6 +28,7 @@ export const Cell = memo(function Cell({
   isPeer,
   isSameDigit,
   isJustEntered,
+  waveStep,
   digitSize = 'normal',
   tabIndex,
   onClick,
@@ -63,6 +66,17 @@ export const Cell = memo(function Cell({
     bgClasses = 'bg-peer';
   }
 
+  // One animation per cell: the wave beats a wrong-digit shake, which beats
+  // the selection pulse
+  let motionClasses = '';
+  if (waveStep !== undefined) {
+    motionClasses = 'animate-wave';
+  } else if (isWrong) {
+    motionClasses = 'animate-shake';
+  } else if (isSelected) {
+    motionClasses = 'animate-selpulse';
+  }
+
   // Text color & font styling
   let textClasses = 'font-hand font-normal';
   if (isWrong) {
@@ -92,11 +106,16 @@ export const Cell = memo(function Cell({
           onClick(index);
         }
       }}
-      style={{ gridRow, gridColumn: gridCol }}
-      className={`relative grid place-items-center cursor-pointer select-none transition-colors duration-150 outline-none
+      style={{
+        gridRow,
+        gridColumn: gridCol,
+        animationDelay:
+          waveStep === undefined ? undefined : `${waveStep * 45}ms`,
+      }}
+      className={`relative grid place-items-center cursor-pointer select-none transition-[background-color] duration-[140ms] outline-none
         shadow-[inset_0_0_0_1px_var(--color-hairline)]
         focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px]
-        ${bgClasses}`}
+        ${bgClasses} ${motionClasses}`}
     >
       {/* Digit value */}
       {value !== 0 && (
@@ -124,7 +143,7 @@ export const Cell = memo(function Cell({
       {isSameDigit && value !== 0 && (
         <span
           aria-hidden="true"
-          className="absolute inset-[3px] border-[3px] border-match rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-[pop_0.22s_cubic-bezier(0.3,1.5,0.5,1)]"
+          className="absolute inset-[3px] border-[3px] border-match rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-ring"
         />
       )}
 
@@ -132,7 +151,7 @@ export const Cell = memo(function Cell({
       {isJustEntered && value !== 0 && (
         <span
           aria-hidden="true"
-          className="absolute inset-[3px] border-[3px] border-ok rounded-full pointer-events-none z-10 animate-[pop_0.22s_cubic-bezier(0.3,1.5,0.5,1)]"
+          className="absolute inset-[3px] border-[3px] border-ok rounded-full pointer-events-none z-10 animate-ring"
         />
       )}
     </div>

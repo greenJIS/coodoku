@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 import type { Difficulty, Puzzle } from '../engine';
 import { createGame } from '../game/cells';
-import { completedUnits, hasProgress } from '../game/queries';
+import {
+  completedUnitCells,
+  completedUnits,
+  hasProgress,
+} from '../game/queries';
 import {
   erase,
   placeDigit,
@@ -26,6 +30,8 @@ export interface GameStore {
   notesMode: boolean;
   paused: boolean;
   lastEntered: number | null;
+  /** Wave delay steps per cell after a row, column or box was completed. */
+  wave: Readonly<Record<number, number>> | null;
   generating: boolean;
   error: string | null;
   pendingDifficulty: Difficulty | null;
@@ -99,12 +105,39 @@ function flushAutosave(state: GameState | null): void {
   }
 }
 
+/** Distance from `cell` along each unit it just completed (later unit wins). */
+function waveDelays(
+  game: GameState,
+  cell: number,
+): Record<number, number> | null {
+  const units = completedUnitCells(game, cell);
+  if (units.length === 0) return null;
+
+  const delays: Record<number, number> = {};
+  for (const unit of units) {
+    const start = Math.max(0, unit.indexOf(cell));
+    unit.forEach((idx, n) => {
+      delays[idx] = Math.abs(n - start);
+    });
+  }
+  return delays;
+}
+
+function clearWaveLater(wave: Readonly<Record<number, number>>): void {
+  setTimeout(() => {
+    if (useGameStore.getState().wave === wave) {
+      useGameStore.setState({ wave: null });
+    }
+  }, 1000);
+}
+
 export const useGameStore = create<GameStore>((set, get) => ({
   game: null,
   selected: null,
   notesMode: false,
   paused: false,
   lastEntered: null,
+  wave: null,
   generating: false,
   error: null,
   pendingDifficulty: null,
@@ -186,6 +219,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     // Correct placement or non-flagged placement
     const isCorrect = digit === nextGame.solution[selected];
     const newLastEntered = isCorrect ? selected : null;
+    const wave = isCorrect ? waveDelays(nextGame, selected) : null;
 
     if (isCorrect) {
       const completed = completedUnits(nextGame, selected);
@@ -217,15 +251,18 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({
         game: nextGame,
         lastEntered: newLastEntered,
+        wave,
         newBest: isNewBest,
       });
+      if (wave) clearWaveLater(wave);
 
       void get().prefetch();
       return;
     }
 
     scheduleAutosave(nextGame);
-    set({ game: nextGame, lastEntered: newLastEntered });
+    set({ game: nextGame, lastEntered: newLastEntered, wave });
+    if (wave) clearWaveLater(wave);
   },
 
   erase: () => {

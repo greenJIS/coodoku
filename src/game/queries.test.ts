@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { Puzzle } from '../engine';
 import { createGame } from './cells';
 import {
+  completedUnitCells,
   completedUnits,
   hasProgress,
   isWrong,
@@ -156,5 +157,31 @@ describe('game queries', () => {
     boxValues[20] = 9; // wrong
     game = { ...game, values: boxValues };
     expect(completedUnits(game, 0).box).toBe(false);
+  });
+
+  it('completedUnitCells lists finished rows, columns and boxes in order', () => {
+    const game = makeTestGame();
+    expect(completedUnitCells(game, 0)).toEqual([]);
+
+    const values = [...game.values];
+    for (let c = 0; c < 9; c++) values[c] = 1;
+    for (let r = 0; r < 9; r++) values[r * 9] = 1;
+    const filled = { ...game, values: Uint8Array.from(values) };
+
+    expect(completedUnitCells(filled, 0)).toEqual([
+      [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      [0, 9, 18, 27, 36, 45, 54, 63, 72],
+    ]);
+    expect(completedUnitCells(filled, 81)).toEqual([]);
+  });
+
+  it('completedUnitCells walks a box row by row', () => {
+    const game = makeTestGame();
+    const values = [...game.values];
+    for (const idx of [30, 31, 32, 39, 40, 41, 48, 49, 50]) values[idx] = 1;
+
+    expect(
+      completedUnitCells({ ...game, values: Uint8Array.from(values) }, 40),
+    ).toEqual([[30, 31, 32, 39, 40, 41, 48, 49, 50]]);
   });
 });

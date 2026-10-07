@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { HeartIcon } from './icons';
 import { useGameStore } from '../store/game';
 
@@ -14,6 +15,14 @@ export function HeartRow({
   const hearts = explicitHearts ?? storeHearts;
   const maxHearts = 5;
 
+  // The heart just lost bounces once (adjust state while rendering)
+  const [prevHearts, setPrevHearts] = useState(hearts);
+  const [hit, setHit] = useState<number | null>(null);
+  if (prevHearts !== hearts) {
+    setPrevHearts(hearts);
+    setHit(hearts < prevHearts ? hearts : null);
+  }
+
   return (
     <div
       role="group"
@@ -28,7 +37,7 @@ export function HeartRow({
             key={i}
             className={`transition-transform duration-200 ${
               isAlive ? 'scale-100' : 'scale-[0.82]'
-            }`}
+            } ${hit === i ? 'animate-hit' : ''}`}
           >
             <HeartIcon
               size={28}

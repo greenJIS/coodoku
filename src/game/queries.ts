@@ -1,4 +1,4 @@
-import { col, row } from './cells';
+import { box, col, row } from './cells';
 import type { GameState } from './types';
 
 export type Direction = 'up' | 'down' | 'left' | 'right';
@@ -96,4 +96,26 @@ export function completedUnits(state: GameState, cell: number): CompletedUnits {
     col: colComplete,
     box: boxComplete,
   };
+}
+
+/** Cells of every complete row, column and box through `cell`, in that order. */
+export function completedUnitCells(state: GameState, cell: number): number[][] {
+  if (cell < 0 || cell >= 81) return [];
+
+  const r = row(cell);
+  const c = col(cell);
+  const b = box(cell);
+  const units = [
+    Array.from({ length: 9 }, (_, k) => r * 9 + k),
+    Array.from({ length: 9 }, (_, k) => k * 9 + c),
+    Array.from(
+      { length: 9 },
+      (_, k) =>
+        (Math.floor(b / 3) * 3 + Math.floor(k / 3)) * 9 + (b % 3) * 3 + (k % 3),
+    ),
+  ];
+
+  return units.filter((unit) =>
+    unit.every((idx) => state.values[idx] === state.solution[idx]),
+  );
 }

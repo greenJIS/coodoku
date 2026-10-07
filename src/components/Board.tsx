@@ -19,6 +19,7 @@ function ConnectedCell({ index }: ConnectedCellProps) {
   const isSelected = useGameStore((s) => s.selected === index);
   const selectedCell = useGameStore((s) => s.selected);
   const lastEntered = useGameStore((s) => s.lastEntered);
+  const waveStep = useGameStore((s) => s.wave?.[index]);
   const select = useGameStore((s) => s.select);
 
   const highlightPeersSetting = useSettingsStore((s) => s.highlightPeers);
@@ -68,6 +69,7 @@ function ConnectedCell({ index }: ConnectedCellProps) {
       isPeer={isPeer}
       isSameDigit={isSameDigit}
       isJustEntered={isJustEntered}
+      waveStep={waveStep}
       digitSize={digitSize}
       tabIndex={tabIndex}
       onClick={handleClick}

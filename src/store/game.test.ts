@@ -107,6 +107,29 @@ describe('game store', () => {
     expect(useGameStore.getState().lastEntered).toBeNull();
   });
 
+  it('sets a wave when a digit completes a row and clears it after 1s', async () => {
+    await useGameStore.getState().newGame('easy');
+    const { game } = useGameStore.getState();
+    if (!game) throw new Error('no game');
+
+    // Fill all but cell 4 of row 0 with the solution, then enter the last one
+    const values = Uint8Array.from(game.values);
+    for (let c = 0; c < 9; c++) values[c] = game.solution[c];
+    values[4] = 0;
+    useGameStore.setState({ game: { ...game, values }, wave: null });
+
+    useGameStore.getState().select(4);
+    useGameStore.getState().enter(game.solution[4]);
+
+    const { wave } = useGameStore.getState();
+    expect(wave?.[4]).toBe(0);
+    expect(wave?.[0]).toBe(4);
+    expect(wave?.[8]).toBe(4);
+
+    vi.advanceTimersByTime(1000);
+    expect(useGameStore.getState().wave).toBeNull();
+  });
+
   it('handles notes mode and erase', async () => {
     await useGameStore.getState().newGame('easy');
     const store = useGameStore.getState();
