@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Puzzle } from '../../engine';
 import { createGame } from '../../game/cells';
@@ -11,6 +11,7 @@ import {
   ConfirmDifficultyModal,
   GameOverModal,
   HelpModal,
+  Modal,
   PauseModal,
   SettingsModal,
   WinModal,
@@ -63,6 +64,33 @@ describe('Game Modals', () => {
       resetArmed: false,
     });
     document.body.innerHTML = '';
+  });
+
+  describe('Modal', () => {
+    it('plays the exit animation before unmounting', async () => {
+      const { rerender } = render(
+        <Modal open onClose={vi.fn()} label="Demo">
+          <p>body</p>
+        </Modal>,
+      );
+      expect(screen.getByRole('dialog').className).toContain(
+        'animate-modal-in',
+      );
+
+      rerender(
+        <Modal open={false} onClose={vi.fn()} label="Demo">
+          <p>body</p>
+        </Modal>,
+      );
+      expect(screen.getByRole('dialog').className).toContain(
+        'animate-modal-out',
+      );
+      expect(screen.getByTestId('modal-backdrop').className).toContain(
+        'pointer-events-none',
+      );
+
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+    });
   });
 
   describe('PauseModal', () => {

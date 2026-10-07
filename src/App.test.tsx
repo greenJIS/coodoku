@@ -87,13 +87,13 @@ describe('App full integration test', () => {
     ).toBeTruthy();
     fireEvent.click(screen.getByRole('button', { name: /^close/i }));
 
-    expect(screen.queryByRole('dialog')).toBeNull();
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     expect(useGameStore.getState().paused).toBe(false);
 
     fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
     fireEvent.click(screen.getByRole('button', { name: /close settings/i }));
 
-    expect(screen.queryByRole('dialog')).toBeNull();
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
     expect(useGameStore.getState().paused).toBe(false);
   });
 
@@ -214,9 +214,11 @@ describe('App full integration test', () => {
     const playBtn = screen.getByRole('button', { name: 'Resume game' });
     fireEvent.click(playBtn);
 
-    expect(
-      screen.queryByRole('dialog', { name: 'Paused game' }),
-    ).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('dialog', { name: 'Paused game' }),
+      ).not.toBeInTheDocument(),
+    );
     expect(useGameStore.getState().paused).toBe(false);
   });
 });
