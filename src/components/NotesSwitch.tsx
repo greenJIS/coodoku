@@ -20,7 +20,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
         aria-label="Notes mode"
         disabled={generating}
         onClick={toggleNotesMode}
-        className={`relative block w-full h-[84px] p-0 rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-[border-color,box-shadow] duration-150
+        className={`relative block w-full h-[84px] p-0 rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_4px_0_var(--color-edge)] cursor-pointer
           focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-2
           disabled:opacity-40 disabled:cursor-not-allowed`}
       >
@@ -33,7 +33,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
         {/* Knob */}
         <span
           aria-hidden="true"
-          className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-[46px] min-[861px]:w-[54px] h-[46px] min-[861px]:h-[54px] rounded-full grid place-items-center border-2 transition-[left,background-color,border-color,box-shadow,color] duration-200 ease-[cubic-bezier(0.4,1.4,0.5,1)]
+          className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-[46px] min-[861px]:w-[54px] h-[46px] min-[861px]:h-[54px] rounded-full grid place-items-center border-2 [transition:left_.24s_cubic-bezier(.4,1.4,.5,1),background_.2s,color_.2s]
             ${
               notesMode
                 ? 'left-[calc(100%-50px)] bg-brand-500 text-brand-900 border-[#b45309] shadow-[0_3px_0_#b45309]'
@@ -50,7 +50,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
           type="button"
           aria-label="About notes"
           onClick={onHelp}
-          className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white font-extrabold text-[17px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform"
+          className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white font-extrabold text-[17px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-100"
         >
           ?
         </button>

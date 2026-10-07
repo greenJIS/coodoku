@@ -59,8 +59,9 @@ describe('NumberPad, NotesSwitch, and Toolbar controls', () => {
       useGameStore.setState({ notesMode: true });
       const { container } = render(<NumberPad />);
 
-      const dashedRing = container.querySelector('[data-notes-ring]');
-      expect(dashedRing).toBeInTheDocument();
+      const rings = container.querySelectorAll('[data-notes-ring="on"]');
+      expect(rings).toHaveLength(9);
+      expect(container.querySelector('[data-notes-ring="off"]')).toBeNull();
     });
 
     it('dims and disables digit when remaining count is 0 and showRemaining is on', () => {

@@ -62,7 +62,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           onMouseLeave={() => setIsHovered(false)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`relative rounded-full grid place-items-center select-none cursor-pointer transition-[transform,box-shadow,border-color,background-color] duration-100 focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none disabled:transform-none ${sizeClasses} ${variantClasses} ${className}`}
+          className={`relative rounded-full grid place-items-center select-none cursor-pointer ${
+            variant === 'close'
+              ? '[transition:transform_.08s,box-shadow_.08s,border-color_.15s,color_.15s]'
+              : 'transition-transform duration-100'
+          } focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none disabled:transform-none ${sizeClasses} ${variantClasses} ${className}`}
           {...rest}
         >
           {icon}

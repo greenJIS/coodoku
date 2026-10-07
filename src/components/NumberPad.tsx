@@ -40,7 +40,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             disabled={isDisabled}
             onClick={() => enter(digit)}
             className={`relative aspect-square rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[34px] leading-[normal] select-none narrow:w-16 narrow:justify-self-center cursor-pointer
-              shadow-[0_4px_0_var(--color-edge)] transition-[transform,box-shadow,border-color,opacity] duration-100
+              shadow-[0_4px_0_var(--color-edge)] transition-[transform,box-shadow] duration-[90ms]
               hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
               active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]
               focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-2
@@ -51,15 +51,15 @@ export function NumberPad({ className = '' }: NumberPadProps) {
               }
               ${generating ? 'opacity-40 cursor-not-allowed' : ''}`}
           >
-            {/* Dotted ring in notes mode */}
-            {notesMode && (
-              <span
-                aria-hidden="true"
-                data-notes-ring
-                className="absolute inset-1 rounded-full pointer-events-none bg-center bg-no-repeat bg-size-[100%_100%] animate-[pop_0.2s_ease-out]"
-                style={{ backgroundImage: NOTES_RING }}
-              />
-            )}
+            {/* Dotted ring, scales in when notes mode turns on */}
+            <span
+              aria-hidden="true"
+              data-notes-ring={notesMode ? 'on' : 'off'}
+              className={`absolute inset-1 rounded-full pointer-events-none bg-center bg-no-repeat bg-size-[100%_100%] [transition:opacity_.2s,transform_.25s_cubic-bezier(.3,1.5,.5,1)] ${
+                notesMode ? 'opacity-100 scale-100' : 'opacity-0 scale-[.85]'
+              }`}
+              style={{ backgroundImage: NOTES_RING }}
+            />
 
             <span>{digit}</span>
 

@@ -65,6 +65,7 @@
   --font-hand: 'Patrick Hand', 'Nunito Variable', system-ui, sans-serif;
 
   /* Animations */
+  --default-transition-timing-function: ease;
   --animate-pop: pop 0.2s ease-out;
   --animate-ring: ring 0.22s cubic-bezier(0.3, 1.5, 0.5, 1);
   --animate-selpulse: selpulse 0.24s ease-out;
@@ -75,8 +76,9 @@
   --animate-modal-out: modalOut 0.24s cubic-bezier(0.5, 0, 0.8, 0.3) both;
   --animate-fade-in: fadeIn 0.2s ease both;
   --animate-fade-out: fadeOut 0.22s ease both;
-  --animate-pane-slide-left: paneSlideLeft 0.25s ease-out;
-  --animate-pane-slide-right: paneSlideRight 0.25s ease-out;
+  --animate-pane-slide-left: paneSlideLeft 0.26s cubic-bezier(0.2, 0.9, 0.3, 1);
+  --animate-pane-slide-right: paneSlideRight 0.26s
+    cubic-bezier(0.2, 0.9, 0.3, 1);
   --animate-fall: fall linear forwards;
   --animate-shimmer: shimmer 1.5s infinite linear;
 
@@ -213,7 +215,7 @@
   @keyframes paneSlideLeft {
     from {
       opacity: 0;
-      transform: translateX(16px);
+      transform: translateX(18px);
     }
     to {
       opacity: 1;
@@ -224,7 +226,7 @@
   @keyframes paneSlideRight {
     from {
       opacity: 0;
-      transform: translateX(-16px);
+      transform: translateX(-18px);
     }
     to {
       opacity: 1;

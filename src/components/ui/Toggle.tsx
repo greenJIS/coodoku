@@ -35,11 +35,11 @@ export function Toggle({
       checked={checked}
       disabled={disabled}
       onChange={handleChange}
-      className={`relative inline-block w-[46px] h-[28px] shrink-0 appearance-none rounded-full cursor-pointer transition-[background-color,border-color] duration-200 outline-none
+      className={`relative inline-block w-[46px] h-[28px] shrink-0 appearance-none rounded-full cursor-pointer [transition:background_.18s,border-color_.18s] outline-none
         border-2 ${
           checked ? 'bg-brand-500 border-brand-700' : 'bg-hairline border-edge'
         }
-        after:content-[''] after:box-border after:absolute after:top-[1px] after:left-[1px] after:w-[20px] after:h-[20px] after:rounded-full after:transition-[transform,border-color,box-shadow,background-color] after:duration-200
+        after:content-[''] after:box-border after:absolute after:top-[1px] after:left-[1px] after:w-[20px] after:h-[20px] after:rounded-full after:[transition:transform_.2s_cubic-bezier(.4,1.4,.5,1),border-color_.18s,box-shadow_.18s]
         ${
           checked
             ? 'after:translate-x-[18px] after:bg-white dark:after:bg-[#fff7e6] after:border-2 after:border-brand-700 after:shadow-[0_2px_0_var(--color-brand-700)]'

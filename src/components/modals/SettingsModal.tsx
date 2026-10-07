@@ -120,8 +120,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const totalSolved = DIFFICULTIES.reduce((n, d) => n + stats[d].solved, 0);
   const paneAnimation =
     direction === 'forward'
-      ? 'animate-[paneSlideLeft_0.25s_ease-out]'
-      : 'animate-[paneSlideRight_0.25s_ease-out]';
+      ? 'animate-[paneSlideLeft_0.26s_cubic-bezier(0.2,0.9,0.3,1)]'
+      : 'animate-[paneSlideRight_0.26s_cubic-bezier(0.2,0.9,0.3,1)]';
 
   return (
     <>

@@ -120,7 +120,7 @@ export const Cell = memo(function Cell({
       {/* Digit value */}
       {value !== 0 && (
         <span
-          className={`leading-none select-none transition-transform duration-100 ${fontSizeClass} ${textClasses} ${
+          className={`leading-none select-none ${fontSizeClass} ${textClasses} ${
             isJustEntered ? 'animate-pop' : ''
           }`}
         >

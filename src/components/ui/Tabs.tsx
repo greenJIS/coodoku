@@ -66,7 +66,7 @@ export function Tabs<T extends string = string>({
       {tabs.length > 0 && (
         <div
           aria-hidden="true"
-          className="absolute top-1 bottom-1 left-1 rounded-full bg-cream-50 dark:bg-slate-200 shadow-[0_2px_0_var(--color-edge)] transition-transform duration-300 ease-[cubic-bezier(0.3,1.35,0.5,1)] pointer-events-none"
+          className="absolute top-1 bottom-1 left-1 rounded-full bg-cream-50 dark:bg-slate-200 shadow-[0_2px_0_var(--color-edge)] transition-transform duration-[340ms] ease-[cubic-bezier(0.3,1.35,0.5,1)] pointer-events-none"
           style={{
             width: pillWidthStyle,
             transform: `translateX(calc(${activeIndex} * (100% + 4px)))`,
@@ -91,7 +91,7 @@ export function Tabs<T extends string = string>({
             aria-label={tab['aria-label']}
             onClick={() => onChange(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
-            className={`relative z-10 flex-1 py-[7px] px-1 rounded-full border-0 bg-transparent text-center text-[13px] font-extrabold cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-2 ${
+            className={`relative z-10 flex-1 py-[7px] px-1 rounded-full border-0 bg-transparent text-center text-[13px] font-extrabold cursor-pointer [transition:background_.15s,color_.15s] focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-2 ${
               isActive ? 'text-ink-900' : 'text-slate-500 hover:text-ink-900'
             }`}
           >
