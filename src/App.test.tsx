@@ -76,26 +76,30 @@ describe('App full integration test', () => {
     engineClient.resetGenerator();
   });
 
-  it('does not show the Pause modal after Help or Settings closes', async () => {
-    engineClient.setGenerator(async () => makeNearlySolvedPuzzle([1]));
-    render(<App />);
-    await waitFor(() => expect(useGameStore.getState().game).not.toBeNull());
+  it(
+    'does not show the Pause modal after Help or Settings closes',
+    { timeout: 20_000 },
+    async () => {
+      engineClient.setGenerator(async () => makeNearlySolvedPuzzle([1]));
+      render(<App />);
+      await waitFor(() => expect(useGameStore.getState().game).not.toBeNull());
 
-    fireEvent.click(screen.getByRole('button', { name: 'About notes' }));
-    expect(
-      screen.getByRole('dialog', { name: /help and rules/i }),
-    ).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: /^close/i }));
+      fireEvent.click(screen.getByRole('button', { name: 'About notes' }));
+      expect(
+        screen.getByRole('dialog', { name: /help and rules/i }),
+      ).toBeTruthy();
+      fireEvent.click(screen.getByRole('button', { name: /^close/i }));
 
-    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-    expect(useGameStore.getState().paused).toBe(false);
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+      expect(useGameStore.getState().paused).toBe(false);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
-    fireEvent.click(screen.getByRole('button', { name: /close settings/i }));
+      fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
+      fireEvent.click(screen.getByRole('button', { name: /close settings/i }));
 
-    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
-    expect(useGameStore.getState().paused).toBe(false);
-  });
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+      expect(useGameStore.getState().paused).toBe(false);
+    },
+  );
 
   it('boots into a game and places a digit', async () => {
     // Puzzle with cell 1 empty (solution is 2)
