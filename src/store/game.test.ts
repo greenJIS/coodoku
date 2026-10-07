@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { Difficulty, GenerateCallOptions, Puzzle } from '../engine';
+import type { Difficulty, GenerateRequest, Puzzle } from '../engine';
 import { createGame } from '../game/cells';
 import { parse } from '../game/save';
 import { GAME_KEY, readKey, writeKey } from '../storage/storage';
-import { engineClient } from './engine';
+import { engineClient, type EngineGenerator } from './engine';
 import { useGameStore } from './game';
 import { useSettingsStore } from './settings';
 import { useStatsStore } from './stats';
@@ -30,7 +30,7 @@ function makeFakePuzzle(difficulty: Difficulty = 'easy'): Puzzle {
 }
 
 describe('game store', () => {
-  let fakeGenerator: (opts: GenerateCallOptions) => Promise<Puzzle>;
+  let fakeGenerator: EngineGenerator;
 
   beforeEach(() => {
     vi.useFakeTimers();
@@ -64,8 +64,8 @@ describe('game store', () => {
       newBest: false,
     });
 
-    fakeGenerator = vi.fn(async (opts: GenerateCallOptions) => {
-      return makeFakePuzzle(opts.difficulty);
+    fakeGenerator = vi.fn(async (request: GenerateRequest) => {
+      return makeFakePuzzle(request.difficulty);
     });
     engineClient.setGenerator(fakeGenerator);
   });
@@ -206,13 +206,16 @@ describe('game store', () => {
   it('aborts prior newGame request when another newGame is called', async () => {
     const signals: AbortSignal[] = [];
 
-    engineClient.setGenerator(async ({ signal, difficulty }) => {
-      signals.push(signal);
+    engineClient.setGenerator(async (request, options) => {
+      const signal = options?.signal;
+      if (signal) {
+        signals.push(signal);
+      }
       await new Promise((resolve, reject) => {
-        signal.addEventListener('abort', () => reject(new Error('Aborted')));
-        setTimeout(() => resolve(makeFakePuzzle(difficulty)), 100);
+        signal?.addEventListener('abort', () => reject(new Error('Aborted')));
+        setTimeout(() => resolve(makeFakePuzzle(request.difficulty)), 100);
       });
-      return makeFakePuzzle(difficulty);
+      return makeFakePuzzle(request.difficulty);
     });
 
     const promise1 = useGameStore.getState().newGame('easy');

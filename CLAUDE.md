@@ -7,9 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Solo sudoku game. Static web app, no backend, no accounts. Pick a difficulty, a puzzle is generated in the browser,
 the game gets a random name, and scores are kept in `localStorage`.
 
-**Status:** the project is scaffolded (Vite, React, Tailwind v4, Vitest, ESLint, Prettier, commitlint + husky) and the
-puzzle engine in `src/engine/` is built and tested. The game UI, store, and storage are not written yet. The sections
-below describe the target. Anything marked _planned_ does not exist yet.
+**Status:** the full playable game UI, stores, persistence, sound synthesis, and animations are implemented
+and tested on branch `feat/ui`. The sections below describe the current architecture and guidelines.
 
 ## Environment
 
@@ -49,11 +48,16 @@ Single-page static app. All state is client-side.
   (Web Worker, cancellable), `generatePuzzle`, `gradePuzzle`, `solve`, `countSolutions`.
 - **Worker**: `generate()` runs generation in a Web Worker and falls back to the main thread where none exists.
   Aborting restarts the worker. Prefetch the next puzzle during play and on the win screen (the store's job).
-- **Store** (`src/store/`, Zustand): board, notes, selection, undo/redo, timer, hearts, hints, pause state.
-- **Storage** (`src/storage/`): versioned `localStorage` — `coodoku:settings:v1`, `coodoku:stats:v1`. Also persist the
-  in-progress game so a refresh does not lose it _(planned)_.
-- **Components** (`src/components/`): Board, Cell, NumberPad, Header, NotesSwitch, modals (Settings, Pause, Help, Win,
-  GameOver).
+- **Rules** (`src/game/`): pure TypeScript game rules (`placeDigit`, `toggleNote`, `erase`, `undo`, `revealHint`,
+  `tick`), precomputed peer bitmasks, queries, and state serialization.
+- **Store** (`src/store/`, Zustand): `game`, `settings`, `stats`, and swappable `engineClient`.
+- **Storage** (`src/storage/`): versioned `localStorage` envelopes (`coodoku:settings:v1`, `coodoku:stats:v1`,
+  `coodoku:game:v1`) with autosave on move, visibility change, and pagehide.
+- **Lib** (`src/lib/`): Web Audio procedural synthesizer, haptics, random names, and time formatting.
+- **Hooks** (`src/hooks/`): `useKeyboard`, `useGameTimer`, `useTheme`, `useReducedMotion`, and `modalStack`.
+- **Components** (`src/components/`): `Board`, `Cell`, `NumberPad`, `Header`, `HeartRow`, `Timer`, `NotesSwitch`,
+  `Toolbar`, `ui/` primitives, and `modals/` (`SettingsModal`, `PauseModal`, `HelpModal`, `WinModal`, `GameOverModal`,
+  `ConfirmDifficultyModal`).
 
 ### Key decisions
 
@@ -136,7 +140,7 @@ The design is inspired by an existing game's board-and-pad layout only. To stay 
 - Do not commit screenshots of the original game. Keep reference images outside the repo.
 - Describe animations in words and write original keyframes and timing.
 - Third-party assets must be open source or CC0/CC-BY (never CC-NC). Record every asset, its source, and license in
-  `ASSETS.md` _(planned)_.
+  `ASSETS.md`.
 
 ## Testing
 

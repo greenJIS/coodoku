@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Puzzle } from '../engine';
 import { createGame } from '../game/cells';
 import { formatTime } from '../lib/time';
 import { useGameStore } from '../store/game';
@@ -8,12 +9,13 @@ import { Header } from './Header';
 import { HeartRow } from './HeartRow';
 import { Timer } from './Timer';
 
-const samplePuzzle = {
-  givens: Array(81).fill(0),
-  solution: Array(81).fill(1),
-  difficulty: 'hard' as const,
-  seed: 'seed-1',
+const samplePuzzle: Puzzle = {
+  puzzle: new Uint8Array(81).fill(0),
+  solution: new Uint8Array(81).fill(1),
+  difficulty: 'hard',
+  seed: 12345,
   exact: true,
+  rating: { hardest: 'nakedSingle', counts: { nakedSingle: 1 } as never },
 };
 
 describe('Header, HeartRow, and Timer', () => {

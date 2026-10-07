@@ -380,10 +380,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
     set({ generating: true, error: null });
 
     try {
-      const puzzle = await engineClient.generate({
-        difficulty: targetDiff,
-        signal: controller.signal,
-      });
+      const puzzle = await engineClient.generate(
+        { difficulty: targetDiff },
+        { signal: controller.signal },
+      );
 
       if (currentAbortController !== controller) {
         return; // aborted by newer request
@@ -439,10 +439,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
     prefetchAbortController = controller;
     prefetchDifficulty = targetDiff;
 
-    const promise = engineClient.generate({
-      difficulty: targetDiff,
-      signal: controller.signal,
-    });
+    const promise = engineClient.generate(
+      { difficulty: targetDiff },
+      { signal: controller.signal },
+    );
     prefetchPromise = promise;
 
     try {

@@ -1,5 +1,5 @@
 import { clearBit, hasNote, peers, toggleBit } from './cells';
-import type { Change, GameState, RuleOptions } from './types';
+import type { Change, GameState, GameStatus, RuleOptions } from './types';
 
 export function placeDigit(
   state: GameState,
@@ -43,7 +43,7 @@ export function placeDigit(
   }
 
   let hearts = state.hearts;
-  let status = state.status;
+  let status: GameStatus = state.status;
   const isCorrect = digit === state.solution[cell];
 
   if (opts.mistakeCheck && !isCorrect) {
@@ -170,7 +170,7 @@ export function revealHint(state: GameState, cell: number): GameState {
   const newNotes = [...state.notes];
   newNotes[cell] = 0;
 
-  let status = state.status;
+  let status: GameStatus = state.status;
   let won = true;
   for (let c = 0; c < 81; c++) {
     if (newValues[c] !== state.solution[c]) {

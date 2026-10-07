@@ -1,13 +1,19 @@
 import { generate } from '../engine';
-import type { GenerateCallOptions, Puzzle } from '../engine';
+import type { GenerateCallOptions, GenerateRequest, Puzzle } from '../engine';
 
-export type EngineGenerator = (options: GenerateCallOptions) => Promise<Puzzle>;
+export type EngineGenerator = (
+  request: GenerateRequest,
+  options?: GenerateCallOptions,
+) => Promise<Puzzle>;
 
 let currentGenerator: EngineGenerator = generate;
 
 export const engineClient = {
-  generate(options: GenerateCallOptions): Promise<Puzzle> {
-    return currentGenerator(options);
+  generate(
+    request: GenerateRequest,
+    options?: GenerateCallOptions,
+  ): Promise<Puzzle> {
+    return currentGenerator(request, options);
   },
   setGenerator(generator: EngineGenerator): void {
     currentGenerator = generator;
