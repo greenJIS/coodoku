@@ -144,6 +144,15 @@ describe('Board and Cell components', () => {
     expect(cell14After?.querySelector('.border-match')).toBeNull();
   });
 
+  it('shows only the green circle, not the leaf outline, on the just-entered cell', () => {
+    useGameStore.setState({ selected: 0, lastEntered: 0 });
+    render(<Board />);
+
+    const cell0 = screen.getAllByRole('gridcell')[0];
+    expect(cell0.querySelector('.border-ok')).toBeInTheDocument();
+    expect(cell0.querySelector('.border-match')).toBeNull();
+  });
+
   it('renders 3x3 notes subgrid on empty cells with notes', () => {
     let game = createGame(samplePuzzle, 'Calm Otter');
     game = toggleNote(game, 2, 4);

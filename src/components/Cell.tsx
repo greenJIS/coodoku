@@ -139,8 +139,8 @@ export const Cell = memo(function Cell({
         </div>
       )}
 
-      {/* Same-digit magenta leaf outline: large radius top-left and bottom-right, small radius top-right and bottom-left */}
-      {isSameDigit && value !== 0 && (
+      {/* Same-digit magenta leaf outline (the green circle replaces it on the just-entered cell): large radius top-left and bottom-right, small radius top-right and bottom-left */}
+      {isSameDigit && !isJustEntered && value !== 0 && (
         <span
           aria-hidden="true"
           className="absolute inset-[3px] border-[3px] border-match rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-ring"
