@@ -6,14 +6,7 @@ import { useGameStore } from '../../store/game';
 import { useSettingsStore } from '../../store/settings';
 import { useStatsStore } from '../../store/stats';
 import { CloseIcon, DiceIcon } from '../icons';
-import {
-  IconButton,
-  Segmented,
-  Slider,
-  StickerButton,
-  Tabs,
-  Toggle,
-} from '../ui';
+import { IconButton, Segmented, Slider, Tabs, Toggle } from '../ui';
 import { ConfirmDifficultyModal } from './ConfirmDifficultyModal';
 import { Modal } from './Modal';
 
@@ -29,12 +22,14 @@ const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard', 'expert'];
 export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const [activeTab, setActiveTab] = useState<SettingsTab>('game');
   const [resetArmed, setResetArmed] = useState(false);
+  const [direction, setDirection] = useState<'forward' | 'back'>('forward');
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const gearBtnRef = useRef<HTMLElement | null>(null);
 
   // Store bindings
   const settingsName = useSettingsStore((s) => s.name);
-  const setName = useSettingsStore((s) => s.setName);
+  const renameGame = useGameStore((s) => s.renameGame);
+  const gameName = useGameStore((s) => s.game?.name);
   const currentDiff = useSettingsStore((s) => s.difficulty);
   const mistakeCheck = useSettingsStore((s) => s.mistakeCheck);
   const setMistakeCheck = useSettingsStore((s) => s.setMistakeCheck);
@@ -77,10 +72,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   useEffect(() => {
     if (open) {
       gearBtnRef.current = document.getElementById('settingsBtn');
-      setNameInput(settingsName);
+      setNameInput(gameName ?? settingsName);
       setResetArmed(false);
     }
-  }, [open, settingsName]);
+  }, [open, gameName, settingsName]);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNameInput(e.target.value.slice(0, 24));
@@ -90,16 +85,16 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
     const trimmed = nameInput.trim();
     if (!trimmed) {
       // Restore previous name
-      setNameInput(settingsName);
+      setNameInput(gameName ?? settingsName);
     } else {
-      setName(trimmed);
+      renameGame(trimmed);
       setNameInput(trimmed);
     }
   };
 
   const handleRandomName = () => {
     const newName = randomName();
-    setName(newName);
+    renameGame(newName);
     setNameInput(newName);
   };
 
@@ -122,6 +117,11 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   };
 
   const activeDiff = pendingDifficulty ?? currentDiff;
+  const totalSolved = DIFFICULTIES.reduce((n, d) => n + stats[d].solved, 0);
+  const paneAnimation =
+    direction === 'forward'
+      ? 'animate-[paneSlideLeft_0.25s_ease-out]'
+      : 'animate-[paneSlideRight_0.25s_ease-out]';
 
   return (
     <>
@@ -130,10 +130,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         onClose={onClose}
         originRef={gearBtnRef}
         label="Settings"
-        className="relative flex flex-col max-h-[92vh] text-left p-6 sm:p-7"
+        className="relative flex flex-col max-h-[92vh] max-w-[420px] text-left px-6! pt-[22px]! pb-[18px]!"
       >
         {/* Close button */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-3 right-3">
           <IconButton
             icon={<CloseIcon size={16} />}
             size="sm"
@@ -143,7 +143,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           />
         </div>
 
-        <h2 className="text-2xl font-extrabold text-ink-900 mb-3 text-center">
+        <h2 className="text-xl font-bold text-ink-900 mb-3 text-center">
           Settings
         </h2>
 
@@ -155,23 +155,31 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             { id: 'feel', label: 'Look & feel' },
           ]}
           activeTab={activeTab}
-          onChange={(id) => setActiveTab(id as SettingsTab)}
-          className="mb-4"
+          onChange={(id) => {
+            const order: SettingsTab[] = ['game', 'play', 'feel'];
+            setDirection(
+              order.indexOf(id as SettingsTab) > order.indexOf(activeTab)
+                ? 'forward'
+                : 'back',
+            );
+            setActiveTab(id as SettingsTab);
+          }}
+          className="mb-3"
         />
 
         {/* Scrolling body */}
-        <div className="flex-1 overflow-y-auto pr-1 -mr-1 space-y-4 min-h-[300px]">
+        <div className="h-[336px] max-h-[calc(92vh-200px)] overflow-y-auto -mr-2.5 pr-2.5">
           {/* TAB 1: Game */}
           {activeTab === 'game' && (
-            <div className="space-y-4 animate-[paneSlideRight_0.2s_ease-out]">
+            <div className={paneAnimation}>
               <div>
                 <label
                   htmlFor="settingsNameInput"
-                  className="block text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-1.5"
+                  className="block text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-0.5 mb-2"
                 >
                   Game name
                 </label>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2">
                   <input
                     id="settingsNameInput"
                     type="text"
@@ -181,7 +189,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                     value={nameInput}
                     onChange={handleNameChange}
                     onBlur={handleNameBlur}
-                    className="flex-1 min-w-0 px-3.5 py-2 rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-extrabold text-base outline-none focus:border-brand-500 transition-colors"
+                    className="flex-1 min-w-0 px-3 py-2 rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-extrabold text-base outline-none focus:border-brand-500 transition-colors"
                   />
                   <button
                     type="button"
@@ -196,19 +204,22 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <div>
-                <div className="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-1.5">
+                <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
                   Difficulty
                 </div>
-                <div id="difficultySelector" className="flex flex-wrap gap-2">
+                <div
+                  id="difficultySelector"
+                  className="flex flex-wrap gap-1.5 mb-1"
+                >
                   {DIFFICULTIES.map((d) => (
                     <button
                       key={d}
                       type="button"
                       onClick={() => requestDifficulty(d)}
-                      className={`px-3 py-1.5 rounded-full border text-xs font-extrabold cursor-pointer transition-colors ${
+                      className={`px-3 py-1 rounded-full border text-xs font-bold cursor-pointer transition-colors ${
                         activeDiff === d
                           ? 'bg-brand-500 border-brand-500 text-brand-900'
-                          : 'border-slate-300 dark:border-edge bg-cream-50 dark:bg-cream-100 text-slate-600 dark:text-slate-300 hover:border-brand-500'
+                          : 'border-slate-300 bg-white/60 dark:bg-cream-200 text-slate-500 hover:border-brand-500'
                       }`}
                     >
                       {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -218,42 +229,46 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <div>
-                <div className="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-2">
+                <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
                   Stats
                 </div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 bg-cream-100/60 dark:bg-cream-200/20 p-3 rounded-xl border border-edge/60">
+                <div className="grid grid-cols-2 gap-x-[18px] gap-y-1.5 text-[13px] font-semibold text-slate-500 mb-2.5">
+                  <div className="flex justify-between">
+                    <span>Solved</span>
+                    <b className="font-extrabold text-ink-900">{totalSolved}</b>
+                  </div>
+                  <div />
                   {DIFFICULTIES.map((d) => (
-                    <div key={d} className="flex justify-between items-center">
-                      <span className="capitalize">{d}:</span>
-                      <span className="font-extrabold text-ink-900">
-                        {stats[d].solved} (
+                    <div key={d} className="flex justify-between">
+                      <span>Best {d.charAt(0).toUpperCase() + d.slice(1)}</span>
+                      <b className="font-extrabold text-ink-900">
                         {stats[d].bestMs !== null
-                          ? formatTime(stats[d].bestMs!)
-                          : '--:--'}
-                        )
-                      </span>
+                          ? formatTime(stats[d].bestMs)
+                          : '\u2013'}
+                      </b>
                     </div>
                   ))}
                 </div>
               </div>
-
-              <StickerButton
-                variant="ghost"
-                size="sm"
-                armed={resetArmed}
+              <button
+                type="button"
                 onClick={handleResetStats}
-                className="w-full"
+                className={`w-full mt-1 px-2 py-2 rounded-full border-2 bg-transparent font-bold cursor-pointer transition-colors ${
+                  resetArmed
+                    ? 'border-error text-error'
+                    : 'border-edge text-slate-500 hover:border-brand-600'
+                }`}
               >
-                {resetArmed ? 'Tap again to reset stats' : 'Reset stats'}
-              </StickerButton>
+                {resetArmed ? 'Tap again to confirm' : 'Reset stats'}
+              </button>
             </div>
           )}
 
           {/* TAB 2: Play */}
           {activeTab === 'play' && (
-            <div className="space-y-3.5 divide-y divide-slate-200 dark:divide-slate-700/60 animate-[paneSlideRight_0.2s_ease-out]">
-              <div className="flex items-center justify-between pt-1">
-                <span className="font-bold text-sm text-ink-900">
+            <div className={paneAnimation}>
+              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Mistake check
                 </span>
                 <Segmented
@@ -266,8 +281,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Auto-remove notes
                 </span>
                 <Toggle
@@ -277,8 +292,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Highlight row, column, box
                 </span>
                 <Toggle
@@ -288,8 +303,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Highlight same digits
                 </span>
                 <Toggle
@@ -299,8 +314,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Show remaining count
                 </span>
                 <Toggle
@@ -310,8 +325,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Show timer
                 </span>
                 <Toggle
@@ -325,9 +340,11 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
           {/* TAB 3: Look & feel */}
           {activeTab === 'feel' && (
-            <div className="space-y-3.5 divide-y divide-slate-200 dark:divide-slate-700/60 animate-[paneSlideRight_0.2s_ease-out]">
-              <label className="flex items-center justify-between pt-1 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">Sound</span>
+            <div className={paneAnimation}>
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
+                  Sound
+                </span>
                 <Toggle
                   checked={sound}
                   onChange={setSound}
@@ -335,8 +352,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <div className="flex items-center justify-between pt-3">
-                <span className="font-bold text-sm text-ink-900">Volume</span>
+              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
+                <span className="font-bold text-sm text-ink-900 pr-3">
+                  Volume
+                </span>
                 <Slider
                   min={0}
                   max={100}
@@ -346,8 +365,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Vibration on mistakes
                 </span>
                 <Toggle
@@ -357,8 +376,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Reduce motion
                 </span>
                 <Toggle
@@ -368,8 +387,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <div className="flex items-center justify-between pt-3">
-                <span className="font-bold text-sm text-ink-900">Theme</span>
+              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
+                <span className="font-bold text-sm text-ink-900 pr-3">
+                  Theme
+                </span>
                 <Segmented
                   options={[
                     { value: 'light', label: 'Light' },
@@ -381,8 +402,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-3">
-                <span className="font-bold text-sm text-ink-900">
+              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Digit size
                 </span>
                 <Segmented
@@ -396,8 +417,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between pt-3 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900">
+              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
+                <span className="font-bold text-sm text-ink-900 pr-3">
                   Left-handed layout
                 </span>
                 <Toggle
@@ -411,15 +432,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="pt-4 border-t border-edge/60 mt-4 flex justify-center">
-          <StickerButton
-            variant="primary"
-            size="lg"
+        <div className="mt-3 shrink-0">
+          <button
+            type="button"
             onClick={handleNewGameClick}
-            className="w-full"
+            className="w-full mt-1.5 px-[22px] py-2.5 rounded-full border-0 bg-brand-500 text-brand-900 font-bold cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2"
           >
             New game
-          </StickerButton>
+          </button>
         </div>
       </Modal>
 

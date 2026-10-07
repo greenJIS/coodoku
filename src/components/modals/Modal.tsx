@@ -162,7 +162,7 @@ export function Modal({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-900/50 backdrop-blur-[4px] animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1c1b1a]/40 animate-fade-in"
     >
       <div
         ref={dialogRef}
@@ -171,7 +171,7 @@ export function Modal({
         aria-label={label}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
-        className={`relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-[24px] border-2 border-edge bg-cream-50 dark:bg-cream-100 p-6 text-ink-900 shadow-[0_12px_32px_rgba(28,27,26,0.35)] outline-none animate-[modalIn_0.3s_cubic-bezier(0.2,0.9,0.3,1.08)_both] ${className}`}
+        className={`relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-[22px] border-2 border-edge bg-white dark:bg-cream-50 p-6 text-ink-900 shadow-[0_6px_0_var(--color-edge)] outline-none animate-[modalIn_0.3s_cubic-bezier(0.2,0.9,0.3,1.08)_both] ${className}`}
       >
         {children}
       </div>

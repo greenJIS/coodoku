@@ -19,7 +19,7 @@ export function HeartRow({
       role="group"
       aria-label={`${hearts} of ${maxHearts} hearts remaining`}
       data-testid="heart-row"
-      className={`flex items-center gap-1.5 ${className}`}
+      className={`flex items-center gap-[5px] ${className}`}
     >
       {Array.from({ length: maxHearts }, (_, i) => {
         const isAlive = i < hearts;
@@ -31,12 +31,12 @@ export function HeartRow({
             }`}
           >
             <HeartIcon
-              size={26}
+              size={28}
               filled={isAlive}
               className={`transition-colors duration-200 ${
                 isAlive
                   ? 'text-accent-500 fill-accent-500 stroke-accent-700'
-                  : 'text-slate-300 dark:text-slate-600 fill-slate-300 dark:fill-slate-600 stroke-slate-400 dark:stroke-slate-500'
+                  : 'text-slate-200 fill-slate-200 stroke-slate-400 dark:stroke-[#6b5a3c]'
               }`}
             />
           </div>

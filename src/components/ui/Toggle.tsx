@@ -37,9 +37,7 @@ export function Toggle({
       onChange={handleChange}
       className={`relative inline-block w-[46px] h-[28px] shrink-0 appearance-none rounded-full cursor-pointer transition-[background-color,border-color] duration-200 outline-none
         border-2 ${
-          checked
-            ? 'bg-brand-500 border-brand-700'
-            : 'bg-slate-300 dark:bg-slate-300 border-edge'
+          checked ? 'bg-brand-500 border-brand-700' : 'bg-hairline border-edge'
         }
         after:content-[''] after:box-border after:absolute after:top-[1px] after:left-[1px] after:w-[20px] after:h-[20px] after:rounded-full after:transition-[transform,border-color,box-shadow,background-color] after:duration-200
         ${

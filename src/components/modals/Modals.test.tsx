@@ -177,7 +177,7 @@ describe('Game Modals', () => {
       // First tap arms button
       fireEvent.click(resetBtn);
       expect(resetSpy).not.toHaveBeenCalled();
-      expect(resetBtn).toHaveTextContent('Tap again to reset stats');
+      expect(resetBtn).toHaveTextContent('Tap again to confirm');
 
       // Second tap resets stats
       fireEvent.click(resetBtn);

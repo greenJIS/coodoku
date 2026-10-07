@@ -50,7 +50,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
           type="button"
           aria-label="About notes"
           onClick={onHelp}
-          className="absolute -top-1 -right-2 z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white font-extrabold text-[17px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform"
+          className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white font-extrabold text-[17px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform"
         >
           ?
         </button>

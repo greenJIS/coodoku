@@ -39,7 +39,7 @@ export function Header({
 
   return (
     <header
-      className={`flex flex-col gap-2 w-full max-w-[1040px] select-none ${className}`}
+      className={`flex flex-col gap-2 w-full max-w-[1040px] mb-2.5 select-none ${className}`}
     >
       {/* Row 1: Inert Home button, Otter + Name, Settings gear */}
       <div className="flex items-center justify-between w-full">
@@ -48,12 +48,14 @@ export function Header({
           label="Home"
           aria-disabled="true"
           onClick={(e) => e.preventDefault()}
-          className="opacity-75 cursor-default hover:border-edge hover:shadow-[0_4px_0_var(--color-edge)] active:translate-y-0"
+          className="cursor-default hover:border-edge hover:shadow-[0_4px_0_var(--color-edge)] active:translate-y-0"
         />
 
-        <div className="flex items-center gap-2.5 font-extrabold text-xl sm:text-2xl text-ink-900 tracking-tight">
+        <div className="flex items-center gap-2.5 font-extrabold text-2xl text-ink-900 tracking-[-0.01em]">
           <Otter size={32} />
-          <span>{displayName}</span>
+          <span className="underline decoration-wavy decoration-brand-500 decoration-2 underline-offset-[7px]">
+            {displayName}
+          </span>
         </div>
 
         <IconButton
@@ -66,22 +68,20 @@ export function Header({
       </div>
 
       {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 items-center justify-items-center sm:justify-items-stretch gap-2.5 w-full text-slate-500 font-bold text-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-3 items-center justify-items-center sm:justify-items-stretch gap-2.5 w-full text-slate-500 font-semibold text-sm">
         {/* Difficulty indicator (left) */}
         <div className="sm:justify-self-start flex items-center gap-1.5 order-2 sm:order-1">
           <span>Difficulty</span>
-          <span className="font-extrabold text-ink-900">{capitalizedDiff}</span>
+          <span className="sr-only">{capitalizedDiff}</span>
           <span
             aria-hidden="true"
-            className="inline-flex gap-1 ml-1 align-middle"
+            className="inline-flex gap-1 ml-1.5 align-middle"
           >
             {[1, 2, 3, 4].map((dot) => (
               <i
                 key={dot}
-                className={`w-2 h-2 rounded-full transition-colors duration-150 ${
-                  dot <= activeDots
-                    ? 'bg-brand-500'
-                    : 'bg-slate-300 dark:bg-slate-600'
+                className={`w-[9px] h-[9px] rounded-full transition-colors duration-150 ${
+                  dot <= activeDots ? 'bg-brand-500' : 'bg-slate-300'
                 }`}
               />
             ))}

@@ -55,7 +55,7 @@ export function App() {
     game?.status === 'playing';
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-between px-3 sm:px-5 py-3 sm:py-4 pb-8 sm:pb-12 bg-paper text-ink-900 transition-colors duration-200">
+    <div className="min-h-screen flex flex-col items-center px-[18px] pt-[14px] pb-10 bg-paper text-ink-900 transition-colors duration-200">
       {/* Top Header */}
       <Header
         onOpenSettings={() => setSettingsOpen(true)}
@@ -64,21 +64,21 @@ export function App() {
 
       {/* Main Playable Area: Board + Sidebar Controls */}
       <main
-        className={`w-full max-w-[1040px] flex gap-6 lg:gap-11 items-center justify-center my-auto transition-all ${
+        className={`w-full max-w-[1040px] flex gap-[22px] min-[861px]:gap-11 items-center justify-center ${
           leftHanded
             ? 'flex-col min-[861px]:flex-row-reverse'
             : 'flex-col min-[861px]:flex-row'
         }`}
       >
         <div
-          className={`flex justify-center w-full max-w-[600px] transition-[filter] duration-200 ${
+          className={`flex justify-center transition-[filter] duration-200 ${
             isPauseOpen ? 'blur-sm select-none pointer-events-none' : ''
           }`}
         >
           <Board />
         </div>
 
-        <aside className="w-[min(88vw,320px)] sm:w-[320px] flex flex-col gap-4 sm:gap-5 items-center">
+        <aside className="w-[min(88vw,380px)] min-[861px]:w-[300px] flex flex-col gap-[18px] items-center">
           <NumberPad />
           <NotesSwitch onHelp={() => setHelpOpen(true)} />
           <Toolbar onAboutHint={() => setHelpOpen(true)} />

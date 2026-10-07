@@ -56,11 +56,11 @@ export const Cell = memo(function Cell({
   }
 
   // Base background & highlight
-  let bgClasses = 'bg-cream-50 dark:bg-cream-100';
+  let bgClasses = 'bg-cream-50';
   if (isSelected) {
-    bgClasses = 'bg-brand-300 dark:bg-brand-800';
+    bgClasses = 'bg-sel';
   } else if (isPeer) {
-    bgClasses = 'bg-brand-100 dark:bg-cream-200';
+    bgClasses = 'bg-peer';
   }
 
   // Text color & font styling
@@ -68,9 +68,9 @@ export const Cell = memo(function Cell({
   if (isWrong) {
     textClasses += ' text-error';
   } else if (isGiven) {
-    textClasses += ' text-ink-900 font-bold';
+    textClasses += ' text-ink-900';
   } else if (value !== 0) {
-    textClasses += ' text-brand-700 dark:text-brand-400 font-bold';
+    textClasses += ' text-brand-700';
   }
 
   const fontSizeClass =
@@ -94,7 +94,7 @@ export const Cell = memo(function Cell({
       }}
       style={{ gridRow, gridColumn: gridCol }}
       className={`relative grid place-items-center cursor-pointer select-none transition-colors duration-150 outline-none
-        shadow-[inset_0_0_0_1px_var(--color-edge)] dark:shadow-[inset_0_0_0_1px_var(--color-edge)]
+        shadow-[inset_0_0_0_1px_var(--color-hairline)]
         focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px]
         ${bgClasses}`}
     >
@@ -111,7 +111,7 @@ export const Cell = memo(function Cell({
 
       {/* 3x3 Notes subgrid */}
       {value === 0 && notes !== 0 && (
-        <div className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 pointer-events-none select-none text-[calc(min(86vw,66vh,600px)/46)] font-bold text-slate-500 dark:text-slate-400 leading-none">
+        <div className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 pointer-events-none select-none text-[calc(min(86vw,66vh,600px)/46)] font-semibold text-slate-500 leading-none">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
             <span key={d} className="grid place-items-center">
               {hasNote(notes, d) ? d : ''}

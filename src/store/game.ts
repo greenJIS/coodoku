@@ -41,6 +41,7 @@ export interface GameStore {
   hint: () => void;
   tick: (dtMs: number) => void;
   setPaused: (paused: boolean) => void;
+  renameGame: (name: string) => void;
 
   newGame: (difficulty?: Difficulty) => Promise<void>;
   prefetch: () => Promise<void>;
@@ -126,6 +127,15 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   setPaused: (paused) => {
     set({ paused });
+  },
+
+  renameGame: (name) => {
+    const { game } = get();
+    useSettingsStore.getState().setName(name);
+    if (!game) return;
+    const nextGame = { ...game, name };
+    set({ game: nextGame });
+    scheduleAutosave(nextGame);
   },
 
   enter: (digit) => {

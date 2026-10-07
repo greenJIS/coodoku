@@ -59,7 +59,7 @@ describe('NumberPad, NotesSwitch, and Toolbar controls', () => {
       useGameStore.setState({ notesMode: true });
       const { container } = render(<NumberPad />);
 
-      const dashedRing = container.querySelector('.border-dashed');
+      const dashedRing = container.querySelector('[data-notes-ring]');
       expect(dashedRing).toBeInTheDocument();
     });
 

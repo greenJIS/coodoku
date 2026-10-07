@@ -120,7 +120,7 @@ Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
 | Hearts, same-digit outline                   | accent-500 `#ec176c`                      |
 | Errors                                       | rose-600 `#e11d48`                        |
 | Just-entered circle                          | `#10b981`                                 |
-| Ink / muted                                  | ink-900 `#1c1b1a` / slate-500 `#8a8781`   |
+| Ink / muted                                  | ink-900 `#2e2418` / slate-500 `#8b7a62`   |
 | Page background                              | warm cream `#fbf3e4` with faint grain     |
 
 - **Style:** "sticker" controls — cream face, 2px warm-tan border, solid offset shadow with no blur, press-down on

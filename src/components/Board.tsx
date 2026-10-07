@@ -88,12 +88,14 @@ export function Board({ className = '' }: BoardProps) {
       aria-label="Sudoku board"
       data-testid="sudoku-board"
       style={{
+        width: 'min(86vw, 66vh, 600px)',
+        height: 'min(86vw, 66vh, 600px)',
         gridTemplateRows:
           'repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr))',
         gridTemplateColumns:
           'repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr))',
       }}
-      className={`relative grid w-full max-w-[600px] aspect-square max-h-[66vh] bg-cream-50 dark:bg-cream-100 border-[3px] border-board-line rounded-[14px] overflow-hidden shadow-[0_6px_0_var(--color-edge)] ${className}`}
+      className={`relative grid shrink-0 bg-cream-50 border-[3px] border-board-line rounded-[14px] overflow-hidden shadow-[0_6px_0_var(--color-edge)] ${className}`}
     >
       {/* 81 Sudoku cells */}
       {Array.from({ length: 81 }, (_, i) => (

@@ -60,13 +60,13 @@ export function Tabs<T extends string = string>({
     <div
       role="tablist"
       aria-label={ariaLabel}
-      className={`relative flex gap-1 p-1 bg-slate-300 dark:bg-slate-300 rounded-full shrink-0 select-none ${className}`}
+      className={`relative flex gap-1 p-1 bg-hairline rounded-full shrink-0 select-none ${className}`}
     >
       {/* Sliding pill indicator */}
       {tabs.length > 0 && (
         <div
           aria-hidden="true"
-          className="absolute top-1 bottom-1 left-1 rounded-full bg-cream-50 dark:bg-cream-100 border border-edge/40 shadow-[0_2px_0_var(--color-edge)] transition-transform duration-300 ease-[cubic-bezier(0.3,1.35,0.5,1)] pointer-events-none"
+          className="absolute top-1 bottom-1 left-1 rounded-full bg-cream-50 dark:bg-slate-200 shadow-[0_2px_0_var(--color-edge)] transition-transform duration-300 ease-[cubic-bezier(0.3,1.35,0.5,1)] pointer-events-none"
           style={{
             width: pillWidthStyle,
             transform: `translateX(calc(${activeIndex} * (100% + 4px)))`,
@@ -91,7 +91,7 @@ export function Tabs<T extends string = string>({
             aria-label={tab['aria-label']}
             onClick={() => onChange(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
-            className={`relative z-10 flex-1 py-1.5 px-2 rounded-full border-0 bg-transparent text-center text-[13px] font-extrabold cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-2 ${
+            className={`relative z-10 flex-1 py-[7px] px-1 rounded-full border-0 bg-transparent text-center text-[13px] font-extrabold cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-2 ${
               isActive ? 'text-ink-900' : 'text-slate-500 hover:text-ink-900'
             }`}
           >

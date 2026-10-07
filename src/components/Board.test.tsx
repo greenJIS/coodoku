@@ -116,13 +116,13 @@ describe('Board and Cell components', () => {
 
     const cells = screen.getAllByRole('gridcell');
     // Cell 1 is peer of cell 0 (same row)
-    expect(cells[1]).toHaveClass('bg-brand-100');
+    expect(cells[1]).toHaveClass('bg-peer');
 
     // Turn off highlightPeers setting
     useSettingsStore.setState({ highlightPeers: false });
     rerender(<Board />);
 
-    expect(cells[1]).not.toHaveClass('bg-brand-100');
+    expect(cells[1]).not.toHaveClass('bg-peer');
   });
 
   it('highlights same-digit cells when setting is enabled and hides them when disabled', () => {
