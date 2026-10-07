@@ -20,7 +20,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
     <div
       role="group"
       aria-label="Number pad"
-      className={`grid grid-cols-3 gap-x-3 gap-y-2.5 min-[861px]:gap-x-[18px] min-[861px]:gap-y-3.5 w-full ${className}`}
+      className={`grid grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5 min-[861px]:gap-x-[18px] min-[861px]:gap-y-3.5 w-full ${className}`}
     >
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => {
         const count = game ? remainingCount(game, digit) : 9;
@@ -39,7 +39,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             }
             disabled={isDisabled}
             onClick={() => enter(digit)}
-            className={`relative aspect-square rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[34px] leading-[normal] select-none narrow:w-16 narrow:justify-self-center cursor-pointer
+            className={`relative aspect-square px-1.5 py-px rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[34px] leading-[normal] select-none narrow:w-16 narrow:justify-self-center cursor-pointer
               shadow-[0_4px_0_var(--color-edge)] transition-[transform,box-shadow] duration-[90ms]
               hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
               active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]
