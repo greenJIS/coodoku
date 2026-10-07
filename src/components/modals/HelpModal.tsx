@@ -25,11 +25,11 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
         />
       </div>
 
-      <h2 className="text-xl sm:text-2xl font-extrabold text-ink-900 mb-4 text-center">
+      <h2 className="text-[20px] sm:text-[24px] font-extrabold text-ink-900 mb-4 text-center">
         How to Play
       </h2>
 
-      <div className="space-y-4 text-sm font-bold text-slate-600 dark:text-slate-300">
+      <div className="space-y-4 text-[14px] font-bold text-slate-600 dark:text-slate-300">
         <section>
           <h3 className="font-extrabold text-ink-900 mb-1">Sudoku Rules</h3>
           <p className="leading-relaxed">
@@ -52,7 +52,7 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
           <h3 className="font-extrabold text-ink-900 mb-1">
             Keyboard Shortcuts
           </h3>
-          <div className="grid grid-cols-2 gap-1.5 text-xs">
+          <div className="grid grid-cols-2 gap-1.5 text-[12px]">
             <span className="font-extrabold text-ink-900">1 – 9</span>
             <span>Place digit / Note</span>
             <span className="font-extrabold text-ink-900">Arrow keys</span>

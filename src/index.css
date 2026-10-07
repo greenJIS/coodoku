@@ -52,6 +52,7 @@
   --color-peer: #fff1d6;
   --color-sel: #ffd98a;
   --color-board-line: #5a4632;
+  --color-user: #b45309;
   --color-ok: #10b981;
   --color-error: #e11d48;
 
@@ -195,16 +196,20 @@
   --color-hairline: #4b3f2c;
   --color-peer: #3b2f1b;
   --color-sel: #7a5416;
-  --color-board-line: #5a4632;
+  --color-board-line: #d8c39a;
+  --color-user: #f7b84e;
   --color-brand-100: #3b2f1b;
   --color-brand-300: #6b4b12;
-  --color-brand-700: #f7b84e;
   --color-error: #f43f5e;
   color-scheme: dark;
 }
 
 /* Page background: warm cream with faint grain */
 @layer base {
+  html {
+    line-height: normal;
+  }
+
   body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }

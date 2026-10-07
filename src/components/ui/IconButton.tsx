@@ -37,14 +37,14 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     }[size];
 
     let variantClasses =
-      'bg-cream-50 dark:bg-cream-100 text-brand-700 dark:text-brand-400 border-2 border-edge hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]';
+      'bg-cream-50 dark:bg-cream-100 text-[#b45309] border-2 border-edge hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]';
 
     if (variant === 'accent') {
       variantClasses =
         'bg-brand-500 text-brand-900 border-2 border-brand-700 shadow-[0_4px_0_var(--color-brand-700)] hover:border-brand-800 hover:shadow-[0_4px_0_var(--color-brand-800)] active:shadow-[0_1px_0_var(--color-brand-700)]';
     } else if (variant === 'close') {
       variantClasses =
-        'bg-cream-50 dark:bg-cream-100 text-brand-700 border-2 border-edge hover:border-brand-600 hover:text-brand-600 shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]';
+        'bg-cream-50 dark:bg-[#3a2f1e] text-[#b45309] border-2 border-edge hover:border-brand-600 hover:text-brand-600 shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]';
     }
 
     const tooltipText = tooltip ?? label;
@@ -71,7 +71,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         {showTooltip && (
           <span
             role="tooltip"
-            className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 text-xs font-bold rounded-md bg-ink-900 text-cream-50 whitespace-nowrap shadow-md pointer-events-none z-50 animate-pop"
+            className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[12px] font-bold rounded-md bg-ink-900 text-cream-50 whitespace-nowrap shadow-md pointer-events-none z-50 animate-pop"
           >
             {tooltipText}
           </span>

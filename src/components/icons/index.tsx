@@ -2,7 +2,7 @@ import type { IconProps } from './types';
 
 export function HomeIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -26,7 +26,7 @@ export function HomeIcon({
 
 export function GearIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -72,7 +72,7 @@ export function PauseIcon({
         y="5"
         width="4"
         height="14"
-        rx="1.5"
+        rx="1.4"
         fill="currentColor"
         stroke="none"
       />
@@ -81,7 +81,7 @@ export function PauseIcon({
         y="5"
         width="4"
         height="14"
-        rx="1.5"
+        rx="1.4"
         fill="currentColor"
         stroke="none"
       />
@@ -113,7 +113,7 @@ export function PlayIcon({
 
 export function UndoIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -138,7 +138,7 @@ export function UndoIcon({
 
 export function EraseIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -162,7 +162,7 @@ export function EraseIcon({
 
 export function HintIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -190,7 +190,7 @@ export interface HeartIconProps extends IconProps {
 
 export function HeartIcon({
   size = 22,
-  strokeWidth = 2.2,
+  strokeWidth = 2,
   filled = true,
   className,
   'aria-hidden': ariaHidden = true,
@@ -208,14 +208,14 @@ export function HeartIcon({
       aria-hidden={ariaHidden}
       className={className}
     >
-      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      <path d="M12 21s-7-4.6-9.3-9.2C1.2 8.6 3 5 6.4 5c2 0 3.4 1.1 5.6 3.2C14.2 6.1 15.6 5 17.6 5 21 5 22.8 8.6 21.3 11.8 19 16.4 12 21 12 21z" />
     </svg>
   );
 }
 
 export function HelpIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -240,8 +240,8 @@ export function HelpIcon({
 }
 
 export function CloseIcon({
-  size = 20,
-  strokeWidth = 2.6,
+  size = 16,
+  strokeWidth = 3,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -258,14 +258,14 @@ export function CloseIcon({
       aria-hidden={ariaHidden}
       className={className}
     >
-      <path d="M18 6L6 18M6 6l12 12" />
+      <path d="M6 6l12 12M18 6L6 18" />
     </svg>
   );
 }
 
 export function DiceIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {
@@ -283,17 +283,17 @@ export function DiceIcon({
       className={className}
     >
       <rect x="4" y="4" width="16" height="16" rx="4" />
-      <circle cx="9" cy="9" r="1" fill="currentColor" stroke="none" />
-      <circle cx="15" cy="9" r="1" fill="currentColor" stroke="none" />
-      <circle cx="9" cy="15" r="1" fill="currentColor" stroke="none" />
-      <circle cx="15" cy="15" r="1" fill="currentColor" stroke="none" />
+      <circle cx="9" cy="9" r="1" fill="currentColor" />
+      <circle cx="15" cy="9" r="1" fill="currentColor" />
+      <circle cx="9" cy="15" r="1" fill="currentColor" />
+      <circle cx="15" cy="15" r="1" fill="currentColor" />
     </svg>
   );
 }
 
 export function PencilIcon({
   size = 22,
-  strokeWidth = 2.4,
+  strokeWidth = 2,
   className,
   'aria-hidden': ariaHidden = true,
 }: IconProps) {

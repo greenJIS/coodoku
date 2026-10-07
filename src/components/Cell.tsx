@@ -70,7 +70,7 @@ export const Cell = memo(function Cell({
   } else if (isGiven) {
     textClasses += ' text-ink-900';
   } else if (value !== 0) {
-    textClasses += ' text-brand-700';
+    textClasses += ' text-user';
   }
 
   const fontSizeClass =

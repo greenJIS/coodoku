@@ -48,7 +48,7 @@ export function Segmented<T extends string | number>({
                 onChange(opt.value);
               }
             }}
-            className={`px-3 py-1 text-[13px] font-bold select-none cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px] ${
+            className={`px-3 py-[5px] text-[13px] font-bold select-none cursor-pointer transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px] ${
               isSelected
                 ? 'bg-brand-500 text-brand-900 shadow-none'
                 : 'text-slate-500 hover:text-ink-900 bg-transparent'

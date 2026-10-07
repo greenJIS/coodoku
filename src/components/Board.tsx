@@ -95,7 +95,7 @@ export function Board({ className = '' }: BoardProps) {
         gridTemplateColumns:
           'repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr))',
       }}
-      className={`relative grid shrink-0 bg-cream-50 border-[3px] border-board-line rounded-[14px] overflow-hidden shadow-[0_6px_0_var(--color-edge)] ${className}`}
+      className={`relative grid shrink-0 bg-cream-50 border-[3px] border-board-line rounded-[14px] overflow-hidden shadow-[0_6px_0_#cdb58a] ${className}`}
     >
       {/* 81 Sudoku cells */}
       {Array.from({ length: 81 }, (_, i) => (
@@ -131,7 +131,7 @@ export function Board({ className = '' }: BoardProps) {
           className="absolute inset-0 z-30 bg-cream-50/70 dark:bg-paper/70 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 animate-pulse"
         >
           <div className="w-12 h-12 rounded-full border-4 border-brand-300 border-t-brand-600 animate-spin" />
-          <span className="font-bold text-sm text-slate-500">
+          <span className="font-bold text-[14px] text-slate-500">
             Generating puzzle...
           </span>
         </div>

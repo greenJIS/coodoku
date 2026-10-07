@@ -17,9 +17,9 @@ export function StickerButton({
   ...rest
 }: StickerButtonProps) {
   const sizeClasses = {
-    sm: 'px-3 py-1 text-xs rounded-xl',
-    md: 'px-4 py-2 text-sm rounded-2xl font-bold',
-    lg: 'px-6 py-2.5 text-base rounded-full font-bold',
+    sm: 'px-3 py-1 text-[12px] rounded-xl',
+    md: 'px-4 py-2 text-[14px] rounded-2xl font-bold',
+    lg: 'px-6 py-2.5 text-[16px] rounded-full font-bold',
   }[size];
 
   let variantClasses: string;

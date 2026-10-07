@@ -36,7 +36,7 @@ export function HeartRow({
               className={`transition-colors duration-200 ${
                 isAlive
                   ? 'text-accent-500 fill-accent-500 stroke-accent-700'
-                  : 'text-slate-200 fill-slate-200 stroke-slate-400 dark:stroke-[#6b5a3c]'
+                  : 'text-slate-200 fill-slate-200 stroke-[#a8a5a0] dark:stroke-[#6b5a3c]'
               }`}
             />
           </div>

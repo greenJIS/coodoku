@@ -56,10 +56,10 @@ export function ConfirmDifficultyModal({
       label="Confirm difficulty change"
       className="text-center z-60"
     >
-      <h2 className="text-2xl font-extrabold text-ink-900 mb-2">
+      <h2 className="text-[24px] font-extrabold text-ink-900 mb-2">
         Change to {diffName}?
       </h2>
-      <p className="text-slate-500 font-bold text-sm mb-6">
+      <p className="text-slate-500 font-bold text-[14px] mb-6">
         Start a new game? Current puzzle progress will be lost.
       </p>
 

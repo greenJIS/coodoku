@@ -143,7 +143,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           />
         </div>
 
-        <h2 className="text-xl font-bold text-ink-900 mb-3 text-center">
+        <h2 className="text-[20px] font-bold text-ink-900 mb-3 text-center">
           Settings
         </h2>
 
@@ -175,7 +175,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               <div>
                 <label
                   htmlFor="settingsNameInput"
-                  className="block text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-0.5 mb-2"
+                  className="block text-[12px] font-bold uppercase tracking-[0.06em] text-slate-500 mt-0.5 mb-2"
                 >
                   Game name
                 </label>
@@ -189,22 +189,22 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                     value={nameInput}
                     onChange={handleNameChange}
                     onBlur={handleNameBlur}
-                    className="flex-1 min-w-0 px-3 py-2 rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-extrabold text-base outline-none focus:border-brand-500 transition-colors"
+                    className="flex-1 min-w-0 px-3 py-2 rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-extrabold text-[16px] outline-none focus:border-brand-500 transition-colors"
                   />
                   <button
                     type="button"
                     aria-label="Random name"
                     title="Random name"
                     onClick={handleRandomName}
-                    className="w-[42px] h-[42px] rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-brand-700 dark:text-brand-400 grid place-items-center shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)] cursor-pointer"
+                    className="w-[42px] h-[42px] rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-user grid place-items-center shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)] cursor-pointer"
                   >
-                    <DiceIcon size={20} />
+                    <DiceIcon />
                   </button>
                 </div>
               </div>
 
               <div>
-                <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
+                <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
                   Difficulty
                 </div>
                 <div
@@ -216,10 +216,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                       key={d}
                       type="button"
                       onClick={() => requestDifficulty(d)}
-                      className={`px-3 py-1 rounded-full border text-xs font-bold cursor-pointer transition-colors ${
+                      className={`px-3 py-1 rounded-full border text-[12px] font-bold cursor-pointer transition-colors ${
                         activeDiff === d
                           ? 'bg-brand-500 border-brand-500 text-brand-900'
-                          : 'border-slate-300 bg-white/60 dark:bg-cream-200 text-slate-500 hover:border-brand-500'
+                          : 'border-[#e4e2de] bg-white/60 dark:bg-[#3a2f1e] text-slate-500 hover:border-brand-500'
                       }`}
                     >
                       {d.charAt(0).toUpperCase() + d.slice(1)}
@@ -229,7 +229,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <div>
-                <div className="text-xs font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
+                <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
                   Stats
                 </div>
                 <div className="grid grid-cols-2 gap-x-[18px] gap-y-1.5 text-[13px] font-semibold text-slate-500 mb-2.5">
@@ -268,7 +268,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           {activeTab === 'play' && (
             <div className={paneAnimation}>
               <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Mistake check
                 </span>
                 <Segmented
@@ -282,7 +282,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Auto-remove notes
                 </span>
                 <Toggle
@@ -293,7 +293,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Highlight row, column, box
                 </span>
                 <Toggle
@@ -304,7 +304,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Highlight same digits
                 </span>
                 <Toggle
@@ -315,7 +315,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Show remaining count
                 </span>
                 <Toggle
@@ -326,7 +326,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Show timer
                 </span>
                 <Toggle
@@ -342,7 +342,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           {activeTab === 'feel' && (
             <div className={paneAnimation}>
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Sound
                 </span>
                 <Toggle
@@ -353,7 +353,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Volume
                 </span>
                 <Slider
@@ -366,7 +366,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Vibration on mistakes
                 </span>
                 <Toggle
@@ -377,7 +377,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Reduce motion
                 </span>
                 <Toggle
@@ -388,7 +388,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </label>
 
               <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Theme
                 </span>
                 <Segmented
@@ -403,7 +403,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Digit size
                 </span>
                 <Segmented
@@ -418,7 +418,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               </div>
 
               <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="font-bold text-sm text-ink-900 pr-3">
+                <span className="font-bold text-[14px] text-ink-900 pr-3">
                   Left-handed layout
                 </span>
                 <Toggle

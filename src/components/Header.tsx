@@ -38,11 +38,9 @@ export function Header({
   const activeDots = DIFFICULTY_LEVELS[actualDifficulty] ?? 1;
 
   return (
-    <header
-      className={`flex flex-col gap-2 w-full max-w-[1040px] mb-2.5 select-none ${className}`}
-    >
+    <header className={`w-full max-w-[1040px] select-none ${className}`}>
       {/* Row 1: Inert Home button, Otter + Name, Settings gear */}
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full mb-2">
         <IconButton
           icon={<HomeIcon />}
           label="Home"
@@ -51,8 +49,8 @@ export function Header({
           className="cursor-default hover:border-edge hover:shadow-[0_4px_0_var(--color-edge)] active:translate-y-0"
         />
 
-        <div className="flex items-center gap-2.5 font-extrabold text-2xl text-ink-900 tracking-[-0.01em]">
-          <Otter size={32} />
+        <div className="flex items-center gap-2.5 font-extrabold text-[24px] text-ink-900 tracking-[-0.01em]">
+          <Otter />
           <span className="underline decoration-wavy decoration-brand-500 decoration-2 underline-offset-[7px]">
             {displayName}
           </span>
@@ -68,10 +66,10 @@ export function Header({
       </div>
 
       {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 items-center justify-items-center sm:justify-items-stretch gap-2.5 w-full text-slate-500 font-semibold text-sm">
+      <div className="grid grid-cols-1 min-[861px]:grid-cols-[1fr_auto_1fr] items-center justify-items-center min-[861px]:justify-items-stretch gap-y-1.5 w-full mb-2.5 text-slate-500 font-semibold text-[14px]">
         {/* Difficulty indicator (left) */}
-        <div className="sm:justify-self-start flex items-center gap-1.5 order-2 sm:order-1">
-          <span>Difficulty</span>
+        <div className="min-[861px]:justify-self-start order-2 min-[861px]:order-1">
+          <span>Difficulty </span>
           <span className="sr-only">{capitalizedDiff}</span>
           <span
             aria-hidden="true"
@@ -80,7 +78,7 @@ export function Header({
             {[1, 2, 3, 4].map((dot) => (
               <i
                 key={dot}
-                className={`w-[9px] h-[9px] rounded-full transition-colors duration-150 ${
+                className={`w-[9px] h-[9px] rounded-full ${
                   dot <= activeDots ? 'bg-brand-500' : 'bg-slate-300'
                 }`}
               />
@@ -89,13 +87,13 @@ export function Header({
         </div>
 
         {/* Hearts row (center) */}
-        <div className="sm:justify-self-center order-1 sm:order-2">
+        <div className="min-[861px]:justify-self-center order-1 min-[861px]:order-2">
           <HeartRow />
         </div>
 
         {/* Timer & Pause button (right) - removed when showTimer is false */}
         {showTimer ? (
-          <div className="sm:justify-self-end flex items-center gap-3 order-3">
+          <div className="min-[861px]:justify-self-end flex items-center gap-3 order-3">
             <Timer />
             <IconButton
               id="pauseBtn"
@@ -107,7 +105,7 @@ export function Header({
             />
           </div>
         ) : (
-          <div className="hidden sm:block order-3" />
+          <div className="hidden min-[861px]:block order-3" />
         )}
       </div>
     </header>

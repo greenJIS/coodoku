@@ -72,17 +72,17 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
         </div>
       )}
 
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-ink-900 mb-2">
+      <h2 className="text-[30px] sm:text-[36px] font-extrabold text-ink-900 mb-2">
         Solved!
       </h2>
 
-      <p className="text-slate-500 font-bold text-base mb-2">
+      <p className="text-slate-500 font-bold text-[16px] mb-2">
         Completed in{' '}
         <span className="font-extrabold text-ink-900">{timeStr}</span>
       </p>
 
       {newBest && (
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500 text-brand-900 font-extrabold text-xs shadow-[0_2px_0_var(--color-brand-700)] mb-4 animate-pop">
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500 text-brand-900 font-extrabold text-[12px] shadow-[0_2px_0_var(--color-brand-700)] mb-4 animate-pop">
           ★ New Best Time!
         </div>
       )}

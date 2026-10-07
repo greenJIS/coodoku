@@ -66,7 +66,7 @@ export function App() {
     game?.status === 'playing';
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-[18px] pt-[14px] pb-10 bg-paper text-ink-900 transition-colors duration-200">
+    <div className="min-h-screen flex flex-col items-center px-[18px] pt-[14px] pb-10 text-ink-900 transition-colors duration-200">
       {/* Top Header */}
       <Header
         onOpenSettings={() => setSettingsOpen(true)}

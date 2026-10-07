@@ -36,10 +36,10 @@ export function GameOverModal({
       label="Game Over"
       className="text-center"
     >
-      <h2 className="text-3xl font-extrabold text-ink-900 mb-2">
+      <h2 className="text-[30px] font-extrabold text-ink-900 mb-2">
         Out of hearts
       </h2>
-      <p className="text-slate-500 font-bold text-sm mb-6">
+      <p className="text-slate-500 font-bold text-[14px] mb-6">
         All 5 hearts used up &middot;{' '}
         <span className="font-extrabold text-ink-900">{timeStr}</span>
       </p>

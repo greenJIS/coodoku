@@ -20,7 +20,7 @@ export function Toast({
     <div
       role="status"
       aria-live="polite"
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-cream-50 dark:bg-cream-100 text-ink-900 border-2 border-edge shadow-[0_6px_0_var(--color-edge)] animate-pop max-w-[90vw] text-sm font-bold ${className}`}
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-cream-50 dark:bg-cream-100 text-ink-900 border-2 border-edge shadow-[0_6px_0_var(--color-edge)] animate-pop max-w-[90vw] text-[14px] font-bold ${className}`}
     >
       <span className="flex-1 text-center sm:text-left">{message}</span>
 
@@ -28,7 +28,7 @@ export function Toast({
         <button
           type="button"
           onClick={onAction}
-          className="px-3 py-1 text-xs font-black rounded-xl bg-brand-500 text-brand-900 border-2 border-brand-700 shadow-[0_2px_0_var(--color-brand-700)] hover:bg-brand-400 active:translate-y-[1px] active:shadow-none cursor-pointer"
+          className="px-3 py-1 text-[12px] font-black rounded-xl bg-brand-500 text-brand-900 border-2 border-brand-700 shadow-[0_2px_0_var(--color-brand-700)] hover:bg-brand-400 active:translate-y-[1px] active:shadow-none cursor-pointer"
         >
           {actionLabel}
         </button>
