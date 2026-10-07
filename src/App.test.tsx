@@ -153,7 +153,7 @@ describe('App full integration test', () => {
       expect(
         screen.getByRole('dialog', { name: 'Game Over' }),
       ).toBeInTheDocument();
-      expect(screen.getByText('Out of hearts')).toBeInTheDocument();
+      expect(screen.getByText('Oh no, out of tries')).toBeInTheDocument();
     });
   });
 
@@ -180,7 +180,7 @@ describe('App full integration test', () => {
       expect(
         screen.getByRole('dialog', { name: 'Puzzle Solved!' }),
       ).toBeInTheDocument();
-      expect(screen.getByText('Solved!')).toBeInTheDocument();
+      expect(screen.getByText('Nicely done!')).toBeInTheDocument();
     });
   });
 

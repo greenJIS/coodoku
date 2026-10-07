@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { formatTime } from '../../lib/time';
 import { useGameStore } from '../../store/game';
-import { StickerButton } from '../ui';
-import { Modal } from './Modal';
+import { CARD_BUTTON, CARD_CLASS, Modal } from './Modal';
 
 export interface GameOverModalProps {
   open: boolean;
@@ -34,34 +33,30 @@ export function GameOverModal({
       closeOnBackdropClick={false}
       originRef={originRef}
       label="Game Over"
-      className="text-center"
+      className={CARD_CLASS}
     >
-      <h2 className="text-[30px] font-extrabold text-ink-900 mb-2">
-        Out of hearts
+      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">
+        Oh no, out of tries
       </h2>
-      <p className="text-slate-500 font-bold text-[14px] mb-6">
-        All 5 hearts used up &middot;{' '}
-        <span className="font-extrabold text-ink-900">{timeStr}</span>
+      <p className="text-slate-500 font-semibold mb-4">
+        No worries, it happens. Take another go? &middot; {timeStr}
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-        <StickerButton
-          variant="soft"
-          size="md"
+      <div className="flex gap-2.5 justify-center">
+        <button
+          type="button"
           onClick={onRetry}
-          className="w-full sm:w-auto"
+          className={`${CARD_BUTTON} bg-slate-100 dark:bg-[#3a2f1e] text-ink-900`}
         >
           Retry puzzle
-        </StickerButton>
-
-        <StickerButton
-          variant="primary"
-          size="md"
+        </button>
+        <button
+          type="button"
           onClick={onNewGame}
-          className="w-full sm:w-auto"
+          className={`${CARD_BUTTON} bg-brand-500 text-brand-900`}
         >
           New game
-        </StickerButton>
+        </button>
       </div>
     </Modal>
   );

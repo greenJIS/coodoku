@@ -9,6 +9,14 @@ import { createPortal } from 'react-dom';
 import { modalStack } from '../../hooks/modalStack';
 import { useGameStore } from '../../store/game';
 
+/** Shrink-wrapped card (Pause, Game over, Win): 30px / 40px padding. */
+export const CARD_CLASS =
+  'w-fit! max-w-[calc(100vw-32px)]! px-10! py-[30px]! text-center';
+
+/** Flat pill button used inside card modals. */
+export const CARD_BUTTON =
+  'px-[22px] py-2.5 rounded-full border-0 font-bold cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
+
 export interface ModalProps {
   open: boolean;
   onClose: () => void;

@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useGameStore } from '../../store/game';
-import { Modal } from './Modal';
+import { CARD_BUTTON, CARD_CLASS, Modal } from './Modal';
 
-const PAUSE_BUTTON =
-  'w-full px-[22px] py-2.5 rounded-full border-0 font-bold cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
+const PAUSE_BUTTON = `w-full ${CARD_BUTTON}`;
 const SOFT = 'bg-hairline text-ink-900';
 const ARMED =
   'bg-[#fde2e7] text-[#be123c] dark:bg-[#4a1f2b] dark:text-[#ff8aa5]';
@@ -73,9 +72,9 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
       originRef={pauseBtnRef}
       label="Paused game"
       backdropClassName="bg-[#1c1b1a]/90 backdrop-blur-[16px]"
-      className="max-w-[360px]! text-center px-10! py-[30px]!"
+      className={CARD_CLASS}
     >
-      <h2 className="text-[28px] font-extrabold text-ink-900 mb-1.5">Paused</h2>
+      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">Paused</h2>
       <p className="text-slate-500 font-semibold mb-4">
         Your board is hidden until you're back.
       </p>

@@ -1,40 +1,66 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { formatTime } from '../../lib/time';
 import { useGameStore } from '../../store/game';
-import { StickerButton } from '../ui';
-import { Modal } from './Modal';
+import { useSettingsStore } from '../../store/settings';
+import { CARD_BUTTON, CARD_CLASS, Modal } from './Modal';
 
 export interface WinModalProps {
   open: boolean;
   onNewGame: () => void;
 }
 
-const CONFETTI_COLORS = [
-  '#f5a524',
-  '#ec176c',
-  '#10b981',
-  '#3b82f6',
-  '#8b5cf6',
-  '#e0940f',
-];
+const CONFETTI_COLORS = ['#f5a524', '#ec176c', '#f8cd82', '#fbcfdf', '#b45309'];
+const CONFETTI_COUNT = 60;
+const CONFETTI_LIFETIME_MS = 4500;
+
+interface ConfettiBit {
+  left: number;
+  duration: number;
+  delay: number;
+  color: string;
+}
+
+function makeConfetti(): ConfettiBit[] {
+  return Array.from({ length: CONFETTI_COUNT }, (_, n) => ({
+    left: Math.random() * 100,
+    duration: 1.6 + Math.random() * 1.8,
+    delay: Math.random() * 0.6,
+    color: CONFETTI_COLORS[n % CONFETTI_COLORS.length],
+  }));
+}
 
 export function WinModal({ open, onNewGame }: WinModalProps) {
   const game = useGameStore((s) => s.game);
   const newBest = useGameStore((s) => s.newBest);
   const lastEntered = useGameStore((s) => s.lastEntered);
+  const reduceMotion = useSettingsStore((s) => s.reduceMotion);
 
   const originRef = useRef<HTMLElement | null>(null);
+  const [confetti, setConfetti] = useState<ConfettiBit[]>([]);
 
   useEffect(() => {
-    if (open && lastEntered !== null) {
+    if (open) {
       originRef.current = document.querySelector(
-        `[data-cell="${lastEntered}"]`,
+        lastEntered !== null
+          ? `[data-cell="${lastEntered}"]`
+          : '[data-testid="sudoku-board"]',
       );
     }
   }, [open, lastEntered]);
 
-  const elapsedMs = game?.elapsedMs ?? 0;
-  const timeStr = formatTime(elapsedMs);
+  // Confetti only on a win, gone after it has fallen
+  useEffect(() => {
+    if (!open || reduceMotion) {
+      setConfetti([]);
+      return;
+    }
+    setConfetti(makeConfetti());
+    const timer = setTimeout(() => setConfetti([]), CONFETTI_LIFETIME_MS);
+    return () => clearTimeout(timer);
+  }, [open, reduceMotion]);
+
+  const timeStr = formatTime(game?.elapsedMs ?? 0);
+  const message = `${game?.name ?? ''} \u00b7 ${timeStr}${newBest ? ' \u00b7 New best!' : ''}`;
 
   return (
     <Modal
@@ -43,60 +69,40 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
       closeOnBackdropClick={false}
       originRef={originRef}
       label="Puzzle Solved!"
-      className="text-center relative overflow-hidden"
+      className={CARD_CLASS}
     >
-      {/* Confetti particles */}
-      {open && (
+      {confetti.length > 0 && (
         <div
           aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
+          className="fixed inset-0 pointer-events-none z-[60] overflow-hidden"
         >
-          {Array.from({ length: 30 }).map((_, i) => {
-            const left = Math.random() * 100;
-            const delay = Math.random() * 0.8;
-            const duration = 2 + Math.random() * 1.5;
-            const bg = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
-            return (
-              <div
-                key={i}
-                style={{
-                  left: `${left}%`,
-                  animationDelay: `${delay}s`,
-                  animationDuration: `${duration}s`,
-                  backgroundColor: bg,
-                }}
-                className="absolute -top-3 w-2.5 h-3.5 rounded-xs animate-fall"
-              />
-            );
-          })}
+          {confetti.map((bit, i) => (
+            <div
+              key={i}
+              style={{
+                left: `${bit.left}vw`,
+                animationDelay: `${bit.delay}s`,
+                animationDuration: `${bit.duration}s`,
+                backgroundColor: bit.color,
+              }}
+              className="absolute -top-3 w-[9px] h-[14px] animate-fall"
+            />
+          ))}
         </div>
       )}
 
-      <h2 className="text-[30px] sm:text-[36px] font-extrabold text-ink-900 mb-2">
-        Solved!
+      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">
+        Nicely done!
       </h2>
+      <p className="text-slate-500 font-semibold mb-4">{message}</p>
 
-      <p className="text-slate-500 font-bold text-[16px] mb-2">
-        Completed in{' '}
-        <span className="font-extrabold text-ink-900">{timeStr}</span>
-      </p>
-
-      {newBest && (
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-brand-500 text-brand-900 font-extrabold text-[12px] shadow-[0_2px_0_var(--color-brand-700)] mb-4 animate-pop">
-          ★ New Best Time!
-        </div>
-      )}
-
-      <div className="mt-4 flex justify-center">
-        <StickerButton
-          variant="primary"
-          size="lg"
-          onClick={onNewGame}
-          className="w-full max-w-[220px]"
-        >
-          New game
-        </StickerButton>
-      </div>
+      <button
+        type="button"
+        onClick={onNewGame}
+        className={`${CARD_BUTTON} bg-brand-500 text-brand-900`}
+      >
+        New game
+      </button>
     </Modal>
   );
 }

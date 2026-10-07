@@ -237,9 +237,8 @@ describe('Game Modals', () => {
       const onNewGame = vi.fn();
       render(<WinModal open={true} onNewGame={onNewGame} />);
 
-      expect(screen.getByText('Solved!')).toBeInTheDocument();
-      expect(screen.getByText('01:35')).toBeInTheDocument();
-      expect(screen.getByText('★ New Best Time!')).toBeInTheDocument();
+      expect(screen.getByText('Nicely done!')).toBeInTheDocument();
+      expect(screen.getByText(/01:35 \u00b7 New best!$/)).toBeInTheDocument();
 
       const newBtn = screen.getByRole('button', { name: 'New game' });
       fireEvent.click(newBtn);
@@ -253,7 +252,7 @@ describe('Game Modals', () => {
         <GameOverModal open={true} onRetry={onRetry} onNewGame={onNewGame} />,
       );
 
-      expect(screen.getByText('Out of hearts')).toBeInTheDocument();
+      expect(screen.getByText('Oh no, out of tries')).toBeInTheDocument();
 
       fireEvent.click(screen.getByRole('button', { name: 'Retry puzzle' }));
       expect(onRetry).toHaveBeenCalledTimes(1);
