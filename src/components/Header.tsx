@@ -29,6 +29,7 @@ export function Header({
   const settingsName = useSettingsStore((s) => s.name);
   const settingsDiff = useSettingsStore((s) => s.difficulty);
   const showTimer = useSettingsStore((s) => s.showTimer);
+  const mistakeCheck = useSettingsStore((s) => s.mistakeCheck);
 
   const displayName = game?.name ?? settingsName;
   // Difficulty actually received from puzzle, fallback to settings
@@ -87,7 +88,9 @@ export function Header({
         </div>
 
         {/* Hearts row (center) */}
-        <div className="min-[861px]:justify-self-center order-1 min-[861px]:order-2">
+        <div
+          className={`min-[861px]:justify-self-center order-1 min-[861px]:order-2 ${mistakeCheck ? '' : 'invisible'}`}
+        >
           <HeartRow />
         </div>
 

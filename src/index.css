@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 
 /* Theme follows the data-theme attribute, not the OS setting */
+/* Same breakpoint as the design preview: max-width 860px, inclusive */
+@custom-variant narrow (@media (max-width: 860px));
+
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 @theme {
@@ -53,6 +56,7 @@
   --color-sel: #ffd98a;
   --color-board-line: #5a4632;
   --color-user: #b45309;
+  --color-match: #ec176c;
   --color-ok: #10b981;
   --color-error: #e11d48;
 
@@ -198,6 +202,7 @@
   --color-sel: #7a5416;
   --color-board-line: #d8c39a;
   --color-user: #f7b84e;
+  --color-match: #ff6aa6;
   --color-brand-100: #3b2f1b;
   --color-brand-300: #6b4b12;
   --color-error: #f43f5e;

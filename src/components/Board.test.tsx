@@ -133,7 +133,7 @@ describe('Board and Cell components', () => {
     // Cell 14 has value 5, should show same-digit leaf outline
     const cell14 = screen.getAllByRole('gridcell')[14];
     expect(cell14).toHaveTextContent('5');
-    const outline = cell14.querySelector('.border-accent-500');
+    const outline = cell14.querySelector('.border-match');
     expect(outline).toBeInTheDocument();
 
     // Turn off highlightSame setting
@@ -141,7 +141,7 @@ describe('Board and Cell components', () => {
     rerender(<Board />);
 
     const cell14After = container.querySelector('[data-cell="14"]');
-    expect(cell14After?.querySelector('.border-accent-500')).toBeNull();
+    expect(cell14After?.querySelector('.border-match')).toBeNull();
   });
 
   it('renders 3x3 notes subgrid on empty cells with notes', () => {

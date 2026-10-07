@@ -39,7 +39,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             }
             disabled={isDisabled}
             onClick={() => enter(digit)}
-            className={`relative aspect-square rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[24px] min-[861px]:text-[34px] leading-[normal] select-none max-[860px]:w-16 max-[860px]:justify-self-center cursor-pointer
+            className={`relative aspect-square rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[34px] leading-[normal] select-none narrow:w-16 narrow:justify-self-center cursor-pointer
               shadow-[0_4px_0_var(--color-edge)] transition-[transform,box-shadow,border-color,opacity] duration-100
               hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
               active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]

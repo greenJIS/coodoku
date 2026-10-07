@@ -12,9 +12,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
   const toggleNotesMode = useGameStore((s) => s.toggleNotesMode);
 
   return (
-    <div
-      className={`relative w-[72%] max-[860px]:w-[62%] select-none ${className}`}
-    >
+    <div className={`relative w-[72%] narrow:w-[62%] select-none ${className}`}>
       <button
         type="button"
         role="switch"
@@ -22,7 +20,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
         aria-label="Notes mode"
         disabled={generating}
         onClick={toggleNotesMode}
-        className={`relative block w-full h-[64px] min-[861px]:h-[84px] p-0 rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-[border-color,box-shadow] duration-150
+        className={`relative block w-full h-[84px] p-0 rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-[border-color,box-shadow] duration-150
           focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-2
           disabled:opacity-40 disabled:cursor-not-allowed`}
       >

@@ -124,7 +124,7 @@ export const Cell = memo(function Cell({
       {isSameDigit && value !== 0 && (
         <span
           aria-hidden="true"
-          className="absolute inset-[3px] border-[3px] border-accent-500 rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-[pop_0.22s_cubic-bezier(0.3,1.5,0.5,1)]"
+          className="absolute inset-[3px] border-[3px] border-match rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-[pop_0.22s_cubic-bezier(0.3,1.5,0.5,1)]"
         />
       )}
 
