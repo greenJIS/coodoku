@@ -122,9 +122,17 @@ Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
 | Just-entered circle                          | `#10b981`                                 |
 | Ink / muted                                  | ink-900 `#2e2418` / slate-500 `#8b7a62`   |
 | Page background                              | warm cream `#fbf3e4` with faint grain     |
+| Cell shading (`peer` / `sel`)                | `#fff1d6` / `#ffd98a`                     |
+| User digits (`user`)                         | `#b45309` (dark `#f7b84e`)                |
+| Same-digit outline (`match`)                 | `#ec176c` (dark `#ff6aa6`)                |
+| Hairlines, tab track (`hairline`)            | `#e6d8bd` (dark `#4b3f2c`)                |
 
 - **Style:** "sticker" controls — cream face, 2px warm-tan border, solid offset shadow with no blur, press-down on
   active. No gloss gradients, no blurry shadows. Dark theme uses the same brown family.
+- **Motion defaults:** transitions use plain `ease` (`--default-transition-timing-function` in `@theme`) like the
+  preview, not Tailwind's material curve. Keyframes (`pop`, `ring`, `selpulse`, `shake`, `wave`, `hit`, `modalIn`,
+  `modalOut`) copy the preview's timings. `Modal` stays mounted 240ms after `open` turns false so the exit plays.
+- **Breakpoint:** the preview's `max-width: 860px` is inclusive, so use the `narrow:` variant, not `max-[860px]:`.
 - **Fonts:** Nunito (UI) and Patrick Hand (digits, timer), self-hosted through the `@fontsource` packages imported in
   `src/main.tsx`. Color and font tokens live in the `@theme {}` block of `src/index.css`.
 - **Icons:** own line icons (stroke 2–3, round caps). A small otter mascot beside the game name.
