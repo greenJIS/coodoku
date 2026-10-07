@@ -87,6 +87,21 @@ describe('generatePuzzle options', () => {
     }
   });
 
+  it('flags exact when the budget ends on a puzzle of the requested tier', () => {
+    // The clock runs out while carving is still above the clue goal, after a
+    // candidate of the requested tier has already been found.
+    let calls = 0;
+    const result = generatePuzzle({
+      difficulty: 'hard',
+      seed: 1,
+      budgetMs: 1,
+      now: () => (calls++ > 52 ? 1e9 : 0),
+    });
+    expect(tierOf(result.rating)).toBe('hard');
+    expect(result.exact).toBe(true);
+    expectWellFormed(result, 'hard');
+  });
+
   it('uses the injected clock for the time budget', () => {
     let time = 0;
     const result = generatePuzzle({

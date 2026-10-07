@@ -80,7 +80,14 @@ export function generatePuzzle(options: GeneratePuzzleOptions): Puzzle {
       best = { solution, candidate: outcome.best };
     }
     if (best !== null && now() >= deadline) {
-      return toPuzzle(seed, difficulty, best, false);
+      // The clock can run out after a candidate already reached the target
+      // tier but before carving hit the clue goal; that puzzle is still exact.
+      return toPuzzle(
+        seed,
+        difficulty,
+        best,
+        best.candidate.tier === difficulty,
+      );
     }
     if (best === null && attempt >= MAX_EMPTY_ATTEMPTS) {
       throw new EngineError('Could not generate a puzzle');
