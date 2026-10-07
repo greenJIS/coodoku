@@ -9,6 +9,9 @@ function createMockAudioContext() {
     stopTime: number;
   }> = [];
 
+  const sources: Array<{ startTime: number; stopTime: number }> = [];
+  const filters: Array<{ type: string; q: number }> = [];
+
   const gains: Array<{
     setValueAtTimeCalls: Array<[number, number]>;
     exponentialRampCalls: Array<[number, number]>;
@@ -18,6 +21,43 @@ function createMockAudioContext() {
     currentTime: 10,
     state: 'running',
     destination: {},
+    sampleRate: 100,
+    createBuffer: vi.fn((_ch: number, length: number) => ({
+      getChannelData: () => new Float32Array(length),
+    })),
+    createBufferSource: vi.fn(() => {
+      const data = { startTime: 0, stopTime: 0 };
+      sources.push(data);
+      return {
+        buffer: null,
+        connect: vi.fn(),
+        start: vi.fn((t: number) => {
+          data.startTime = t;
+        }),
+        stop: vi.fn((t: number) => {
+          data.stopTime = t;
+        }),
+      };
+    }),
+    createBiquadFilter: vi.fn(() => {
+      const data = { type: '', q: 0 };
+      filters.push(data);
+      return {
+        set type(v: string) {
+          data.type = v;
+        },
+        Q: {
+          set value(v: number) {
+            data.q = v;
+          },
+        },
+        frequency: {
+          setValueAtTime: vi.fn(),
+          exponentialRampToValueAtTime: vi.fn(),
+        },
+        connect: vi.fn(),
+      };
+    }),
     resume: vi.fn().mockResolvedValue(undefined),
     createOscillator: vi.fn(() => {
       const osc = {
@@ -26,6 +66,7 @@ function createMockAudioContext() {
           setValueAtTime: vi.fn((val: number) => {
             oscData.freq = val;
           }),
+          exponentialRampToValueAtTime: vi.fn(),
         },
         connect: vi.fn(),
         start: vi.fn((t: number) => {
@@ -65,7 +106,7 @@ function createMockAudioContext() {
     }),
   } as unknown as AudioContext;
 
-  return { mockCtx, oscillators, gains };
+  return { mockCtx, oscillators, sources, filters, gains };
 }
 
 describe('sound system', () => {
@@ -113,20 +154,53 @@ describe('sound system', () => {
     'lose',
   ];
 
-  it.each(ALL_KINDS)('schedules oscillators for sound kind: %s', (kind) => {
-    const { mockCtx, oscillators, gains } = createMockAudioContext();
+  it.each(ALL_KINDS)('schedules every voice for sound kind: %s', (kind) => {
+    const { mockCtx, oscillators, sources, gains } = createMockAudioContext();
     sound.setAudioContext(mockCtx);
 
     sound.play(kind, { sound: true, volume: 50 });
 
-    expect(oscillators.length).toBeGreaterThan(0);
-    expect(gains.length).toBe(oscillators.length);
+    // One gain envelope per oscillator or noise burst
+    expect(oscillators.length + sources.length).toBeGreaterThan(0);
+    expect(gains.length).toBe(oscillators.length + sources.length);
 
-    // Each oscillator was started and stopped
-    for (const osc of oscillators) {
-      expect(osc.startTime).toBeGreaterThanOrEqual(10);
-      expect(osc.stopTime).toBeGreaterThan(osc.startTime);
+    for (const voice of [...oscillators, ...sources]) {
+      expect(voice.startTime).toBeGreaterThanOrEqual(10);
+      expect(voice.stopTime).toBeGreaterThan(voice.startTime);
     }
+  });
+
+  it('uses band-passed noise for the wooden tick and paper swish', () => {
+    const { mockCtx, sources, filters } = createMockAudioContext();
+    sound.setAudioContext(mockCtx);
+
+    sound.play('erase', { sound: true, volume: 50 });
+
+    expect(sources).toHaveLength(1);
+    expect(filters).toEqual([{ type: 'bandpass', q: 1.1 }]);
+  });
+
+  it('keeps the win jingle and lose motif behind the placement sound', () => {
+    for (const kind of ['win', 'lose'] as const) {
+      const { mockCtx, oscillators } = createMockAudioContext();
+      sound.setAudioContext(mockCtx);
+
+      sound.play(kind, { sound: true, volume: 50 });
+
+      const first = Math.min(...oscillators.map((o) => o.startTime));
+      expect(first).toBeGreaterThanOrEqual(10.3);
+    }
+  });
+
+  it('scales every envelope peak with the volume setting', () => {
+    const peak = (volume: number): number => {
+      const { mockCtx, gains } = createMockAudioContext();
+      sound.setAudioContext(mockCtx);
+      sound.play('mistake', { sound: true, volume });
+      return gains[0].exponentialRampCalls[0][0];
+    };
+
+    expect(peak(100)).toBeCloseTo(peak(50) * 2, 5);
   });
 
   it('resumes suspended audio context on play', () => {

@@ -6,39 +6,138 @@ export interface SoundOptions {
   volume?: number; // 0..100
 }
 
-interface ToneSpec {
+/** A pitched sine/triangle partial, optionally gliding to a lower pitch. */
+interface PartialVoice {
+  kind: 'partial';
   freq: number;
+  peak: number;
   dur: number;
   type?: OscillatorType;
-  vol?: number;
+  glideTo?: number;
+  glideDur?: number;
   delay?: number;
 }
 
-const SOUND_SPECS: Record<SoundKind, ToneSpec[]> = {
-  place: [{ freq: 520, dur: 0.09, type: 'triangle' }],
-  note: [{ freq: 840, dur: 0.05, type: 'sine', vol: 0.5 }],
-  erase: [{ freq: 300, dur: 0.08, type: 'sine', vol: 0.6 }],
-  mistake: [{ freq: 170, dur: 0.2, type: 'sawtooth', vol: 0.7 }],
-  hint: [
-    { freq: 587, dur: 0.1, type: 'sine', vol: 0.8 },
-    { freq: 880, dur: 0.15, type: 'sine', vol: 0.8, delay: 0.08 },
+/** A short burst of band-passed noise: wood tick, paper swish. */
+interface NoiseVoice {
+  kind: 'noise';
+  freq: number;
+  q: number;
+  peak: number;
+  dur: number;
+  sweepTo?: number;
+  delay?: number;
+}
+
+type Voice = PartialVoice | NoiseVoice;
+
+/** Marimba-ish pluck: fundamental, a quick bright partial and a tiny tick. */
+function pluck(freq: number, delay = 0, dur = 0.42, level = 1): Voice[] {
+  const peak = 0.3 * level;
+  return [
+    { kind: 'partial', freq, peak, dur, delay },
+    {
+      kind: 'partial',
+      freq: freq * 4,
+      peak: peak * 0.28,
+      dur: dur * 0.22,
+      delay,
+    },
+    {
+      kind: 'noise',
+      freq: freq * 3,
+      q: 1.2,
+      peak: peak * 0.25,
+      dur: 0.02,
+      delay,
+    },
+  ];
+}
+
+/** Soft bell: inharmonic partials that die away at different speeds. */
+function bell(freq: number, delay = 0, dur = 0.9, level = 1): Voice[] {
+  const peak = 0.2 * level;
+  return [
+    { kind: 'partial', freq, peak, dur, delay },
+    {
+      kind: 'partial',
+      freq: freq * 2.76,
+      peak: peak * 0.35,
+      dur: dur * 0.5,
+      delay,
+    },
+    {
+      kind: 'partial',
+      freq: freq * 5.4,
+      peak: peak * 0.1,
+      dur: dur * 0.25,
+      delay,
+    },
+  ];
+}
+
+// C major pentatonic: any run of notes stays consonant
+const C5 = 523.25;
+const E5 = 659.25;
+const G5 = 783.99;
+const A5 = 880;
+const C6 = 1046.5;
+const G6 = 1568;
+
+const SOUND_SPECS: Record<SoundKind, Voice[]> = {
+  // wooden tile set down
+  place: [
+    {
+      kind: 'partial',
+      freq: 880,
+      peak: 0.28,
+      dur: 0.07,
+      glideTo: 560,
+      glideDur: 0.04,
+    },
+    { kind: 'noise', freq: 1400, q: 2, peak: 0.12, dur: 0.025 },
   ],
-  complete: [
-    { freq: 660, dur: 0.1, type: 'triangle', vol: 1 },
-    { freq: 880, dur: 0.14, type: 'triangle', vol: 1, delay: 0.09 },
+  note: [
+    { kind: 'noise', freq: 3200, q: 3, peak: 0.09, dur: 0.018 },
+    { kind: 'partial', freq: 1900, peak: 0.06, dur: 0.03 },
   ],
+  // paper swish
+  erase: [
+    { kind: 'noise', freq: 3200, q: 1.1, peak: 0.14, dur: 0.14, sweepTo: 1100 },
+  ],
+  // gentle thud, not a buzzer
+  mistake: [
+    {
+      kind: 'partial',
+      freq: 150,
+      peak: 0.4,
+      dur: 0.22,
+      glideTo: 85,
+      glideDur: 0.16,
+    },
+    {
+      kind: 'partial',
+      freq: 311,
+      peak: 0.1,
+      dur: 0.16,
+      type: 'triangle',
+      glideTo: 220,
+      glideDur: 0.14,
+      delay: 0.01,
+    },
+    { kind: 'noise', freq: 400, q: 1, peak: 0.1, dur: 0.04 },
+  ],
+  hint: [...bell(C6, 0, 0.9, 0.9), ...bell(G6, 0.1, 1, 0.8)],
+  complete: [C5, E5, G5].flatMap((f, i) => pluck(f, i * 0.075, 0.38, 0.9)),
+  // lead-in lets the placement sound finish before the jingle starts
   win: [
-    { freq: 523, dur: 0.22, type: 'triangle', vol: 1, delay: 0 },
-    { freq: 659, dur: 0.22, type: 'triangle', vol: 1, delay: 0.12 },
-    { freq: 784, dur: 0.22, type: 'triangle', vol: 1, delay: 0.24 },
-    { freq: 1047, dur: 0.22, type: 'triangle', vol: 1, delay: 0.36 },
+    ...[C5, E5, G5, A5, C6].flatMap((f, i) => pluck(f, 0.3 + i * 0.11, 0.5)),
+    ...bell(C6, 0.85, 1.4),
+    ...bell(G6, 0.9, 1.4, 0.7),
   ],
-  lose: [
-    { freq: 220, dur: 0.22, type: 'sawtooth', vol: 0.7, delay: 0 },
-    { freq: 196, dur: 0.22, type: 'sawtooth', vol: 0.7, delay: 0.14 },
-    { freq: 175, dur: 0.22, type: 'sawtooth', vol: 0.7, delay: 0.28 },
-    { freq: 147, dur: 0.22, type: 'sawtooth', vol: 0.7, delay: 0.42 },
-  ],
+  lose: [392, 349.23, 293.66].flatMap((f, i) =>
+    pluck(f, 0.3 + i * 0.2, 0.7, 0.8),
+  ),
 };
 
 let audioCtx: AudioContext | null = null;
@@ -56,6 +155,20 @@ function getOrCreateContext(): AudioContext | null {
   } catch {
     return null;
   }
+}
+
+const noiseBuffers = new WeakMap<AudioContext, AudioBuffer>();
+
+/** One second of white noise per context, reused by every noise voice. */
+function noiseBuffer(ctx: AudioContext): AudioBuffer {
+  let buffer = noiseBuffers.get(ctx);
+  if (!buffer) {
+    buffer = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    noiseBuffers.set(ctx, buffer);
+  }
+  return buffer;
 }
 
 export const sound = {
@@ -81,32 +194,52 @@ export const sound = {
         void ctx.resume();
       }
 
-      const masterVol = volumePercent / 100;
-      const specs = SOUND_SPECS[kind] ?? [];
+      const master = volumePercent / 100;
+      const noise = noiseBuffer(ctx);
 
-      for (const spec of specs) {
-        const delay = spec.delay ?? 0;
-        const dur = spec.dur;
-        const vol = spec.vol ?? 1;
-        const type = spec.type ?? 'sine';
-
-        const t = ctx.currentTime + delay;
-        const osc = ctx.createOscillator();
+      for (const voice of SOUND_SPECS[kind] ?? []) {
+        const t = ctx.currentTime + (voice.delay ?? 0);
         const gain = ctx.createGain();
-
-        osc.type = type;
-        osc.frequency.setValueAtTime(spec.freq, t);
-
-        const targetGain = Math.max(0.0002, 0.25 * vol * masterVol);
+        const peak = Math.max(0.0002, voice.peak * master);
         gain.gain.setValueAtTime(0.0001, t);
-        gain.gain.exponentialRampToValueAtTime(targetGain, t + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-
-        osc.connect(gain);
+        gain.gain.exponentialRampToValueAtTime(
+          peak,
+          t + (voice.kind === 'noise' ? 0.003 : 0.004),
+        );
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + voice.dur);
         gain.connect(ctx.destination);
 
-        osc.start(t);
-        osc.stop(t + dur + 0.02);
+        if (voice.kind === 'partial') {
+          const osc = ctx.createOscillator();
+          osc.type = voice.type ?? 'sine';
+          osc.frequency.setValueAtTime(voice.freq, t);
+          if (voice.glideTo) {
+            osc.frequency.exponentialRampToValueAtTime(
+              voice.glideTo,
+              t + (voice.glideDur ?? 0.05),
+            );
+          }
+          osc.connect(gain);
+          osc.start(t);
+          osc.stop(t + voice.dur + 0.03);
+        } else {
+          const src = ctx.createBufferSource();
+          const filter = ctx.createBiquadFilter();
+          src.buffer = noise;
+          filter.type = 'bandpass';
+          filter.Q.value = voice.q;
+          filter.frequency.setValueAtTime(voice.freq, t);
+          if (voice.sweepTo) {
+            filter.frequency.exponentialRampToValueAtTime(
+              voice.sweepTo,
+              t + voice.dur,
+            );
+          }
+          src.connect(filter);
+          filter.connect(gain);
+          src.start(t);
+          src.stop(t + voice.dur + 0.02);
+        }
       }
     } catch {
       // Audio failed or blocked

@@ -106,7 +106,11 @@ Single-page static app. All state is client-side.
 
 ### Sound
 
-Synthesized with the Web Audio API (oscillators), no audio files. Respect the sound toggle and volume setting.
+Synthesized with the Web Audio API, no audio files. Respect the sound toggle and volume setting. The set is warm and
+handmade to match the sticker look: a wooden tick for placing, marimba-style plucks and soft bells on a C major
+pentatonic scale (so any run of notes stays consonant), band-passed noise for note and erase, and a low thud instead of
+a buzzer for mistakes. Win and lose start 0.3s late so they land after the placement sound. Voices are data in
+`SOUND_SPECS` (`src/lib/sound.ts`): add a kind by composing `pluck`, `bell` or raw partial and noise voices.
 
 ## Design system
 
