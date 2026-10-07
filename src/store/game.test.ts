@@ -113,7 +113,7 @@ describe('game store', () => {
     if (!game) throw new Error('no game');
 
     // Fill all but cell 4 of row 0 with the solution, then enter the last one
-    const values = Uint8Array.from(game.values);
+    const values = [...game.values];
     for (let c = 0; c < 9; c++) values[c] = game.solution[c];
     values[4] = 0;
     useGameStore.setState({ game: { ...game, values }, wave: null });

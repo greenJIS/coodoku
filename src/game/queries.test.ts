@@ -166,7 +166,7 @@ describe('game queries', () => {
     const values = [...game.values];
     for (let c = 0; c < 9; c++) values[c] = 1;
     for (let r = 0; r < 9; r++) values[r * 9] = 1;
-    const filled = { ...game, values: Uint8Array.from(values) };
+    const filled = { ...game, values };
 
     expect(completedUnitCells(filled, 0)).toEqual([
       [0, 1, 2, 3, 4, 5, 6, 7, 8],
@@ -180,8 +180,8 @@ describe('game queries', () => {
     const values = [...game.values];
     for (const idx of [30, 31, 32, 39, 40, 41, 48, 49, 50]) values[idx] = 1;
 
-    expect(
-      completedUnitCells({ ...game, values: Uint8Array.from(values) }, 40),
-    ).toEqual([[30, 31, 32, 39, 40, 41, 48, 49, 50]]);
+    expect(completedUnitCells({ ...game, values }, 40)).toEqual([
+      [30, 31, 32, 39, 40, 41, 48, 49, 50],
+    ]);
   });
 });
