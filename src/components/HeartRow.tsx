@@ -35,14 +35,14 @@ export function HeartRow({
         return (
           <div
             key={i}
-            className={`transition-transform duration-200 ${
-              isAlive ? 'scale-100' : 'scale-[0.82]'
+            className={`${
+              isAlive ? '' : '[transform:scale(0.82)]'
             } ${hit === i ? 'animate-hit' : ''}`}
           >
             <HeartIcon
               size={28}
               filled={isAlive}
-              className={`transition-colors duration-200 ${
+              className={`${
                 isAlive
                   ? 'text-accent-500 fill-accent-500 stroke-accent-700'
                   : 'text-slate-200 fill-slate-200 stroke-[#a8a5a0] dark:stroke-[#6b5a3c]'
