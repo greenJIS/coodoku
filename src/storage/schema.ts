@@ -30,9 +30,6 @@ export interface DifficultyStats {
 export type Stats = Record<Difficulty, DifficultyStats>;
 
 export function getDefaultSettings(): Settings {
-  const prefersDark =
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   const prefersReduceMotion =
     typeof window !== 'undefined' &&
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -50,7 +47,7 @@ export function getDefaultSettings(): Settings {
     volume: 60,
     vibrate: true,
     reduceMotion: Boolean(prefersReduceMotion),
-    theme: prefersDark ? 'dark' : 'light',
+    theme: 'light',
     digitSize: 'normal',
     leftHanded: false,
   };

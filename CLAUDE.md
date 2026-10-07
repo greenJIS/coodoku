@@ -83,7 +83,7 @@ Single-page static app. All state is client-side.
 - **Reset puzzle / New game** in the Pause modal need a second tap to confirm.
 - **Settings** (persisted): game name, difficulty, mistake check (instant/off), auto-remove notes, highlight peers,
   highlight same digits, show remaining count, show timer, sound + volume, vibration, reduce motion (defaults from
-  `prefers-reduced-motion`), theme (light/dark), digit size, left-handed layout. Stats: solved count and best time per
+  `prefers-reduced-motion`), theme (light/dark, light by default whatever the OS prefers), digit size, left-handed layout. Stats: solved count and best time per
   difficulty, reset with a two-tap confirm.
 
 ### Board

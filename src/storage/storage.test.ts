@@ -19,6 +19,20 @@ describe('storage helpers and schema', () => {
     localStorage.clear();
   });
 
+  it('defaults to the light theme even when the system prefers dark', () => {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) => ({
+        matches: query.includes('prefers-color-scheme: dark'),
+      })),
+    );
+
+    expect(getDefaultSettings().theme).toBe('light');
+    expect(parseSettings({ theme: 'dark' }).theme).toBe('dark');
+
+    vi.unstubAllGlobals();
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
   });
