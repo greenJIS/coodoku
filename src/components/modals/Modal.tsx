@@ -15,6 +15,7 @@ export interface ModalProps {
   originRef?: RefObject<HTMLElement | null>;
   label: string;
   className?: string;
+  backdropClassName?: string;
   children: ReactNode;
   closeOnBackdropClick?: boolean;
 }
@@ -28,6 +29,7 @@ export function Modal({
   originRef,
   label,
   className = '',
+  backdropClassName = 'bg-[#1c1b1a]/40',
   children,
   closeOnBackdropClick = true,
 }: ModalProps) {
@@ -162,7 +164,7 @@ export function Modal({
           onClose();
         }
       }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1c1b1a]/40 animate-fade-in"
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in ${backdropClassName}`}
     >
       <div
         ref={dialogRef}
