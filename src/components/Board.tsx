@@ -133,7 +133,7 @@ export function Board({ className = '' }: BoardProps) {
           className="absolute inset-0 z-30 bg-cream-50/70 dark:bg-paper/70 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 animate-pulse"
         >
           <div className="w-12 h-12 rounded-full border-4 border-brand-300 border-t-brand-600 animate-spin" />
-          <span className="font-bold text-[14px] text-slate-500">
+          <span className="text-[14px] text-slate-500">
             Generating puzzle...
           </span>
         </div>

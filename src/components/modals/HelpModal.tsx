@@ -75,14 +75,14 @@ function MiniGrid({ cells }: { cells: MiniCell[] }) {
       {cells.map((c, i) => (
         <div
           key={i}
-          className={`relative grid place-items-center text-[24px] font-medium ${
+          className={`relative grid place-items-center text-[29px] ${
             c.hi ? 'bg-[#ffe9b8] dark:bg-cream-50' : 'bg-white dark:bg-cream-50'
           }`}
         >
           {c.v ? (
             c.v
           ) : c.n ? (
-            <em className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 not-italic text-[9px] font-semibold text-slate-500">
+            <em className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 not-italic text-[11px] text-slate-500">
               {NOTE_DIGITS.map((k) => (
                 <i key={k} className="not-italic grid place-items-center">
                   {c.n?.includes(k) ? k : ''}
@@ -123,7 +123,7 @@ export function HelpModal({ open, onClose, topic = 'notes' }: HelpModalProps) {
         />
       </div>
 
-      <h3 className="text-[20px] font-bold text-ink-900 mb-1">{page.title}</h3>
+      <h3 className="text-[24px] text-ink-900 mb-1">{page.title}</h3>
 
       {page.hearts ? (
         <HeartRow hearts={3} className="justify-center mt-[22px] mb-6" />
@@ -131,9 +131,7 @@ export function HelpModal({ open, onClose, topic = 'notes' }: HelpModalProps) {
         <MiniGrid cells={page.grid ?? []} />
       )}
 
-      <p className="text-[14px] font-semibold leading-[1.45] text-slate-500">
-        {page.text}
-      </p>
+      <p className="text-[17px] leading-[1.45] text-slate-500">{page.text}</p>
 
       {pages.length > 1 && (
         <div className="flex items-center justify-center gap-[14px] mt-[14px]">

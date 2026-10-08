@@ -31,9 +31,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const [isFocused, setIsFocused] = useState(false);
 
     const sizeClasses = {
-      sm: 'w-[38px] h-[38px] text-[18px] shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]',
-      md: 'w-[48px] h-[48px] text-[22px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
-      lg: 'w-[54px] h-[54px] text-[24px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
+      sm: 'w-[38px] h-[38px] text-[22px] shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]',
+      md: 'w-[48px] h-[48px] text-[26px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
+      lg: 'w-[54px] h-[54px] text-[29px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
     }[size];
 
     let variantClasses =
@@ -75,7 +75,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         {showTooltip && (
           <span
             role="tooltip"
-            className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[12px] font-bold rounded-md bg-ink-900 text-cream-50 whitespace-nowrap shadow-md pointer-events-none z-50 animate-pop"
+            className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[14px] rounded-md bg-ink-900 text-cream-50 whitespace-nowrap shadow-md pointer-events-none z-50 animate-pop"
           >
             {tooltipText}
           </span>

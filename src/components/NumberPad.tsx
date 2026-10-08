@@ -67,7 +67,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             {showRemaining && (
               <span
                 aria-hidden="true"
-                className="absolute right-2.5 bottom-2 font-sans font-bold text-[11px] text-slate-500"
+                className="absolute right-2.5 bottom-2 font-sans text-[11px] text-slate-500"
               >
                 {count}
               </span>

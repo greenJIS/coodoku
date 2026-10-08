@@ -137,8 +137,8 @@ Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
   preview, not Tailwind's material curve. Keyframes (`pop`, `ring`, `selpulse`, `shake`, `wave`, `hit`, `modalIn`,
   `modalOut`) copy the preview's timings. `Modal` stays mounted 240ms after `open` turns false so the exit plays.
 - **Breakpoint:** the preview's `max-width: 860px` is inclusive, so use the `narrow:` variant, not `max-[860px]:`.
-- **Fonts:** Nunito (UI) and Patrick Hand (digits, timer), self-hosted through the `@fontsource` packages imported in
-  `src/main.tsx`. Color and font tokens live in the `@theme {}` block of `src/index.css`.
+- **Fonts:** Patrick Hand everywhere (digits, timer and UI; one weight, no bold), self-hosted through the `@fontsource`
+  package imported in `src/main.tsx`. Color and font tokens live in the `@theme {}` block of `src/index.css`.
 - **Icons:** own line icons (stroke 2–3, round caps). A small otter mascot beside the game name.
 - **Layout:** board left, number pad right; header has home / name / settings, then difficulty / hearts / timer + pause.
   Under 860px the pad stacks below the board.

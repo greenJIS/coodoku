@@ -35,10 +35,8 @@ export function GameOverModal({
       label="Game Over"
       className={CARD_CLASS}
     >
-      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">
-        Oh no, out of tries
-      </h2>
-      <p className="text-slate-500 font-semibold mb-4">
+      <h2 className="text-[34px] text-ink-900 mb-1.5">Oh no, out of tries</h2>
+      <p className="text-slate-500 mb-4">
         No worries, it happens. Take another go? &middot; {timeStr}
       </p>
 

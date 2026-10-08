@@ -91,10 +91,8 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
         </div>
       )}
 
-      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">
-        Nicely done!
-      </h2>
-      <p className="text-slate-500 font-semibold mb-4">{message}</p>
+      <h2 className="text-[34px] text-ink-900 mb-1.5">Nicely done!</h2>
+      <p className="text-slate-500 mb-4">{message}</p>
 
       <button
         type="button"

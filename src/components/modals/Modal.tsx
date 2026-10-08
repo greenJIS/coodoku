@@ -20,7 +20,7 @@ export const CARD_CLASS =
 
 /** Flat pill button used inside card modals. */
 export const CARD_BUTTON =
-  'px-[22px] py-2.5 rounded-full border-0 font-bold cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
+  'px-[22px] py-2.5 rounded-full border-0 cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
 
 export interface ModalProps {
   open: boolean;

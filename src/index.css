@@ -60,9 +60,9 @@
   --color-ok: #10b981;
   --color-error: #e11d48;
 
-  /* Typography — self-hosted via @fontsource */
-  --font-sans: 'Nunito Variable', system-ui, -apple-system, sans-serif;
-  --font-hand: 'Patrick Hand', 'Nunito Variable', system-ui, sans-serif;
+  /* Typography — self-hosted via @fontsource. Patrick Hand has one weight (400). */
+  --font-sans: 'Patrick Hand', system-ui, -apple-system, sans-serif;
+  --font-hand: 'Patrick Hand', system-ui, -apple-system, sans-serif;
 
   /* Animations */
   --default-transition-timing-function: ease;
@@ -286,6 +286,7 @@
   }
 
   body {
+    font-synthesis: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }

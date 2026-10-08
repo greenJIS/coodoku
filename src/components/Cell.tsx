@@ -130,7 +130,7 @@ export const Cell = memo(function Cell({
 
       {/* 3x3 Notes subgrid */}
       {value === 0 && notes !== 0 && (
-        <div className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 pointer-events-none select-none text-[calc(min(86vw,66vh,600px)/46)] font-semibold text-slate-500 leading-none">
+        <div className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 pointer-events-none select-none text-[calc(min(86vw,66vh,600px)/46)] text-slate-500 leading-none">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
             <span key={d} className="grid place-items-center">
               {hasNote(notes, d) ? d : ''}

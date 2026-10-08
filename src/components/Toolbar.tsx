@@ -47,7 +47,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         aria-label="Undo"
         disabled={isUndoDisabled}
         onClick={undo}
-        className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-bold text-[12px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none"
+        className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 text-[14px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none"
       >
         <UndoIcon size={22} className="text-board-line dark:text-ink-600" />
         <span>Undo</span>
@@ -59,7 +59,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         aria-label="Erase"
         disabled={isEraseDisabled}
         onClick={erase}
-        className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-bold text-[12px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none"
+        className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 text-[14px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none"
       >
         <EraseIcon size={22} className="text-board-line dark:text-ink-600" />
         <span>Erase</span>
@@ -72,7 +72,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
           aria-label={`Hint, ${hintsLeft} remaining`}
           disabled={isHintDisabled}
           onClick={hint}
-          className={`flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-bold text-[12px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none ${hintsLeft <= 0 ? 'opacity-40' : ''}`}
+          className={`flex-1 flex flex-col items-center gap-1 py-2.5 px-1.5 rounded-2xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 text-[14px] shadow-[0_4px_0_var(--color-edge)] cursor-pointer transition-transform duration-[90ms] hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)] disabled:cursor-default disabled:pointer-events-none disabled:transform-none ${hintsLeft <= 0 ? 'opacity-40' : ''}`}
         >
           <HintIcon size={22} className="text-brand-600" />
           <span>Hint x{hintsLeft}</span>
@@ -83,7 +83,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
             type="button"
             aria-label="About hints"
             onClick={onAboutHint}
-            className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white font-extrabold text-[17px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-100"
+            className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white text-[20px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-100"
           >
             ?
           </button>

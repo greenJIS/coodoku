@@ -1,4 +1,3 @@
-import '@fontsource-variable/nunito';
 import '@fontsource/patrick-hand';
 import './index.css';
 

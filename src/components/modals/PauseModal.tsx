@@ -74,8 +74,8 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
       backdropClassName="bg-[#1c1b1a]/90 backdrop-blur-[16px]"
       className={CARD_CLASS}
     >
-      <h2 className="text-[28px] font-bold text-ink-900 mb-1.5">Paused</h2>
-      <p className="text-slate-500 font-semibold mb-4">
+      <h2 className="text-[34px] text-ink-900 mb-1.5">Paused</h2>
+      <p className="text-slate-500 mb-4">
         Your board is hidden until you're back.
       </p>
 

@@ -50,7 +50,7 @@ export function Header({
           className="cursor-default hover:border-edge hover:shadow-[0_4px_0_var(--color-edge)] active:translate-y-0"
         />
 
-        <div className="flex items-center gap-2.5 font-extrabold text-[24px] text-ink-900 tracking-[-0.01em]">
+        <div className="flex items-center gap-2.5 text-[29px] text-ink-900 tracking-[-0.01em]">
           <Otter />
           <span className="underline decoration-wavy decoration-brand-500 decoration-2 underline-offset-[7px]">
             {displayName}
@@ -67,7 +67,7 @@ export function Header({
       </div>
 
       {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
-      <div className="grid grid-cols-1 min-[861px]:grid-cols-[1fr_auto_1fr] items-center justify-items-center min-[861px]:justify-items-stretch gap-y-1.5 w-full mb-2.5 text-slate-500 font-semibold text-[14px]">
+      <div className="grid grid-cols-1 min-[861px]:grid-cols-[1fr_auto_1fr] items-center justify-items-center min-[861px]:justify-items-stretch gap-y-1.5 w-full mb-2.5 text-slate-500 text-[17px]">
         {/* Difficulty indicator (left) */}
         <div className="min-[861px]:justify-self-start order-2 min-[861px]:order-1">
           <span>Difficulty </span>

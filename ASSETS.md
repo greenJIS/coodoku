@@ -19,12 +19,11 @@ redistribution.
 
 | Asset | Package / Source | Author / Creator | License |
 | --- | --- | --- | --- |
-| Nunito Variable | `@fontsource-variable/nunito` | Vernon Adams | SIL Open Font License 1.1 (OFL-1.1) |
 | Patrick Hand | `@fontsource/patrick-hand` | Patrick Wagesreiter | SIL Open Font License 1.1 (OFL-1.1) |
 
 ## Licenses
 
 ### SIL Open Font License (OFL-1.1)
 
-The fonts Nunito and Patrick Hand are licensed under the SIL Open Font License, Version 1.1.
+The font Patrick Hand is licensed under the SIL Open Font License, Version 1.1.
 The license allows using, modifying, and redistributing the fonts freely, provided the fonts are not sold on their own.
