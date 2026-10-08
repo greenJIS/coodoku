@@ -81,6 +81,9 @@
     cubic-bezier(0.2, 0.9, 0.3, 1);
   --animate-fall: fall linear forwards;
   --animate-shimmer: shimmer 1.5s infinite linear;
+  --animate-bob: bob 2.6s ease-in-out infinite;
+  --animate-mini-fill: miniFill 2.8s ease infinite both;
+  --animate-slide: slide 1.4s ease-in-out infinite;
 
   @keyframes pop {
     0% {
@@ -246,6 +249,42 @@
     }
     100% {
       background-position: 200% 0;
+    }
+  }
+
+  @keyframes bob {
+    50% {
+      transform: translateY(-6px) rotate(-2deg);
+    }
+  }
+
+  @keyframes miniFill {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    8% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+    14%,
+    78% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    92%,
+    100% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+
+  @keyframes slide {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(250%);
     }
   }
 }
