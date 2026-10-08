@@ -338,6 +338,11 @@
   transition: none !important;
 }
 
+[data-motion='reduced'] .lift:hover,
+[data-motion='reduced'] .lift:active {
+  translate: none; /* Tailwind v4 translate utilities set `translate`, not `transform` */
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root:not([data-motion='normal']) *,
   :root:not([data-motion='normal']) *::before,
