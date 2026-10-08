@@ -7,6 +7,7 @@ import { engineClient, type EngineGenerator } from './engine';
 import { useGameStore } from './game';
 import { useSettingsStore } from './settings';
 import { useStatsStore } from './stats';
+import { useViewStore } from './view';
 
 // Valid 9x9 canonical solution
 const VALID_SOLUTION_ARRAY: number[] = [
@@ -63,6 +64,7 @@ describe('game store', () => {
       pendingDifficulty: null,
       newBest: false,
     });
+    useViewStore.setState({ view: 'loading' });
 
     fakeGenerator = vi.fn(async (request: GenerateRequest) => {
       return makeFakePuzzle(request.difficulty);
@@ -303,20 +305,63 @@ describe('game store', () => {
     expect(flushed?.values[2]).toBe(3);
   });
 
-  it('boot loads valid saved game paused, or starts new game', async () => {
-    // Case 1: valid saved game exists
+  it('boot restores a saved game paused and does not generate', async () => {
     const mockGame = createGame(makeFakePuzzle('hard'), 'Saved Otter');
     writeKey(GAME_KEY, mockGame);
 
     await useGameStore.getState().boot();
     expect(useGameStore.getState().game?.name).toBe('Saved Otter');
     expect(useGameStore.getState().game?.difficulty).toBe('hard');
-    expect(useGameStore.getState().paused).toBe(true); // resumes paused
+    expect(useGameStore.getState().paused).toBe(true);
+  });
 
-    // Case 2: no saved game
+  it('boot with no save leaves the game empty', async () => {
     localStorage.clear();
     useGameStore.setState({ game: null });
     await useGameStore.getState().boot();
-    expect(useGameStore.getState().game).not.toBeNull();
+    expect(useGameStore.getState().game).toBeNull();
+  });
+
+  it('boot ignores a won or lost save', async () => {
+    const won = {
+      ...createGame(makeFakePuzzle('easy'), 'Old'),
+      status: 'won' as const,
+    };
+    writeKey(GAME_KEY, won);
+    useGameStore.setState({ game: null });
+    await useGameStore.getState().boot();
+    expect(useGameStore.getState().game).toBeNull();
+  });
+
+  it('startGame generates, then moves to the game view', async () => {
+    useViewStore.setState({ view: 'home' });
+    await useGameStore.getState().startGame('medium');
+    expect(useGameStore.getState().game?.difficulty).toBe('medium');
+    expect(useViewStore.getState().view).toBe('game');
+  });
+
+  it('startGame stays on home and keeps the old game when generation fails', async () => {
+    const saved = createGame(makeFakePuzzle('easy'), 'Keeper');
+    useGameStore.setState({ game: saved });
+    useViewStore.setState({ view: 'home' });
+    engineClient.setGenerator(async () => {
+      throw new Error('boom');
+    });
+    await useGameStore.getState().startGame('hard');
+    expect(useViewStore.getState().view).toBe('home');
+    expect(useGameStore.getState().game).toBe(saved);
+    expect(useGameStore.getState().error).toBe('boom');
+  });
+
+  it('exitToHome saves, pauses and goes home', () => {
+    useGameStore.setState({
+      game: createGame(makeFakePuzzle('easy'), 'Away'),
+      paused: false,
+    });
+    useViewStore.setState({ view: 'game' });
+    useGameStore.getState().exitToHome();
+    expect(useGameStore.getState().paused).toBe(true);
+    expect(useViewStore.getState().view).toBe('home');
+    expect(readKey(GAME_KEY, parse)?.name).toBe('Away');
   });
 });

@@ -23,6 +23,7 @@ import { GAME_KEY, readKey, removeKey, writeKey } from '../storage/storage';
 import { engineClient } from './engine';
 import { useSettingsStore } from './settings';
 import { useStatsStore } from './stats';
+import { useViewStore } from './view';
 
 export interface GameStore {
   game: GameState | null;
@@ -50,6 +51,8 @@ export interface GameStore {
   renameGame: (name: string) => void;
 
   newGame: (difficulty?: Difficulty) => Promise<void>;
+  startGame: (difficulty: Difficulty) => Promise<void>;
+  exitToHome: () => void;
   prefetch: () => Promise<void>;
   retry: () => void;
   requestDifficulty: (difficulty: Difficulty) => void;
@@ -468,6 +471,21 @@ export const useGameStore = create<GameStore>((set, get) => ({
     }
   },
 
+  startGame: async (difficulty) => {
+    const before = get().game;
+    await get().newGame(difficulty);
+    const { game, error } = get();
+    if (error === null && game !== before) {
+      useViewStore.getState().goGame();
+    }
+  },
+
+  exitToHome: () => {
+    get().flushSave();
+    set({ paused: true });
+    useViewStore.getState().goHome();
+  },
+
   prefetch: async () => {
     const targetDiff = useSettingsStore.getState().difficulty;
 
@@ -589,7 +607,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       return;
     }
 
-    await get().newGame(useSettingsStore.getState().difficulty);
+    void get().prefetch();
   },
 
   flushSave: () => {
