@@ -1,3 +1,4 @@
+export * from './AboutModal';
 export * from './ConfirmDifficultyModal';
 export * from './GameOverModal';
 export * from './HelpModal';

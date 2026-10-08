@@ -4,7 +4,7 @@ import { HeartRow } from '../HeartRow';
 import { IconButton } from '../ui';
 import { Modal } from './Modal';
 
-export type HelpTopic = 'notes' | 'hint';
+export type HelpTopic = 'notes' | 'hint' | 'rules';
 
 export interface HelpModalProps {
   open: boolean;
@@ -26,6 +26,18 @@ interface HelpSlide {
 }
 
 const HELP: Record<HelpTopic, HelpSlide[]> = {
+  rules: [
+    {
+      title: 'How to play',
+      grid: [{ v: 5 }, { v: 3 }, {}, {}, { v: 7 }, {}, { v: 6 }, {}, {}],
+      text: 'Fill every row, column, and 3x3 box with the digits 1 to 9, once each. Every puzzle has exactly one answer and never needs guessing.',
+    },
+    {
+      title: 'Five hearts',
+      hearts: true,
+      text: 'A wrong digit costs a heart. Lose all five and the game ends. Harder tiers need trickier techniques, not fewer clues.',
+    },
+  ],
   notes: [
     {
       title: 'Not sure yet?',
