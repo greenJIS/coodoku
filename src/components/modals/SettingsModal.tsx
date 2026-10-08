@@ -5,6 +5,7 @@ import { formatTime } from '../../lib/time';
 import { useGameStore } from '../../store/game';
 import { useSettingsStore } from '../../store/settings';
 import { useStatsStore } from '../../store/stats';
+import { useViewStore } from '../../store/view';
 import { CloseIcon, DiceIcon } from '../icons';
 import { IconButton, Segmented, Slider, Tabs, Toggle } from '../ui';
 import { ConfirmDifficultyModal } from './ConfirmDifficultyModal';
@@ -30,6 +31,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const settingsName = useSettingsStore((s) => s.name);
   const renameGame = useGameStore((s) => s.renameGame);
   const gameName = useGameStore((s) => s.game?.name);
+  const view = useViewStore((s) => s.view);
   const currentDiff = useSettingsStore((s) => s.difficulty);
   const mistakeCheck = useSettingsStore((s) => s.mistakeCheck);
   const setMistakeCheck = useSettingsStore((s) => s.setMistakeCheck);
@@ -201,30 +203,32 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 </div>
               </div>
 
-              <div>
-                <div className="text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
-                  Difficulty
+              {view === 'game' && (
+                <div>
+                  <div className="text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
+                    Difficulty
+                  </div>
+                  <div
+                    id="difficultySelector"
+                    className="flex flex-wrap gap-1.5 mb-1"
+                  >
+                    {DIFFICULTIES.map((d) => (
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => requestDifficulty(d)}
+                        className={`px-3 py-1 rounded-full border text-[14px] cursor-pointer transition-colors ${
+                          activeDiff === d
+                            ? 'bg-brand-500 border-brand-500 text-brand-900'
+                            : 'border-[#e4e2de] bg-white/60 dark:bg-[#3a2f1e] text-slate-500 hover:border-brand-500'
+                        }`}
+                      >
+                        {d.charAt(0).toUpperCase() + d.slice(1)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div
-                  id="difficultySelector"
-                  className="flex flex-wrap gap-1.5 mb-1"
-                >
-                  {DIFFICULTIES.map((d) => (
-                    <button
-                      key={d}
-                      type="button"
-                      onClick={() => requestDifficulty(d)}
-                      className={`px-3 py-1 rounded-full border text-[14px] cursor-pointer transition-colors ${
-                        activeDiff === d
-                          ? 'bg-brand-500 border-brand-500 text-brand-900'
-                          : 'border-[#e4e2de] bg-white/60 dark:bg-[#3a2f1e] text-slate-500 hover:border-brand-500'
-                      }`}
-                    >
-                      {d.charAt(0).toUpperCase() + d.slice(1)}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              )}
 
               <div>
                 <div className="text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">

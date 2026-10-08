@@ -2,12 +2,14 @@ import { renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useGameStore } from '../store/game';
 import { useSettingsStore } from '../store/settings';
+import { useViewStore } from '../store/view';
 import { modalStack } from './modalStack';
 import { useKeyboard } from './useKeyboard';
 
 describe('useKeyboard', () => {
   beforeEach(() => {
     modalStack.clear();
+    useViewStore.setState({ view: 'game' });
     useSettingsStore.setState({ showTimer: true });
     useGameStore.setState({
       game: { status: 'playing' } as never,

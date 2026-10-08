@@ -9,6 +9,8 @@ import { engineClient } from './store/engine';
 import { clearPrefetchCache, useGameStore } from './store/game';
 import { useSettingsStore } from './store/settings';
 import { useStatsStore } from './store/stats';
+import { useViewStore } from './store/view';
+import { enterGame } from './test/helpers';
 import { App } from './App';
 
 const VALID_SOLUTION_ARRAY: number[] = [
@@ -68,6 +70,7 @@ describe('App full integration test', () => {
       pendingDifficulty: null,
       newBest: false,
     });
+    useViewStore.setState({ view: 'loading' });
     document.body.innerHTML = '';
   });
 
@@ -82,7 +85,7 @@ describe('App full integration test', () => {
     async () => {
       engineClient.setGenerator(async () => makeNearlySolvedPuzzle([1]));
       render(<App />);
-      await waitFor(() => expect(useGameStore.getState().game).not.toBeNull());
+      await enterGame();
 
       fireEvent.click(screen.getByRole('button', { name: 'About notes' }));
       expect(
@@ -107,12 +110,7 @@ describe('App full integration test', () => {
     engineClient.setGenerator(async () => puzzle);
 
     render(<App />);
-
-    // Wait for boot to load game
-    await waitFor(() => {
-      expect(screen.getByText('Brave Otter')).toBeInTheDocument();
-      expect(screen.getByTestId('sudoku-board')).toBeInTheDocument();
-    });
+    await enterGame();
 
     // Cell 1 is empty initially
     const cell1 = screen.getAllByRole('gridcell')[1];
@@ -138,10 +136,7 @@ describe('App full integration test', () => {
     engineClient.setGenerator(async () => puzzle);
 
     render(<App />);
-    await waitFor(() => {
-      expect(useGameStore.getState().generating).toBe(false);
-      expect(useGameStore.getState().game).not.toBeNull();
-    });
+    await enterGame();
 
     // Set hearts to 1
     let game = useGameStore.getState().game!;
@@ -167,10 +162,7 @@ describe('App full integration test', () => {
     engineClient.setGenerator(async () => puzzle);
 
     render(<App />);
-    await waitFor(() => {
-      expect(useGameStore.getState().generating).toBe(false);
-      expect(useGameStore.getState().game).not.toBeNull();
-    });
+    await enterGame();
 
     // Select cell 1 and place correct digit 2
     const cell1 = screen.getAllByRole('gridcell')[1];
@@ -201,6 +193,7 @@ describe('App full integration test', () => {
 
     // Boot app
     render(<App />);
+    await enterGame();
 
     // Resumes in paused state with Pause modal open
     await waitFor(() => {

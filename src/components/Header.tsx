@@ -26,6 +26,7 @@ export function Header({
   className = '',
 }: HeaderProps) {
   const game = useGameStore((s) => s.game);
+  const exitToHome = useGameStore((s) => s.exitToHome);
   const settingsName = useSettingsStore((s) => s.name);
   const settingsDiff = useSettingsStore((s) => s.difficulty);
   const showTimer = useSettingsStore((s) => s.showTimer);
@@ -45,9 +46,8 @@ export function Header({
         <IconButton
           icon={<HomeIcon />}
           label="Home"
-          aria-disabled="true"
-          onClick={(e) => e.preventDefault()}
-          className="cursor-default hover:border-edge hover:shadow-[0_4px_0_var(--color-edge)] active:translate-y-0"
+          tooltip="Home"
+          onClick={exitToHome}
         />
 
         <div className="flex items-center gap-2.5 text-[29px] text-ink-900 tracking-[-0.01em]">

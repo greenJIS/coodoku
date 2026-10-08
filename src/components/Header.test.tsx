@@ -5,6 +5,7 @@ import { createGame } from '../game/cells';
 import { formatTime } from '../lib/time';
 import { useGameStore } from '../store/game';
 import { useSettingsStore } from '../store/settings';
+import { useViewStore } from '../store/view';
 import { Header } from './Header';
 import { HeartRow } from './HeartRow';
 import { Timer } from './Timer';
@@ -20,6 +21,7 @@ const samplePuzzle: Puzzle = {
 
 describe('Header, HeartRow, and Timer', () => {
   beforeEach(() => {
+    useViewStore.setState({ view: 'game' });
     const game = createGame(samplePuzzle, 'Clever Otter');
     useGameStore.setState({
       game,
@@ -32,10 +34,13 @@ describe('Header, HeartRow, and Timer', () => {
   });
 
   describe('Header', () => {
-    it('renders inert Home button with aria-disabled', () => {
+    it('renders an enabled Home button that goes home', () => {
       render(<Header />);
       const homeBtn = screen.getByRole('button', { name: 'Home' });
-      expect(homeBtn).toHaveAttribute('aria-disabled', 'true');
+      expect(homeBtn).not.toHaveAttribute('aria-disabled');
+      fireEvent.click(homeBtn);
+      expect(useViewStore.getState().view).toBe('home');
+      expect(useGameStore.getState().paused).toBe(true);
     });
 
     it('renders Otter mascot and game name', () => {

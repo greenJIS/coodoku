@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Board } from './components/Board';
 import { Header } from './components/Header';
 import {
+  AboutModal,
   GameOverModal,
   HelpModal,
   type HelpTopic,
@@ -11,30 +12,42 @@ import {
 } from './components/modals';
 import { NotesSwitch } from './components/NotesSwitch';
 import { NumberPad } from './components/NumberPad';
+import { HomeScreen } from './components/screens/HomeScreen';
+import { LoadingScreen } from './components/screens/LoadingScreen';
 import { Toolbar } from './components/Toolbar';
 import { Toast } from './components/ui';
 import { useGameTimer } from './hooks/useGameTimer';
 import { useKeyboard } from './hooks/useKeyboard';
+import { useLoadingGate } from './hooks/useLoadingGate';
 import { useReducedMotion } from './hooks/useReducedMotion';
 import { useTheme } from './hooks/useTheme';
+import { loadUiFont } from './lib/fonts';
 import { useGameStore } from './store/game';
 import { useSettingsStore } from './store/settings';
+import { useViewStore } from './store/view';
 
 export function App() {
   const boot = useGameStore((s) => s.boot);
   const game = useGameStore((s) => s.game);
   const paused = useGameStore((s) => s.paused);
   const setPaused = useGameStore((s) => s.setPaused);
-  const newGame = useGameStore((s) => s.newGame);
+  const startGame = useGameStore((s) => s.startGame);
   const retry = useGameStore((s) => s.retry);
   const error = useGameStore((s) => s.error);
   const pendingDifficulty = useGameStore((s) => s.pendingDifficulty);
 
+  const view = useViewStore((s) => s.view);
+  const goHome = useViewStore((s) => s.goHome);
+
   const leftHanded = useSettingsStore((s) => s.leftHanded);
+  const difficulty = useSettingsStore((s) => s.difficulty);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [helpTopic, setHelpTopic] = useState<HelpTopic | null>(null);
   const helpOpen = helpTopic !== null;
+
+  const gate = useLoadingGate();
 
   // Mount core app hooks
   useKeyboard();
@@ -42,25 +55,33 @@ export function App() {
   useTheme();
   useReducedMotion();
 
-  // Call boot() once on mount
+  // Launch: restore any save and load the font, then open Home.
   useEffect(() => {
-    void boot();
-  }, [boot]);
+    void Promise.allSettled([loadUiFont(), boot()]).then(() => goHome());
+  }, [boot, goHome]);
 
   // Release the modal-induced pause in the same batch that closes the modal,
   // otherwise the Pause modal mounts for a render and re-pauses the game.
+  // Only in the game view: on Home, `Modal` itself pauses and unpauses around
+  // open and close, and Continue sets `paused: true` explicitly on the way in.
   const closeSettings = () => {
     setSettingsOpen(false);
-    if (!helpOpen && pendingDifficulty === null) setPaused(false);
+    if (view === 'game' && !helpOpen && pendingDifficulty === null) {
+      setPaused(false);
+    }
   };
   const closeHelp = () => {
     setHelpTopic(null);
-    if (!settingsOpen && pendingDifficulty === null) setPaused(false);
+    if (view === 'game' && !settingsOpen && pendingDifficulty === null) {
+      setPaused(false);
+    }
   };
 
-  const isWon = game?.status === 'won';
-  const isLost = game?.status === 'lost';
+  const inGame = view === 'game';
+  const isWon = inGame && game?.status === 'won';
+  const isLost = inGame && game?.status === 'lost';
   const isPauseOpen =
+    inGame &&
     paused &&
     !settingsOpen &&
     !helpOpen &&
@@ -69,34 +90,46 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center px-[18px] pt-[14px] pb-10 text-ink-900 transition-colors duration-200">
-      {/* Top Header */}
-      <Header
-        onOpenSettings={() => setSettingsOpen(true)}
-        onPause={() => setPaused(true)}
-      />
+      {view === 'home' && (
+        <HomeScreen
+          onOpenSettings={() => setSettingsOpen(true)}
+          onOpenHelp={() => setHelpTopic('rules')}
+          onOpenAbout={() => setAboutOpen(true)}
+        />
+      )}
 
-      {/* Main Playable Area: Board + Sidebar Controls */}
-      <main
-        className={`w-full max-w-[1040px] flex gap-[22px] min-[861px]:gap-11 items-center justify-center ${
-          leftHanded
-            ? 'flex-col min-[861px]:flex-row-reverse'
-            : 'flex-col min-[861px]:flex-row'
-        }`}
-      >
-        <div
-          className={`flex justify-center transition-[filter] duration-200 ${
-            isPauseOpen ? 'blur-sm select-none pointer-events-none' : ''
-          }`}
-        >
-          <Board />
-        </div>
+      {inGame && (
+        <>
+          {/* Top Header */}
+          <Header
+            onOpenSettings={() => setSettingsOpen(true)}
+            onPause={() => setPaused(true)}
+          />
 
-        <aside className="w-[min(88vw,380px)] min-[861px]:w-[300px] flex flex-col gap-[18px] items-center">
-          <NumberPad />
-          <NotesSwitch onHelp={() => setHelpTopic('notes')} />
-          <Toolbar onAboutHint={() => setHelpTopic('hint')} />
-        </aside>
-      </main>
+          {/* Main Playable Area: Board + Sidebar Controls */}
+          <main
+            className={`w-full max-w-[1040px] flex gap-[22px] min-[861px]:gap-11 items-center justify-center ${
+              leftHanded
+                ? 'flex-col min-[861px]:flex-row-reverse'
+                : 'flex-col min-[861px]:flex-row'
+            }`}
+          >
+            <div
+              className={`flex justify-center transition-[filter] duration-200 ${
+                isPauseOpen ? 'blur-sm select-none pointer-events-none' : ''
+              }`}
+            >
+              <Board />
+            </div>
+
+            <aside className="w-[min(88vw,380px)] min-[861px]:w-[300px] flex flex-col gap-[18px] items-center">
+              <NumberPad />
+              <NotesSwitch onHelp={() => setHelpTopic('notes')} />
+              <Toolbar onAboutHint={() => setHelpTopic('hint')} />
+            </aside>
+          </main>
+        </>
+      )}
 
       {/* Modals */}
       <SettingsModal open={settingsOpen} onClose={closeSettings} />
@@ -109,12 +142,14 @@ export function App() {
         topic={helpTopic ?? 'notes'}
       />
 
-      <WinModal open={isWon} onNewGame={() => void newGame()} />
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+
+      <WinModal open={isWon} onNewGame={() => void startGame(difficulty)} />
 
       <GameOverModal
         open={isLost}
         onRetry={retry}
-        onNewGame={() => void newGame()}
+        onNewGame={() => void startGame(difficulty)}
       />
 
       {/* Error Toast */}
@@ -122,9 +157,11 @@ export function App() {
         <Toast
           message={error}
           actionLabel="Retry"
-          onAction={() => void newGame()}
+          onAction={() => void startGame(difficulty)}
         />
       )}
+
+      {gate.show && <LoadingScreen leaving={gate.leaving} />}
     </div>
   );
 }

@@ -603,7 +603,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
         pendingDifficulty: null,
         newBest: false,
       });
-      void get().prefetch();
       return;
     }
 

@@ -7,6 +7,7 @@ import { modalStack } from '../../hooks/modalStack';
 import { useGameStore } from '../../store/game';
 import { useSettingsStore } from '../../store/settings';
 import { useStatsStore } from '../../store/stats';
+import { useViewStore } from '../../store/view';
 import {
   ConfirmDifficultyModal,
   GameOverModal,
@@ -39,6 +40,7 @@ const samplePuzzle: Puzzle = {
 describe('Game Modals', () => {
   beforeEach(() => {
     modalStack.clear();
+    useViewStore.setState({ view: 'game' });
     const game = createGame(samplePuzzle, 'Brave Otter');
     useGameStore.setState({
       game,

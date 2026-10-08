@@ -1,11 +1,13 @@
 import { renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { useGameStore } from '../store/game';
+import { useViewStore } from '../store/view';
 import { useGameTimer } from './useGameTimer';
 
 describe('useGameTimer', () => {
   beforeEach(() => {
     vi.useFakeTimers();
+    useViewStore.setState({ view: 'game' });
     useGameStore.setState({
       game: { status: 'playing', elapsedMs: 0 } as never,
       paused: false,

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGameStore } from '../store/game';
+import { useViewStore } from '../store/view';
 
 export function useGameTimer(): void {
   useEffect(() => {
@@ -11,7 +12,13 @@ export function useGameTimer(): void {
       lastTime = now;
 
       const { game, paused } = useGameStore.getState();
-      if (paused || !game || game.status !== 'playing' || document.hidden) {
+      if (
+        paused ||
+        !game ||
+        game.status !== 'playing' ||
+        document.hidden ||
+        useViewStore.getState().view !== 'game'
+      ) {
         return;
       }
 

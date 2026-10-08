@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { moveSelection } from '../game/queries';
 import { useGameStore } from '../store/game';
 import { useSettingsStore } from '../store/settings';
+import { useViewStore } from '../store/view';
 import { modalStack } from './modalStack';
 
 export function useKeyboard(): void {
@@ -21,6 +22,8 @@ export function useKeyboard(): void {
         modalStack.pop();
         return;
       }
+
+      if (useViewStore.getState().view !== 'game') return;
 
       if (
         modalStack.isOpen() ||
