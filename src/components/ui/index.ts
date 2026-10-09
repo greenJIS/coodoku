@@ -5,3 +5,4 @@ export * from './StickerButton';
 export * from './Tabs';
 export * from './Toast';
 export * from './Toggle';
+export * from './Tooltip';

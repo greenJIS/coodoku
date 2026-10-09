@@ -7,7 +7,7 @@ import { useSettingsStore } from '../../store/settings';
 import { useStatsStore } from '../../store/stats';
 import { useViewStore } from '../../store/view';
 import { CloseIcon, DiceIcon } from '../icons';
-import { IconButton, Segmented, Slider, Tabs, Toggle } from '../ui';
+import { IconButton, Segmented, Slider, Tabs, Toggle, Tooltip } from '../ui';
 import { ConfirmDifficultyModal } from './ConfirmDifficultyModal';
 import { Modal } from './Modal';
 
@@ -209,22 +209,23 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                       dark:bg-cream-100
                     "
                   />
-                  <button
-                    type="button"
-                    aria-label="Random name"
-                    title="Random name"
-                    onClick={handleRandomName}
-                    className="
-                      grid size-10.5 cursor-pointer place-items-center
-                      rounded-xl border-2 border-edge bg-cream-50 text-user
-                      shadow-[0_3px_0_var(--color-edge)]
-                      active:translate-y-0.5
-                      active:shadow-[0_1px_0_var(--color-edge)]
-                      dark:bg-cream-100
-                    "
-                  >
-                    <DiceIcon />
-                  </button>
+                  <Tooltip text="Random name" align="end">
+                    <button
+                      type="button"
+                      aria-label="Random name"
+                      onClick={handleRandomName}
+                      className="
+                        grid size-10.5 cursor-pointer place-items-center
+                        rounded-xl border-2 border-edge bg-cream-50 text-user
+                        shadow-[0_3px_0_var(--color-edge)]
+                        active:translate-y-0.5
+                        active:shadow-[0_1px_0_var(--color-edge)]
+                        dark:bg-cream-100
+                      "
+                    >
+                      <DiceIcon />
+                    </button>
+                  </Tooltip>
                 </div>
               </div>
 

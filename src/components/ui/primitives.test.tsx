@@ -163,7 +163,15 @@ describe('UI Primitives', () => {
   });
 
   describe('IconButton', () => {
-    it('renders with accessible label and shows tooltip on hover/focus', () => {
+    it('falls back to the label for the tooltip and has no native title', () => {
+      render(<IconButton icon={<GearIcon />} label="Close settings" />);
+      const button = screen.getByRole('button', { name: 'Close settings' });
+      expect(button).not.toHaveAttribute('title');
+      fireEvent.mouseEnter(button);
+      expect(screen.getByRole('tooltip')).toHaveTextContent('Close settings');
+    });
+
+    it('renders with accessible label and shows tooltip on hover only', () => {
       render(
         <IconButton
           icon={<GearIcon />}
@@ -174,7 +182,8 @@ describe('UI Primitives', () => {
 
       const button = screen.getByRole('button', { name: 'Settings' });
       expect(button).toBeInTheDocument();
-      expect(button).toHaveAttribute('title', 'Game Settings');
+      // The custom tooltip replaces the native one, so no double tooltip
+      expect(button).not.toHaveAttribute('title');
 
       // Tooltip is not visible before hover
       expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
@@ -189,9 +198,9 @@ describe('UI Primitives', () => {
       fireEvent.mouseLeave(button);
       expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
 
-      // Focus shows tooltip
+      // Focus alone never opens it (modals autofocus their first button)
       fireEvent.focus(button);
-      expect(screen.getByRole('tooltip')).toHaveTextContent('Game Settings');
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
     });
   });
 
