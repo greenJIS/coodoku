@@ -20,7 +20,11 @@ export function NumberPad({ className = '' }: NumberPadProps) {
     <div
       role="group"
       aria-label="Number pad"
-      className={`grid grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5 min-[861px]:gap-x-[18px] min-[861px]:gap-y-3.5 w-full ${className}`}
+      className={`
+        grid w-full grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5
+        min-[861px]:gap-x-4.5 min-[861px]:gap-y-3.5
+        ${className}
+      `}
     >
       {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => {
         const count = game ? remainingCount(game, digit) : 9;
@@ -39,25 +43,36 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             }
             disabled={isDisabled}
             onClick={() => enter(digit)}
-            className={`relative aspect-square px-1.5 py-px rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 font-hand text-[34px] leading-[normal] select-none narrow:w-16 narrow:justify-self-center cursor-pointer
-              shadow-[0_4px_0_var(--color-edge)] transition-[transform,box-shadow] duration-[90ms]
-              hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
-              active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]
-              focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-2
+            className={`
+              relative aspect-square cursor-pointer rounded-full border-2
+              border-edge bg-cream-50 px-1.5 py-px font-hand text-[34px]
+              leading-[normal] text-ink-900 shadow-[0_4px_0_var(--color-edge)]
+              transition-[transform,box-shadow] duration-90 select-none
+              hover:border-brand-600
+              hover:shadow-[0_4px_0_var(--color-brand-600)]
+              focus-visible:outline-3 focus-visible:outline-offset-2
+              focus-visible:outline-brand-400
+              active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
+              dark:bg-cream-100
+              narrow:w-16 narrow:justify-self-center
               ${
                 isDone
-                  ? 'opacity-30 pointer-events-none cursor-not-allowed'
+                  ? 'pointer-events-none cursor-not-allowed opacity-30'
                   : ''
               }
-              ${generating ? 'opacity-40 cursor-not-allowed' : ''}`}
+              ${generating ? 'cursor-not-allowed opacity-40' : ''}
+            `}
           >
             {/* Dotted ring, scales in when notes mode turns on */}
             <span
               aria-hidden="true"
               data-notes-ring={notesMode ? 'on' : 'off'}
-              className={`absolute inset-1 rounded-full pointer-events-none bg-center bg-no-repeat bg-size-[100%_100%] [transition:opacity_.2s,transform_.25s_cubic-bezier(.3,1.5,.5,1)] ${
-                notesMode ? 'opacity-100 scale-100' : 'opacity-0 scale-[.85]'
-              }`}
+              className={`
+                pointer-events-none absolute inset-1 rounded-full
+                bg-size-[100%_100%] bg-center bg-no-repeat
+                [transition:opacity_.2s,transform_.25s_cubic-bezier(.3,1.5,.5,1)]
+                ${notesMode ? 'scale-100 opacity-100' : 'scale-[.85] opacity-0'}
+              `}
               style={{ backgroundImage: NOTES_RING }}
             />
 
@@ -67,7 +82,10 @@ export function NumberPad({ className = '' }: NumberPadProps) {
             {showRemaining && (
               <span
                 aria-hidden="true"
-                className="absolute right-2.5 bottom-2 font-sans text-[11px] text-slate-500"
+                className="
+                  absolute right-2.5 bottom-2 font-sans text-[11px]
+                  text-slate-500
+                "
               >
                 {count}
               </span>

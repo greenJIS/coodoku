@@ -12,7 +12,13 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
   const toggleNotesMode = useGameStore((s) => s.toggleNotesMode);
 
   return (
-    <div className={`relative w-[72%] narrow:w-[62%] select-none ${className}`}>
+    <div
+      className={`
+        relative w-[72%] select-none
+        narrow:w-[62%]
+        ${className}
+      `}
+    >
       <button
         type="button"
         role="switch"
@@ -20,25 +26,47 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
         aria-label="Notes mode"
         disabled={generating}
         onClick={toggleNotesMode}
-        className={`relative block w-full h-[84px] p-0 rounded-full border-2 border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_4px_0_var(--color-edge)] cursor-pointer
-          focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-2
-          disabled:opacity-40 disabled:cursor-not-allowed`}
+        className={`
+          relative block h-21 w-full cursor-pointer rounded-full border-2
+          border-edge bg-cream-50 p-0 shadow-[0_4px_0_var(--color-edge)]
+          focus-visible:outline-3 focus-visible:outline-offset-2
+          focus-visible:outline-brand-400
+          disabled:cursor-not-allowed disabled:opacity-40
+          dark:bg-cream-100
+        `}
       >
         {/* Track groove */}
         <span
           aria-hidden="true"
-          className="absolute top-1/2 -translate-y-1/2 left-[50px] right-[50px] h-[16px] min-[861px]:h-[22px] rounded-full bg-brand-800 shadow-[inset_0_3px_0_var(--color-brand-900)]"
+          className="
+            absolute inset-x-12.5 top-1/2 h-4 -translate-y-1/2
+            rounded-full bg-brand-800
+            shadow-[inset_0_3px_0_var(--color-brand-900)]
+            min-[861px]:h-5.5
+          "
         />
 
         {/* Knob */}
         <span
           aria-hidden="true"
-          className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-[46px] min-[861px]:w-[54px] h-[46px] min-[861px]:h-[54px] rounded-full grid place-items-center border-2 [transition:left_.24s_cubic-bezier(.4,1.4,.5,1),background_.2s,color_.2s]
+          className={`
+            absolute top-1/2 z-10 grid size-11.5 -translate-1/2
+            place-items-center rounded-full border-2
+            [transition:left_.24s_cubic-bezier(.4,1.4,.5,1),background_.2s,color_.2s]
+            min-[861px]:size-13.5
             ${
               notesMode
-                ? 'left-[calc(100%-50px)] bg-brand-500 text-brand-900 border-[#b45309] shadow-[0_3px_0_#b45309]'
-                : 'left-[50px] bg-white dark:bg-[#4a3c25] text-board-line border-edge shadow-[0_3px_0_var(--color-edge)]'
-            }`}
+                ? `
+                  left-[calc(100%-50px)] border-[#b45309] bg-brand-500
+                  text-brand-900 shadow-[0_3px_0_#b45309]
+                `
+                : `
+                  left-12.5 border-edge bg-white text-board-line
+                  shadow-[0_3px_0_var(--color-edge)]
+                  dark:bg-[#4a3c25]
+                `
+            }
+          `}
         >
           <PencilIcon size={22} />
         </span>
@@ -50,7 +78,14 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
           type="button"
           aria-label="About notes"
           onClick={onHelp}
-          className="absolute -top-[3px] -right-[7px] z-20 w-[30px] h-[30px] rounded-full bg-brand-500 text-white text-[20px] leading-[30px] text-center border-0 shadow-[0_2px_0_var(--color-brand-700)] cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-100"
+          className="
+            absolute -top-0.75 -right-1.75 z-20 size-7.5 cursor-pointer
+            rounded-full border-0 bg-brand-500 text-center text-[20px]
+            leading-7.5 text-white shadow-[0_2px_0_var(--color-brand-700)]
+            transition-transform duration-100
+            hover:scale-110
+            active:scale-95
+          "
         >
           ?
         </button>

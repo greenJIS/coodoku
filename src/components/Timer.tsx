@@ -16,7 +16,11 @@ export function Timer({ elapsedMs: explicitMs, className = '' }: TimerProps) {
       role="timer"
       aria-label={`Elapsed time ${formatted}`}
       data-testid="game-timer"
-      className={`font-hand font-normal text-[40px] leading-[normal] tracking-[0.01em] text-ink-900 tabular-nums select-none ${className}`}
+      className={`
+        font-hand text-[40px] leading-[normal] font-normal tracking-[0.01em]
+        text-ink-900 tabular-nums select-none
+        ${className}
+      `}
     >
       {formatted}
     </span>

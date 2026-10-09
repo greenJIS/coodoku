@@ -40,9 +40,14 @@ export function Header({
   const activeDots = DIFFICULTY_LEVELS[actualDifficulty] ?? 1;
 
   return (
-    <header className={`w-full max-w-[1040px] select-none ${className}`}>
+    <header
+      className={`
+        w-full max-w-260 select-none
+        ${className}
+      `}
+    >
       {/* Row 1: Inert Home button, Otter + Name, Settings gear */}
-      <div className="flex items-center justify-between w-full mb-2">
+      <div className="mb-2 flex w-full items-center justify-between">
         <IconButton
           icon={<HomeIcon />}
           label="Home"
@@ -50,9 +55,19 @@ export function Header({
           onClick={exitToHome}
         />
 
-        <div className="flex items-center gap-2.5 text-[29px] text-ink-900 tracking-[-0.01em]">
+        <div
+          className="
+            flex items-center gap-2.5 text-[29px] tracking-[-0.01em]
+            text-ink-900
+          "
+        >
           <Otter />
-          <span className="underline decoration-wavy decoration-brand-500 decoration-2 underline-offset-[7px]">
+          <span
+            className="
+              underline decoration-brand-500 decoration-wavy decoration-2
+              underline-offset-[7px]
+            "
+          >
             {displayName}
           </span>
         </div>
@@ -67,21 +82,33 @@ export function Header({
       </div>
 
       {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
-      <div className="grid grid-cols-1 min-[861px]:grid-cols-[1fr_auto_1fr] items-center justify-items-center min-[861px]:justify-items-stretch gap-y-1.5 w-full mb-2.5 text-slate-500 text-[17px]">
+      <div
+        className="
+          mb-2.5 grid w-full grid-cols-1 items-center justify-items-center
+          gap-y-1.5 text-[17px] text-slate-500
+          min-[861px]:grid-cols-[1fr_auto_1fr] min-[861px]:justify-items-stretch
+        "
+      >
         {/* Difficulty indicator (left) */}
-        <div className="min-[861px]:justify-self-start order-2 min-[861px]:order-1">
+        <div
+          className="
+            order-2
+            min-[861px]:order-1 min-[861px]:justify-self-start
+          "
+        >
           <span>Difficulty </span>
           <span className="sr-only">{capitalizedDiff}</span>
           <span
             aria-hidden="true"
-            className="inline-flex gap-1 ml-1.5 align-middle"
+            className="ml-1.5 inline-flex gap-1 align-middle"
           >
             {[1, 2, 3, 4].map((dot) => (
               <i
                 key={dot}
-                className={`w-[9px] h-[9px] rounded-full ${
-                  dot <= activeDots ? 'bg-brand-500' : 'bg-slate-300'
-                }`}
+                className={`
+                  size-2.25 rounded-full
+                  ${dot <= activeDots ? 'bg-brand-500' : 'bg-slate-300'}
+                `}
               />
             ))}
           </span>
@@ -89,14 +116,23 @@ export function Header({
 
         {/* Hearts row (center) */}
         <div
-          className={`min-[861px]:justify-self-center order-1 min-[861px]:order-2 ${mistakeCheck ? '' : 'invisible'}`}
+          className={`
+            order-1
+            min-[861px]:order-2 min-[861px]:justify-self-center
+            ${mistakeCheck ? '' : `invisible`}
+          `}
         >
           <HeartRow />
         </div>
 
         {/* Timer & Pause button (right) - removed when showTimer is false */}
         {showTimer ? (
-          <div className="min-[861px]:justify-self-end flex items-center gap-3 order-3">
+          <div
+            className="
+              order-3 flex items-center gap-3
+              min-[861px]:justify-self-end
+            "
+          >
             <Timer />
             <IconButton
               id="pauseBtn"
@@ -108,7 +144,12 @@ export function Header({
             />
           </div>
         ) : (
-          <div className="hidden min-[861px]:block order-3" />
+          <div
+            className="
+              order-3 hidden
+              min-[861px]:block
+            "
+          />
         )}
       </div>
     </header>

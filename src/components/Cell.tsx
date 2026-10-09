@@ -112,17 +112,25 @@ export const Cell = memo(function Cell({
         animationDelay:
           waveStep === undefined ? undefined : `${waveStep * 45}ms`,
       }}
-      className={`relative grid place-items-center cursor-pointer select-none transition-[background-color] duration-[140ms] outline-none
+      className={`
+        relative grid cursor-pointer place-items-center
         shadow-[inset_0_0_0_1px_var(--color-hairline)]
-        focus-visible:z-20 focus-visible:outline-3 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px]
-        ${bgClasses} ${motionClasses}`}
+        transition-[background-color] duration-140 outline-none select-none
+        focus-visible:z-20 focus-visible:outline-3
+        focus-visible:-outline-offset-2 focus-visible:outline-brand-400
+        ${bgClasses}
+        ${motionClasses}
+      `}
     >
       {/* Digit value */}
       {value !== 0 && (
         <span
-          className={`leading-none select-none ${fontSizeClass} ${textClasses} ${
-            isJustEntered ? 'animate-pop' : ''
-          }`}
+          className={`
+            leading-none select-none
+            ${fontSizeClass}
+            ${textClasses}
+            ${isJustEntered ? 'animate-pop' : ''}
+          `}
         >
           {value}
         </span>
@@ -130,7 +138,13 @@ export const Cell = memo(function Cell({
 
       {/* 3x3 Notes subgrid */}
       {value === 0 && notes !== 0 && (
-        <div className="absolute inset-[2px] grid grid-cols-3 grid-rows-3 pointer-events-none select-none text-[calc(min(86vw,66vh,600px)/46)] text-slate-500 leading-none">
+        <div
+          className="
+            pointer-events-none absolute inset-0.5 grid grid-cols-3
+            grid-rows-3 text-[calc(min(86vw,66vh,600px)/46)] leading-none
+            text-slate-500 select-none
+          "
+        >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
             <span key={d} className="grid place-items-center">
               {hasNote(notes, d) ? d : ''}
@@ -143,7 +157,10 @@ export const Cell = memo(function Cell({
       {isSameDigit && !isJustEntered && value !== 0 && (
         <span
           aria-hidden="true"
-          className="absolute inset-[3px] border-[3px] border-match rounded-[14px_4px_14px_4px] pointer-events-none z-10 animate-ring"
+          className="
+            pointer-events-none absolute inset-0.75 z-10 animate-ring
+            rounded-[14px_4px_14px_4px] border-[3px] border-match
+          "
         />
       )}
 
@@ -151,7 +168,10 @@ export const Cell = memo(function Cell({
       {isJustEntered && value !== 0 && (
         <span
           aria-hidden="true"
-          className="absolute inset-[3px] border-[3px] border-ok rounded-full pointer-events-none z-10 animate-ring"
+          className="
+            pointer-events-none absolute inset-0.75 z-10 animate-ring
+            rounded-full border-[3px] border-ok
+          "
         />
       )}
     </div>

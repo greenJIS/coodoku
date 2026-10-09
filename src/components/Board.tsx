@@ -97,7 +97,11 @@ export function Board({ className = '' }: BoardProps) {
         gridTemplateColumns:
           'repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr))',
       }}
-      className={`relative grid shrink-0 bg-cream-50 border-[3px] border-board-line rounded-[14px] overflow-hidden shadow-[0_6px_0_#cdb58a] ${className}`}
+      className={`
+        relative grid shrink-0 overflow-hidden rounded-[14px] border-[3px]
+        border-board-line bg-cream-50 shadow-[0_6px_0_#cdb58a]
+        ${className}
+      `}
     >
       {/* 81 Sudoku cells */}
       {Array.from({ length: 81 }, (_, i) => (
@@ -108,31 +112,40 @@ export function Board({ className = '' }: BoardProps) {
       <div
         aria-hidden="true"
         style={{ gridArea: '1 / 4 / 12 / 5' }}
-        className="bg-board-line pointer-events-none z-10"
+        className="pointer-events-none z-10 bg-board-line"
       />
       <div
         aria-hidden="true"
         style={{ gridArea: '1 / 8 / 12 / 9' }}
-        className="bg-board-line pointer-events-none z-10"
+        className="pointer-events-none z-10 bg-board-line"
       />
       <div
         aria-hidden="true"
         style={{ gridArea: '4 / 1 / 5 / 12' }}
-        className="bg-board-line pointer-events-none z-10"
+        className="pointer-events-none z-10 bg-board-line"
       />
       <div
         aria-hidden="true"
         style={{ gridArea: '8 / 1 / 9 / 12' }}
-        className="bg-board-line pointer-events-none z-10"
+        className="pointer-events-none z-10 bg-board-line"
       />
 
       {/* Generating state skeleton overlay */}
       {generating && (
         <div
           data-testid="board-skeleton"
-          className="absolute inset-0 z-30 bg-cream-50/70 dark:bg-paper/70 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 animate-pulse"
+          className="
+            absolute inset-0 z-30 flex animate-pulse flex-col items-center
+            justify-center gap-3 bg-cream-50/70 backdrop-blur-[2px]
+            dark:bg-paper/70
+          "
         >
-          <div className="w-12 h-12 rounded-full border-4 border-brand-300 border-t-brand-600 animate-spin" />
+          <div
+            className="
+              size-12 animate-spin rounded-full border-4 border-brand-300
+              border-t-brand-600
+            "
+          />
           <span className="text-[14px] text-slate-500">
             Generating puzzle...
           </span>

@@ -90,9 +90,11 @@ export function App() {
 
   return (
     <div
-      className={`flex flex-col items-center px-[18px] pt-[14px] text-ink-900 transition-colors duration-200 ${
-        view === 'home' ? 'h-dvh overflow-hidden pb-3' : 'min-h-screen pb-10'
-      }`}
+      className={`
+        flex flex-col items-center px-4.5 pt-3.5 text-ink-900
+        transition-colors duration-200
+        ${view === 'home' ? 'h-dvh overflow-hidden pb-3' : 'min-h-screen pb-10'}
+      `}
     >
       {view === 'home' && (
         <HomeScreen
@@ -112,21 +114,37 @@ export function App() {
 
           {/* Main Playable Area: Board + Sidebar Controls */}
           <main
-            className={`w-full max-w-[1040px] flex gap-[22px] min-[861px]:gap-11 items-center justify-center ${
-              leftHanded
-                ? 'flex-col min-[861px]:flex-row-reverse'
-                : 'flex-col min-[861px]:flex-row'
-            }`}
+            className={`
+              flex w-full max-w-260 items-center justify-center gap-5.5
+              min-[861px]:gap-11
+              ${
+                leftHanded
+                  ? `
+                    flex-col
+                    min-[861px]:flex-row-reverse
+                  `
+                  : `
+                    flex-col
+                    min-[861px]:flex-row
+                  `
+              }
+            `}
           >
             <div
-              className={`flex justify-center transition-[filter] duration-200 ${
-                isPauseOpen ? 'blur-sm select-none pointer-events-none' : ''
-              }`}
+              className={`
+                flex justify-center transition-[filter] duration-200
+                ${isPauseOpen ? 'pointer-events-none blur-sm select-none' : ''}
+              `}
             >
               <Board />
             </div>
 
-            <aside className="w-[min(88vw,380px)] min-[861px]:w-[300px] flex flex-col gap-[18px] items-center">
+            <aside
+              className="
+                flex w-[min(88vw,380px)] flex-col items-center gap-4.5
+                min-[861px]:w-75
+              "
+            >
               <NumberPad />
               <NotesSwitch onHelp={() => setHelpTopic('notes')} />
               <Toolbar onAboutHint={() => setHelpTopic('hint')} />
