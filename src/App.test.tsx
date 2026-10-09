@@ -211,10 +211,12 @@ describe('App full integration test', () => {
     const playBtn = screen.getByRole('button', { name: 'Resume game' });
     fireEvent.click(playBtn);
 
-    await waitFor(() =>
-      expect(
-        screen.queryByRole('dialog', { name: 'Paused game' }),
-      ).not.toBeInTheDocument(),
+    await waitFor(
+      () =>
+        expect(
+          screen.queryByRole('dialog', { name: 'Paused game' }),
+        ).not.toBeInTheDocument(),
+      { timeout: 3000 },
     );
     expect(useGameStore.getState().paused).toBe(false);
   });

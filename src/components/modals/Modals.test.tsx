@@ -246,7 +246,9 @@ describe('Game Modals', () => {
 
   describe('ConfirmDifficultyModal', () => {
     it('calls confirmDifficulty on confirm button', () => {
-      const confirmSpy = vi.spyOn(useGameStore.getState(), 'confirmDifficulty');
+      const confirmSpy = vi
+        .spyOn(useGameStore.getState(), 'confirmDifficulty')
+        .mockImplementation(() => {});
       useGameStore.setState({ pendingDifficulty: 'hard' });
 
       render(<ConfirmDifficultyModal open={true} />);
