@@ -21,7 +21,10 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
       open={open}
       onClose={onClose}
       label="About Coodoku"
-      className="relative w-[min(90vw,380px)]! max-w-none! text-center px-7! pt-[26px]! pb-5!"
+      className="
+        relative w-[min(90vw,380px)]! max-w-none! px-7! pt-6.5! pb-5!
+        text-center
+      "
     >
       <div className="absolute top-3 right-3">
         <IconButton
@@ -37,7 +40,11 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         A solo sudoku that runs in your browser. No accounts, no server. Puzzles
         are generated on your device and scores stay in local storage.
       </p>
-      <h4 className="mt-4 mb-1.5 text-[18px] uppercase tracking-[0.08em] text-slate-500">
+      <h4
+        className="
+          mt-4 mb-1.5 text-[18px] tracking-[0.08em] text-slate-500 uppercase
+        "
+      >
         Credits
       </h4>
       <ul className="flex flex-col gap-1 text-[19px] text-ink-900">

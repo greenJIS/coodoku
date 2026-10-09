@@ -71,20 +71,23 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
       onClose={handleResume}
       originRef={pauseBtnRef}
       label="Paused game"
-      backdropClassName="bg-[#1c1b1a]/90 backdrop-blur-[16px]"
+      backdropClassName="bg-[#1c1b1a]/90 backdrop-blur-lg"
       className={CARD_CLASS}
     >
-      <h2 className="text-[34px] text-ink-900 mb-1.5">Paused</h2>
-      <p className="text-slate-500 mb-4">
+      <h2 className="mb-1.5 text-[34px] text-ink-900">Paused</h2>
+      <p className="mb-4 text-slate-500">
         Your board is hidden until you're back.
       </p>
 
-      <div className="flex flex-col gap-2.5 min-w-[230px] w-full">
+      <div className="flex w-full min-w-57.5 flex-col gap-2.5">
         <button
           type="button"
           onClick={handleResume}
           aria-label="Resume game"
-          className={`${PAUSE_BUTTON} bg-brand-500 text-brand-900`}
+          className={`
+            ${PAUSE_BUTTON}
+            bg-brand-500 text-brand-900
+          `}
         >
           Play
         </button>
@@ -95,7 +98,10 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
           aria-label={
             armedAction === 'reset' ? 'Confirm reset puzzle' : 'Reset puzzle'
           }
-          className={`${PAUSE_BUTTON} ${armedAction === 'reset' ? ARMED : SOFT}`}
+          className={`
+            ${PAUSE_BUTTON}
+            ${armedAction === 'reset' ? ARMED : SOFT}
+          `}
         >
           {armedAction === 'reset' ? 'Tap again to reset' : 'Reset puzzle'}
         </button>
@@ -104,7 +110,10 @@ export function PauseModal({ open, onClose }: PauseModalProps) {
           type="button"
           onClick={handleNewGame}
           aria-label={armedAction === 'new' ? 'Confirm new game' : 'New game'}
-          className={`${PAUSE_BUTTON} ${armedAction === 'new' ? ARMED : SOFT}`}
+          className={`
+            ${PAUSE_BUTTON}
+            ${armedAction === 'new' ? ARMED : SOFT}
+          `}
         >
           {armedAction === 'new' ? 'Tap again to confirm' : 'New game'}
         </button>

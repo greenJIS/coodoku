@@ -54,19 +54,27 @@ export function ConfirmDifficultyModal({
       onClose={handleCancel}
       originRef={originRef}
       label="Confirm difficulty change"
-      className="text-center z-60"
+      className="z-60 text-center"
     >
-      <h2 className="text-[29px] text-ink-900 mb-2">Change to {diffName}?</h2>
-      <p className="text-slate-500 text-[17px] mb-6">
+      <h2 className="mb-2 text-[29px] text-ink-900">Change to {diffName}?</h2>
+      <p className="mb-6 text-[17px] text-slate-500">
         Start a new game? Current puzzle progress will be lost.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+      <div
+        className="
+          flex flex-col items-center justify-center gap-3
+          sm:flex-row
+        "
+      >
         <StickerButton
           variant="soft"
           size="md"
           onClick={handleCancel}
-          className="w-full sm:w-auto"
+          className="
+            w-full
+            sm:w-auto
+          "
         >
           Keep playing
         </StickerButton>
@@ -75,7 +83,10 @@ export function ConfirmDifficultyModal({
           variant="primary"
           size="md"
           onClick={handleConfirm}
-          className="w-full sm:w-auto"
+          className="
+            w-full
+            sm:w-auto
+          "
         >
           New game
         </StickerButton>

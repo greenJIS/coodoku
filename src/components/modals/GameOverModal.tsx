@@ -35,23 +35,30 @@ export function GameOverModal({
       label="Game Over"
       className={CARD_CLASS}
     >
-      <h2 className="text-[34px] text-ink-900 mb-1.5">Oh no, out of tries</h2>
-      <p className="text-slate-500 mb-4">
+      <h2 className="mb-1.5 text-[34px] text-ink-900">Oh no, out of tries</h2>
+      <p className="mb-4 text-slate-500">
         No worries, it happens. Take another go? &middot; {timeStr}
       </p>
 
-      <div className="flex gap-2.5 justify-center">
+      <div className="flex justify-center gap-2.5">
         <button
           type="button"
           onClick={onRetry}
-          className={`${CARD_BUTTON} bg-slate-100 dark:bg-[#3a2f1e] text-ink-900`}
+          className={`
+            ${CARD_BUTTON}
+            bg-slate-100 text-ink-900
+            dark:bg-[#3a2f1e]
+          `}
         >
           Retry puzzle
         </button>
         <button
           type="button"
           onClick={onNewGame}
-          className={`${CARD_BUTTON} bg-brand-500 text-brand-900`}
+          className={`
+            ${CARD_BUTTON}
+            bg-brand-500 text-brand-900
+          `}
         >
           New game
         </button>

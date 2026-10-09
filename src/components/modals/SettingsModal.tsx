@@ -122,7 +122,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const totalSolved = DIFFICULTIES.reduce((n, d) => n + stats[d].solved, 0);
   const paneAnimation =
     direction === 'forward'
-      ? 'animate-[paneSlideLeft_0.26s_cubic-bezier(0.2,0.9,0.3,1)]'
+      ? 'animate-pane-slide-left'
       : 'animate-[paneSlideRight_0.26s_cubic-bezier(0.2,0.9,0.3,1)]';
 
   return (
@@ -132,7 +132,10 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         onClose={onClose}
         originRef={gearBtnRef}
         label="Settings"
-        className="relative flex flex-col max-h-[92vh] max-w-[420px] text-left px-6! pt-[22px]! pb-[18px]!"
+        className="
+          relative flex max-h-[92vh] max-w-105 flex-col px-6! pt-5.5!
+          pb-4.5! text-left
+        "
       >
         {/* Close button */}
         <div className="absolute top-3 right-3">
@@ -145,7 +148,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           />
         </div>
 
-        <h2 className="text-[24px] text-ink-900 mb-3 text-center">Settings</h2>
+        <h2 className="mb-3 text-center text-[24px] text-ink-900">Settings</h2>
 
         {/* Tab selection */}
         <Tabs
@@ -168,14 +171,21 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         />
 
         {/* Scrolling body */}
-        <div className="h-[336px] max-h-[calc(92vh-200px)] overflow-y-auto -mr-2.5 pr-2.5">
+        <div
+          className="
+            -mr-2.5 h-84 max-h-[calc(92vh-200px)] overflow-y-auto pr-2.5
+          "
+        >
           {/* TAB 1: Game */}
           {activeTab === 'game' && (
             <div className={paneAnimation}>
               <div>
                 <label
                   htmlFor="settingsNameInput"
-                  className="block text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-0.5 mb-2"
+                  className="
+                    mt-0.5 mb-2 block text-[14px] tracking-[0.06em]
+                    text-slate-500 uppercase
+                  "
                 >
                   Game name
                 </label>
@@ -189,14 +199,27 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                     value={nameInput}
                     onChange={handleNameChange}
                     onBlur={handleNameBlur}
-                    className="flex-1 min-w-0 px-3 py-2 rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-ink-900 text-[19px] outline-none focus:border-brand-500 transition-colors"
+                    className="
+                      min-w-0 flex-1 rounded-xl border-2 border-edge bg-cream-50
+                      px-3 py-2 text-[19px] text-ink-900 transition-colors
+                      outline-none
+                      focus:border-brand-500
+                      dark:bg-cream-100
+                    "
                   />
                   <button
                     type="button"
                     aria-label="Random name"
                     title="Random name"
                     onClick={handleRandomName}
-                    className="w-[42px] h-[42px] rounded-xl border-2 border-edge bg-cream-50 dark:bg-cream-100 text-user grid place-items-center shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)] cursor-pointer"
+                    className="
+                      grid size-10.5 cursor-pointer place-items-center
+                      rounded-xl border-2 border-edge bg-cream-50 text-user
+                      shadow-[0_3px_0_var(--color-edge)]
+                      active:translate-y-0.5
+                      active:shadow-[0_1px_0_var(--color-edge)]
+                      dark:bg-cream-100
+                    "
                   >
                     <DiceIcon />
                   </button>
@@ -205,23 +228,36 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
               {view === 'game' && (
                 <div>
-                  <div className="text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
+                  <div
+                    className="
+                      mt-3.5 mb-2 text-[14px] tracking-[0.06em] text-slate-500
+                      uppercase
+                    "
+                  >
                     Difficulty
                   </div>
                   <div
                     id="difficultySelector"
-                    className="flex flex-wrap gap-1.5 mb-1"
+                    className="mb-1 flex flex-wrap gap-1.5"
                   >
                     {DIFFICULTIES.map((d) => (
                       <button
                         key={d}
                         type="button"
                         onClick={() => requestDifficulty(d)}
-                        className={`px-3 py-1 rounded-full border text-[14px] cursor-pointer transition-colors ${
-                          activeDiff === d
-                            ? 'bg-brand-500 border-brand-500 text-brand-900'
-                            : 'border-[#e4e2de] bg-white/60 dark:bg-[#3a2f1e] text-slate-500 hover:border-brand-500'
-                        }`}
+                        className={`
+                          cursor-pointer rounded-full border px-3 py-1
+                          text-[14px] transition-colors
+                          ${
+                            activeDiff === d
+                              ? 'border-brand-500 bg-brand-500 text-brand-900'
+                              : `
+                                border-slate-300 bg-white/60 text-slate-500
+                                hover:border-brand-500
+                                dark:bg-[#3a2f1e]
+                              `
+                          }
+                        `}
                       >
                         {d.charAt(0).toUpperCase() + d.slice(1)}
                       </button>
@@ -231,10 +267,20 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               )}
 
               <div>
-                <div className="text-[14px] uppercase tracking-[0.06em] text-slate-500 mt-3.5 mb-2">
+                <div
+                  className="
+                    mt-3.5 mb-2 text-[14px] tracking-[0.06em] text-slate-500
+                    uppercase
+                  "
+                >
                   Stats
                 </div>
-                <div className="grid grid-cols-2 gap-x-[18px] gap-y-1.5 text-[16px] text-slate-500 mb-2.5">
+                <div
+                  className="
+                    mb-2.5 grid grid-cols-2 gap-x-4.5 gap-y-1.5 text-[16px]
+                    text-slate-500
+                  "
+                >
                   <div className="flex justify-between">
                     <span>Solved</span>
                     <b className="text-ink-900">{totalSolved}</b>
@@ -255,11 +301,18 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
               <button
                 type="button"
                 onClick={handleResetStats}
-                className={`w-full mt-1 px-2 py-2 rounded-full border-2 bg-transparent cursor-pointer transition-colors ${
-                  resetArmed
-                    ? 'border-error text-error'
-                    : 'border-edge text-slate-500 hover:border-brand-600'
-                }`}
+                className={`
+                  mt-1 w-full cursor-pointer rounded-full border-2
+                  bg-transparent p-2 transition-colors
+                  ${
+                    resetArmed
+                      ? 'border-error text-error'
+                      : `
+                        border-edge text-slate-500
+                        hover:border-brand-600
+                      `
+                  }
+                `}
               >
                 {resetArmed ? 'Tap again to confirm' : 'Reset stats'}
               </button>
@@ -269,8 +322,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           {/* TAB 2: Play */}
           {activeTab === 'play' && (
             <div className={paneAnimation}>
-              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <div
+                className="
+                  flex min-h-11.5 items-center justify-between border-b
+                  border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Mistake check
                 </span>
                 <Segmented
@@ -283,8 +342,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Auto-remove notes
                 </span>
                 <Toggle
@@ -294,8 +359,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Highlight row, column, box
                 </span>
                 <Toggle
@@ -305,8 +376,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Highlight same digits
                 </span>
                 <Toggle
@@ -316,8 +393,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Show remaining count
                 </span>
                 <Toggle
@@ -327,8 +410,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Show timer
                 </span>
                 <Toggle
@@ -343,8 +432,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           {/* TAB 3: Look & feel */}
           {activeTab === 'feel' && (
             <div className={paneAnimation}>
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">Sound</span>
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">Sound</span>
                 <Toggle
                   checked={sound}
                   onChange={setSound}
@@ -352,8 +447,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="text-[17px] text-ink-900 pr-3">Volume</span>
+              <div
+                className="
+                  flex min-h-11.5 items-center justify-between border-b
+                  border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">Volume</span>
                 <Slider
                   min={0}
                   max={100}
@@ -363,8 +464,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Vibration on mistakes
                 </span>
                 <Toggle
@@ -374,8 +481,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Reduce motion
                 </span>
                 <Toggle
@@ -385,8 +498,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </label>
 
-              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="text-[17px] text-ink-900 pr-3">Theme</span>
+              <div
+                className="
+                  flex min-h-11.5 items-center justify-between border-b
+                  border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">Theme</span>
                 <Segmented
                   options={[
                     { value: 'light', label: 'Light' },
@@ -398,8 +517,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <div className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <div
+                className="
+                  flex min-h-11.5 items-center justify-between border-b
+                  border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Digit size
                 </span>
                 <Segmented
@@ -413,8 +538,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                 />
               </div>
 
-              <label className="flex items-center justify-between min-h-[46px] border-b border-hairline last:border-b-0 cursor-pointer">
-                <span className="text-[17px] text-ink-900 pr-3">
+              <label
+                className="
+                  flex min-h-11.5 cursor-pointer items-center justify-between
+                  border-b border-hairline
+                  last:border-b-0
+                "
+              >
+                <span className="pr-3 text-[17px] text-ink-900">
                   Left-handed layout
                 </span>
                 <Toggle
@@ -432,7 +563,15 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
           <button
             type="button"
             onClick={handleNewGameClick}
-            className="w-full mt-1.5 px-[22px] py-2.5 rounded-full border-0 bg-brand-500 text-brand-900 cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2"
+            className="
+              mt-1.5 w-full cursor-pointer rounded-full border-0 bg-brand-500
+              px-5.5 py-2.5 text-brand-900 transition-[filter,transform]
+              duration-100
+              hover:brightness-105
+              focus-visible:outline-3 focus-visible:outline-offset-2
+              focus-visible:outline-brand-300
+              active:translate-y-0.5
+            "
           >
             New game
           </button>

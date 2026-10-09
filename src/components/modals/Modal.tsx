@@ -16,11 +16,11 @@ const EXIT_MS = 240;
 
 /** Shrink-wrapped card (Pause, Game over, Win): 30px / 40px padding. */
 export const CARD_CLASS =
-  'w-fit! max-w-[calc(100vw-32px)]! px-10! py-[30px]! text-center';
+  'w-fit! max-w-[calc(100vw-32px)]! px-10! py-7.5! text-center';
 
 /** Flat pill button used inside card modals. */
 export const CARD_BUTTON =
-  'px-[22px] py-2.5 rounded-full border-0 cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-[2px] focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
+  'px-5.5 py-2.5 rounded-full border-0 cursor-pointer transition-[filter,transform] duration-100 hover:brightness-105 active:translate-y-0.5 focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2';
 
 export interface ModalProps {
   open: boolean;
@@ -188,9 +188,11 @@ export function Modal({
           onClose();
         }
       }}
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
-        open ? 'animate-fade-in' : 'animate-fade-out pointer-events-none'
-      } ${backdropClassName}`}
+      className={`
+        fixed inset-0 z-50 flex items-center justify-center p-4
+        ${open ? 'animate-fade-in' : 'pointer-events-none animate-fade-out'}
+        ${backdropClassName}
+      `}
     >
       <div
         ref={dialogRef}
@@ -199,7 +201,14 @@ export function Modal({
         aria-label={label}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
-        className={`relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-[22px] border-2 border-edge bg-white dark:bg-cream-50 p-6 text-ink-900 shadow-[0_6px_0_var(--color-edge)] outline-none ${open ? 'animate-modal-in' : 'animate-modal-out'} ${className}`}
+        className={`
+          relative max-h-[92vh] w-full max-w-105 overflow-y-auto
+          rounded-[22px] border-2 border-edge bg-white p-6 text-ink-900
+          shadow-[0_6px_0_var(--color-edge)] outline-none
+          dark:bg-cream-50
+          ${open ? `animate-modal-in` : `animate-modal-out`}
+          ${className}
+        `}
       >
         {children}
       </div>

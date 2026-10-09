@@ -74,7 +74,7 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
       {confetti.length > 0 && (
         <div
           aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-[60] overflow-hidden"
+          className="pointer-events-none fixed inset-0 z-60 overflow-hidden"
         >
           {confetti.map((bit, i) => (
             <div
@@ -85,19 +85,22 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
                 animationDuration: `${bit.duration}s`,
                 backgroundColor: bit.color,
               }}
-              className="absolute -top-3 w-[9px] h-[14px] animate-fall"
+              className="absolute -top-3 h-3.5 w-2.25 animate-fall"
             />
           ))}
         </div>
       )}
 
-      <h2 className="text-[34px] text-ink-900 mb-1.5">Nicely done!</h2>
-      <p className="text-slate-500 mb-4">{message}</p>
+      <h2 className="mb-1.5 text-[34px] text-ink-900">Nicely done!</h2>
+      <p className="mb-4 text-slate-500">{message}</p>
 
       <button
         type="button"
         onClick={onNewGame}
-        className={`${CARD_BUTTON} bg-brand-500 text-brand-900`}
+        className={`
+          ${CARD_BUTTON}
+          bg-brand-500 text-brand-900
+        `}
       >
         New game
       </button>
