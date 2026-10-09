@@ -89,7 +89,11 @@ export function App() {
     game?.status === 'playing';
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-[18px] pt-[14px] pb-10 text-ink-900 transition-colors duration-200">
+    <div
+      className={`flex flex-col items-center px-[18px] pt-[14px] text-ink-900 transition-colors duration-200 ${
+        view === 'home' ? 'h-dvh overflow-hidden pb-3' : 'min-h-screen pb-10'
+      }`}
+    >
       {view === 'home' && (
         <HomeScreen
           onOpenSettings={() => setSettingsOpen(true)}

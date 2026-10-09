@@ -35,7 +35,7 @@ export function DifficultyPicker({
 
   return (
     <div>
-      <div className="mb-2 text-[18px] uppercase tracking-[0.08em] text-slate-500">
+      <div className="mb-1.5 text-[16px] uppercase tracking-[0.08em] text-slate-500">
         New game
       </div>
       <div className="grid grid-cols-4 gap-2">
@@ -48,18 +48,18 @@ export function DifficultyPicker({
               type="button"
               aria-pressed={selected}
               onClick={() => onChange(d)}
-              className={`rounded-[14px] border-2 px-1 py-2.5 text-center ${
+              className={`rounded-[14px] border-2 px-1 py-2 text-center ${
                 selected
                   ? `${LIFT_MOVE} border-brand-700 bg-sel shadow-[0_3px_0_var(--color-brand-700)] not-disabled:not-aria-disabled:hover:shadow-[0_5px_0_var(--color-brand-700)]`
                   : `${LIFT} border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_3px_0_var(--color-edge)]`
               }`}
             >
-              <strong className="block text-[24px] font-normal leading-tight">
+              <strong className="block text-[22px] font-normal leading-tight">
                 {label(d)}
               </strong>
               <span
                 aria-hidden="true"
-                className="my-1.5 flex justify-center gap-[3px]"
+                className="my-1 flex justify-center gap-[3px]"
               >
                 {DIFFICULTY_ORDER.map((_, dot) => (
                   <i
@@ -70,10 +70,10 @@ export function DifficultyPicker({
                   />
                 ))}
               </span>
-              <span className="block text-[17px] leading-snug text-slate-500">
+              <span className="block text-[16px] leading-snug text-slate-500">
                 {entry?.solved ?? 0} solved
               </span>
-              <span className="block text-[17px] leading-snug text-slate-500">
+              <span className="block text-[16px] leading-snug text-slate-500">
                 best {entry?.bestMs == null ? '—' : formatTime(entry.bestMs)}
               </span>
             </button>
@@ -85,7 +85,7 @@ export function DifficultyPicker({
           variant="soft"
           armed={armed}
           onClick={onStart}
-          className={`${LIFT_MOVE} mt-3 w-full text-[22px]`}
+          className={`${LIFT_MOVE} mt-3 w-full text-[20px]`}
         >
           {armed
             ? 'Tap again to replace your saved game'

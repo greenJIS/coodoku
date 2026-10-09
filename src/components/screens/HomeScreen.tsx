@@ -93,16 +93,19 @@ export function HomeScreen({
   const selectedLabel = selected.charAt(0).toUpperCase() + selected.slice(1);
 
   return (
-    <main className="flex w-full flex-col items-center pt-6">
-      <Otter size={120} className="animate-bob" />
-      <h1 className="mt-1.5 text-[60px] leading-none underline decoration-wavy decoration-brand-500 decoration-[3px] underline-offset-[9px]">
+    <main className="flex min-h-0 w-full flex-1 flex-col items-center justify-center">
+      <Otter
+        size={96}
+        className="animate-bob [@media(max-height:640px)]:hidden"
+      />
+      <h1 className="mt-1 text-[50px] leading-none underline decoration-wavy decoration-brand-500 decoration-[3px] underline-offset-[8px]">
         Coodoku
       </h1>
-      <p className="mt-3.5 text-[22px] text-slate-500">
+      <p className="mt-3 text-[20px] text-slate-500">
         Quiet sudoku, one otter, no accounts.
       </p>
 
-      <div className="mt-7 flex w-[min(92vw,460px)] flex-col gap-4">
+      <div className="mt-5 flex w-[min(92vw,460px)] flex-col gap-3">
         {save ? (
           <ContinueCard game={save} onContinue={resume} />
         ) : (
@@ -110,7 +113,7 @@ export function HomeScreen({
             variant="primary"
             size="lg"
             onClick={start}
-            className={`${LIFT_MOVE} w-full text-[30px]`}
+            className={`${LIFT_MOVE} w-full text-[28px]`}
           >
             {`Play ${selectedLabel}`}
           </StickerButton>
@@ -123,16 +126,17 @@ export function HomeScreen({
           armed={armed}
         />
 
-        <HowToPlayCard onOpen={onOpenHelp} />
-
-        <StickerButton
-          variant="soft"
-          onClick={onOpenSettings}
-          className={`${LIFT_MOVE} w-full gap-2 text-[22px]`}
-        >
-          <GearIcon />
-          Settings
-        </StickerButton>
+        <div className="grid grid-cols-2 gap-3">
+          <HowToPlayCard onOpen={onOpenHelp} />
+          <StickerButton
+            variant="soft"
+            onClick={onOpenSettings}
+            className={`${LIFT_MOVE} w-full gap-2 rounded-[18px] text-[22px]`}
+          >
+            <GearIcon />
+            Settings
+          </StickerButton>
+        </div>
 
         <HomeFooter onAbout={onOpenAbout} />
       </div>
