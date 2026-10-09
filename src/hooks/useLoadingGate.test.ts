@@ -1,7 +1,9 @@
 import { act, renderHook } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { createGame } from '../game/cells';
 import { loadUiFont } from '../lib/fonts';
 import { useGameStore } from '../store/game';
+import { makePuzzle } from '../test/fixtures';
 import { useViewStore } from '../store/view';
 import { useLoadingGate } from './useLoadingGate';
 
@@ -14,7 +16,7 @@ function advance(ms: number): void {
 describe('useLoadingGate', () => {
   beforeEach(() => {
     vi.useFakeTimers();
-    useGameStore.setState({ generating: false });
+    useGameStore.setState({ generating: false, game: null });
   });
 
   afterEach(() => {
@@ -59,6 +61,15 @@ describe('useLoadingGate', () => {
     advance(1);
     expect(result.current.leaving).toBe(true);
     advance(240);
+    expect(result.current.show).toBe(false);
+  });
+
+  it('stays hidden while a game in progress is on screen', () => {
+    useViewStore.setState({ view: 'game' });
+    useGameStore.setState({ game: createGame(makePuzzle(), 'Otter') });
+    const { result } = renderHook(() => useLoadingGate());
+    act(() => useGameStore.setState({ generating: true }));
+    advance(2000);
     expect(result.current.show).toBe(false);
   });
 

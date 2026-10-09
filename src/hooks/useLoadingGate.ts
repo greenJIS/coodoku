@@ -15,14 +15,19 @@ export interface LoadingGate {
 
 /**
  * Owns the Loading overlay. It shows immediately at launch, and during puzzle
- * generation only after SHOW_AFTER_MS (a prefetch hit never flashes it). Once
+ * generation only after SHOW_AFTER_MS (a prefetch hit never flashes it), never
+ * while a game in progress is on screen. Once
  * shown it stays for MIN_MS, then fades for FADE_MS. All state changes happen
  * in timer callbacks.
  */
 export function useLoadingGate(): LoadingGate {
   const launching = useViewStore((s) => s.view === 'loading');
   const generating = useGameStore((s) => s.generating);
-  const busy = launching || generating;
+  const inGameView = useViewStore((s) => s.view === 'game');
+  const playing = useGameStore((s) => s.game?.status === 'playing');
+  // A live game keeps its board on screen while the next puzzle generates.
+  const inLiveGame = inGameView && playing;
+  const busy = launching || (generating && !inLiveGame);
 
   const [phase, setPhase] = useState<Phase>(() =>
     useViewStore.getState().view === 'loading' ? 'shown' : 'hidden',

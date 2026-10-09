@@ -66,6 +66,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
   const pendingDifficulty = useGameStore((s) => s.pendingDifficulty);
   const requestDifficulty = useGameStore((s) => s.requestDifficulty);
+  const confirmDifficulty = useGameStore((s) => s.confirmDifficulty);
   const newGame = useGameStore((s) => s.newGame);
 
   // Local state for name input
@@ -580,7 +581,13 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
       </Modal>
 
       {/* Stacked confirm difficulty modal */}
-      <ConfirmDifficultyModal open={pendingDifficulty !== null} />
+      <ConfirmDifficultyModal
+        open={pendingDifficulty !== null}
+        onConfirm={() => {
+          confirmDifficulty();
+          onClose();
+        }}
+      />
     </>
   );
 }
