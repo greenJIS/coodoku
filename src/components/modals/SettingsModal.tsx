@@ -173,7 +173,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         {/* Scrolling body */}
         <div
           className="
-            -mr-2.5 h-84 max-h-[calc(92vh-200px)] overflow-y-auto pr-2.5
+            -mr-2.5 h-84 max-h-[calc(92vh-200px)] overflow-x-hidden
+            overflow-y-auto pr-2.5
           "
         >
           {/* TAB 1: Game */}
