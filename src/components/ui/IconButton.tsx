@@ -31,9 +31,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     const [isFocused, setIsFocused] = useState(false);
 
     const sizeClasses = {
-      sm: 'w-[38px] h-[38px] text-[22px] shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]',
-      md: 'w-[48px] h-[48px] text-[26px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
-      lg: 'w-[54px] h-[54px] text-[29px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-[3px] active:shadow-[0_1px_0_var(--color-edge)]',
+      sm: 'w-9.5 h-9.5 text-[22px] shadow-[0_3px_0_var(--color-edge)] active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-edge)]',
+      md: 'w-12 h-12 text-[26px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]',
+      lg: 'w-13.5 h-13.5 text-[29px] shadow-[0_4px_0_var(--color-edge)] active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]',
     }[size];
 
     let variantClasses =
@@ -44,7 +44,7 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         'bg-brand-500 text-brand-900 border-2 border-brand-700 shadow-[0_4px_0_var(--color-brand-700)] hover:border-brand-800 hover:shadow-[0_4px_0_var(--color-brand-800)] active:shadow-[0_1px_0_var(--color-brand-700)]';
     } else if (variant === 'close') {
       variantClasses =
-        'bg-cream-50 dark:bg-[#3a2f1e] text-[#b45309] border-2 border-edge hover:border-brand-600 hover:text-brand-600 shadow-[0_3px_0_var(--color-edge)] active:translate-y-[2px] active:shadow-[0_1px_0_var(--color-edge)]';
+        'bg-cream-50 dark:bg-[#3a2f1e] text-[#b45309] border-2 border-edge hover:border-brand-600 hover:text-brand-600 shadow-[0_3px_0_var(--color-edge)] active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-edge)]';
     }
 
     const tooltipText = tooltip ?? label;
@@ -62,11 +62,24 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
           onMouseLeave={() => setIsHovered(false)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`relative rounded-full grid place-items-center select-none cursor-pointer ${
-            variant === 'close'
-              ? '[transition:transform_.08s,box-shadow_.08s,border-color_.15s,color_.15s]'
-              : 'transition-transform duration-100'
-          } focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none disabled:transform-none ${sizeClasses} ${variantClasses} ${className}`}
+          className={`
+            relative grid cursor-pointer place-items-center rounded-full
+            select-none
+            ${
+              variant === 'close'
+                ? `
+                  [transition:transform_.08s,box-shadow_.08s,border-color_.15s,color_.15s]
+                `
+                : 'transition-transform duration-100'
+            }
+            focus-visible:outline-3 focus-visible:outline-offset-2
+            focus-visible:outline-brand-300
+            disabled:pointer-events-none disabled:transform-none
+            disabled:cursor-not-allowed disabled:opacity-40
+            ${sizeClasses}
+            ${variantClasses}
+            ${className}
+          `}
           {...rest}
         >
           {icon}
@@ -75,7 +88,11 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
         {showTooltip && (
           <span
             role="tooltip"
-            className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[14px] rounded-md bg-ink-900 text-cream-50 whitespace-nowrap shadow-md pointer-events-none z-50 animate-pop"
+            className="
+              pointer-events-none absolute -bottom-8 left-1/2 z-50
+              -translate-x-1/2 animate-pop rounded-md bg-ink-900 px-2 py-0.5
+              text-[14px] whitespace-nowrap text-cream-50 shadow-md
+            "
           >
             {tooltipText}
           </span>

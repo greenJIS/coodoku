@@ -32,7 +32,11 @@ export function Segmented<T extends string | number>({
     <div
       role="radiogroup"
       aria-label={ariaLabel}
-      className={`inline-flex items-center shrink-0 border-2 border-edge rounded-full overflow-hidden ${className}`}
+      className={`
+        inline-flex shrink-0 items-center overflow-hidden rounded-full border-2
+        border-edge
+        ${className}
+      `}
     >
       {normalizedOptions.map((opt) => {
         const isSelected = opt.value === value;
@@ -48,11 +52,19 @@ export function Segmented<T extends string | number>({
                 onChange(opt.value);
               }
             }}
-            className={`px-3 py-[5px] text-[16px] select-none cursor-pointer focus-visible:outline-2 focus-visible:outline-brand-400 focus-visible:outline-offset-[-2px] ${
-              isSelected
-                ? 'bg-brand-500 text-brand-900 shadow-none'
-                : 'text-slate-500 hover:text-ink-900 bg-transparent'
-            }`}
+            className={`
+              cursor-pointer px-3 py-1.25 text-[16px] select-none
+              focus-visible:outline-2 focus-visible:-outline-offset-2
+              focus-visible:outline-brand-400
+              ${
+                isSelected
+                  ? 'bg-brand-500 text-brand-900 shadow-none'
+                  : `
+                    bg-transparent text-slate-500
+                    hover:text-ink-900
+                  `
+              }
+            `}
           >
             {opt.label}
           </button>

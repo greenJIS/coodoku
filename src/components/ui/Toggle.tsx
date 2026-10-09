@@ -35,18 +35,32 @@ export function Toggle({
       checked={checked}
       disabled={disabled}
       onChange={handleChange}
-      className={`relative inline-block w-[46px] h-[28px] shrink-0 appearance-none rounded-full cursor-pointer [transition:background_.18s,border-color_.18s] outline-none
-        border-2 ${
-          checked ? 'bg-brand-500 border-brand-700' : 'bg-hairline border-edge'
-        }
-        after:content-[''] after:box-border after:absolute after:top-[1px] after:left-[1px] after:w-[20px] after:h-[20px] after:rounded-full after:[transition:transform_.2s_cubic-bezier(.4,1.4,.5,1),border-color_.18s,box-shadow_.18s]
+      className={`
+        relative inline-block h-7 w-11.5 shrink-0 cursor-pointer
+        appearance-none rounded-full border-2 outline-none
+        [transition:background_.18s,border-color_.18s]
+        ${checked ? 'border-brand-700 bg-brand-500' : 'border-edge bg-hairline'}
+        after:absolute after:top-px after:left-px after:box-border
+        after:size-5 after:rounded-full after:content-['']
+        after:[transition:transform_.2s_cubic-bezier(.4,1.4,.5,1),border-color_.18s,box-shadow_.18s]
         ${
           checked
-            ? 'after:translate-x-[18px] after:bg-white dark:after:bg-[#fff7e6] after:border-2 after:border-brand-700 after:shadow-[0_2px_0_var(--color-brand-700)]'
-            : 'after:translate-x-0 after:bg-white dark:after:bg-[#4a3c25] after:border-2 after:border-edge after:shadow-[0_2px_0_var(--color-edge)]'
+            ? `
+              after:translate-x-4.5 after:border-2 after:border-brand-700
+              after:bg-white after:shadow-[0_2px_0_var(--color-brand-700)]
+              dark:after:bg-[#fff7e6]
+            `
+            : `
+              after:translate-x-0 after:border-2 after:border-edge
+              after:bg-white after:shadow-[0_2px_0_var(--color-edge)]
+              dark:after:bg-[#4a3c25]
+            `
         }
-        focus-visible:outline-3 focus-visible:outline-brand-300 focus-visible:outline-offset-2
-        disabled:opacity-40 disabled:cursor-not-allowed ${className}`}
+        focus-visible:outline-3 focus-visible:outline-offset-2
+        focus-visible:outline-brand-300
+        disabled:cursor-not-allowed disabled:opacity-40
+        ${className}
+      `}
     />
   );
 }
