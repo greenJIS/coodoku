@@ -7,7 +7,15 @@ import { useSettingsStore } from '../../store/settings';
 import { useStatsStore } from '../../store/stats';
 import { useViewStore } from '../../store/view';
 import { CloseIcon, DiceIcon } from '../icons';
-import { IconButton, Segmented, Slider, Tabs, Toggle, Tooltip } from '../ui';
+import {
+  IconButton,
+  Segmented,
+  Slider,
+  StickerButton,
+  Tabs,
+  Toggle,
+  Tooltip,
+} from '../ui';
 import { ConfirmDifficultyModal } from './ConfirmDifficultyModal';
 import { Modal } from './Modal';
 
@@ -174,7 +182,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         {/* Scrolling body */}
         <div
           className="
-            -mr-2.5 h-84 max-h-[calc(92vh-200px)] overflow-x-hidden
+            -mr-2.5 h-88 max-h-[calc(92vh-200px)] overflow-x-hidden
             overflow-y-auto pr-2.5
           "
         >
@@ -244,26 +252,16 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                     className="mb-1 flex flex-wrap gap-1.5"
                   >
                     {DIFFICULTIES.map((d) => (
-                      <button
+                      <StickerButton
                         key={d}
-                        type="button"
+                        variant={activeDiff === d ? 'primary' : 'default'}
+                        size="sm"
+                        aria-pressed={activeDiff === d}
                         onClick={() => requestDifficulty(d)}
-                        className={`
-                          cursor-pointer rounded-full border px-3 py-1
-                          text-[14px] transition-colors
-                          ${
-                            activeDiff === d
-                              ? 'border-brand-500 bg-brand-500 text-brand-900'
-                              : `
-                                border-slate-300 bg-white/60 text-slate-500
-                                hover:border-brand-500
-                                dark:bg-[#3a2f1e]
-                              `
-                          }
-                        `}
+                        className="rounded-full! px-3.5! shadow-[0_3px_0_var(--color-edge)]"
                       >
                         {d.charAt(0).toUpperCase() + d.slice(1)}
-                      </button>
+                      </StickerButton>
                     ))}
                   </div>
                 </div>
@@ -301,24 +299,15 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                   ))}
                 </div>
               </div>
-              <button
-                type="button"
+              <StickerButton
+                variant="ghost"
+                size="md"
+                armed={resetArmed}
                 onClick={handleResetStats}
-                className={`
-                  mt-1 w-full cursor-pointer rounded-full border-2
-                  bg-transparent p-2 transition-colors
-                  ${
-                    resetArmed
-                      ? 'border-error text-error'
-                      : `
-                        border-edge text-slate-500
-                        hover:border-brand-600
-                      `
-                  }
-                `}
+                className="mt-1 mb-1 w-full"
               >
                 {resetArmed ? 'Tap again to confirm' : 'Reset stats'}
-              </button>
+              </StickerButton>
             </div>
           )}
 
@@ -563,21 +552,14 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
 
         {/* Footer */}
         <div className="mt-3 shrink-0">
-          <button
-            type="button"
+          <StickerButton
+            variant="primary"
+            size="lg"
             onClick={handleNewGameClick}
-            className="
-              mt-1.5 w-full cursor-pointer rounded-full border-0 bg-brand-500
-              px-5.5 py-2.5 text-brand-900 transition-[filter,transform]
-              duration-100
-              hover:brightness-105
-              focus-visible:outline-3 focus-visible:outline-offset-2
-              focus-visible:outline-brand-300
-              active:translate-y-0.5
-            "
+            className="mt-1.5 w-full"
           >
             New game
-          </button>
+          </StickerButton>
         </div>
       </Modal>
 
