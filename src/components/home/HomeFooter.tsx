@@ -5,7 +5,11 @@ const LINK =
 
 export function HomeFooter({ onAbout }: { onAbout: () => void }) {
   return (
-    <footer className="flex justify-center gap-[18px] text-[17px] text-slate-500">
+    <footer
+      className="
+      flex justify-center gap-4.5 text-[17px] text-slate-500
+    "
+    >
       <button type="button" onClick={onAbout} className={LINK}>
         About
       </button>

@@ -35,7 +35,11 @@ export function DifficultyPicker({
 
   return (
     <div>
-      <div className="mb-1.5 text-[16px] uppercase tracking-[0.08em] text-slate-500">
+      <div
+        className="
+          mb-1.5 text-[16px] tracking-[0.08em] text-slate-500 uppercase
+        "
+      >
         New game
       </div>
       <div className="grid grid-cols-4 gap-2">
@@ -48,25 +52,38 @@ export function DifficultyPicker({
               type="button"
               aria-pressed={selected}
               onClick={() => onChange(d)}
-              className={`rounded-[14px] border-2 px-1 py-2 text-center ${
-                selected
-                  ? `${LIFT_MOVE} border-brand-700 bg-sel shadow-[0_3px_0_var(--color-brand-700)] not-disabled:not-aria-disabled:hover:shadow-[0_5px_0_var(--color-brand-700)]`
-                  : `${LIFT} border-edge bg-cream-50 dark:bg-cream-100 shadow-[0_3px_0_var(--color-edge)]`
-              }`}
+              className={`
+                rounded-[14px] border-2 px-1 py-2 text-center
+                ${
+                  selected
+                    ? `
+                      ${LIFT_MOVE}
+                      border-brand-700 bg-sel
+                      shadow-[0_3px_0_var(--color-brand-700)]
+                      not-disabled:not-aria-disabled:hover:shadow-[0_5px_0_var(--color-brand-700)]
+                    `
+                    : `
+                      ${LIFT}
+                      border-edge bg-cream-50 shadow-[0_3px_0_var(--color-edge)]
+                      dark:bg-cream-100
+                    `
+                }
+              `}
             >
-              <strong className="block text-[22px] font-normal leading-tight">
+              <strong className="block text-[22px] leading-tight font-normal">
                 {label(d)}
               </strong>
               <span
                 aria-hidden="true"
-                className="my-1 flex justify-center gap-[3px]"
+                className="my-1 flex justify-center gap-0.75"
               >
                 {DIFFICULTY_ORDER.map((_, dot) => (
                   <i
                     key={dot}
-                    className={`h-[7px] w-[7px] rounded-full ${
-                      dot <= i ? 'bg-brand-500' : 'bg-slate-300'
-                    }`}
+                    className={`
+                      size-1.75 rounded-full
+                      ${dot <= i ? 'bg-brand-500' : 'bg-slate-300'}
+                    `}
                   />
                 ))}
               </span>
@@ -85,7 +102,10 @@ export function DifficultyPicker({
           variant="soft"
           armed={armed}
           onClick={onStart}
-          className={`${LIFT_MOVE} mt-3 w-full text-[20px]`}
+          className={`
+            ${LIFT_MOVE}
+            mt-3 w-full text-[20px]
+          `}
         >
           {armed
             ? 'Tap again to replace your saved game'
