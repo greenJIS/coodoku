@@ -1,11 +1,7 @@
 import { create } from 'zustand';
 import type { Difficulty, Puzzle } from '../engine';
 import { createGame } from '../game/cells';
-import {
-  completedUnitCells,
-  completedUnits,
-  hasProgress,
-} from '../game/queries';
+import { completedUnitCells, completedUnits } from '../game/queries';
 import {
   erase,
   placeDigit,
@@ -560,7 +556,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (difficulty === currentDiff) return;
 
     const { game } = get();
-    if (!game || !hasProgress(game) || game.status !== 'playing') {
+    if (!game) {
       void get().newGame(difficulty);
       return;
     }
@@ -571,7 +567,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
   confirmDifficulty: () => {
     const pending = get().pendingDifficulty;
     if (pending) {
-      set({ pendingDifficulty: null });
+      // Unpause in the same batch that closes the confirm and Settings modals,
+      // otherwise the Pause modal flashes while the new puzzle generates.
+      set({ pendingDifficulty: null, paused: false });
       void get().newGame(pending);
     }
   },

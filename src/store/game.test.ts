@@ -197,20 +197,25 @@ describe('game store', () => {
     expect(retried?.name).toBe(initialName);
   });
 
-  it('manages requestDifficulty with and without progress', async () => {
-    await useGameStore.getState().newGame('easy');
-
-    // Without progress: requestDifficulty starts new game immediately
-    useGameStore.getState().requestDifficulty('hard');
+  it('asks to confirm every difficulty change once a game exists', async () => {
+    // No game yet: requestDifficulty starts a new game immediately
+    useGameStore.getState().requestDifficulty('medium');
     await vi.runAllTimersAsync();
-    expect(useGameStore.getState().game?.difficulty).toBe('hard');
+    expect(useGameStore.getState().game?.difficulty).toBe('medium');
     expect(useGameStore.getState().pendingDifficulty).toBeNull();
 
-    // Make progress
-    useGameStore.getState().select(1);
-    useGameStore.getState().enter(2);
+    // Same difficulty: nothing happens
+    useGameStore.getState().requestDifficulty('medium');
+    expect(useGameStore.getState().pendingDifficulty).toBeNull();
+
+    // Fresh board, no progress: still asks
+    useGameStore.getState().requestDifficulty('hard');
+    expect(useGameStore.getState().pendingDifficulty).toBe('hard');
+    useGameStore.getState().cancelDifficulty();
 
     // With progress: sets pendingDifficulty and pauses
+    useGameStore.getState().select(1);
+    useGameStore.getState().enter(2);
     useGameStore.getState().requestDifficulty('expert');
     expect(useGameStore.getState().pendingDifficulty).toBe('expert');
     expect(useGameStore.getState().paused).toBe(true);
@@ -223,6 +228,7 @@ describe('game store', () => {
     // Request again and confirm
     useGameStore.getState().requestDifficulty('expert');
     useGameStore.getState().confirmDifficulty();
+    expect(useGameStore.getState().paused).toBe(false);
     await vi.runAllTimersAsync();
     expect(useGameStore.getState().game?.difficulty).toBe('expert');
     expect(useGameStore.getState().pendingDifficulty).toBeNull();
