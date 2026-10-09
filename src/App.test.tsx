@@ -180,7 +180,7 @@ describe('App full integration test', () => {
     });
   });
 
-  it('resumes saved game with Pause modal open on refresh', async () => {
+  it('resumes saved game straight into play on refresh', async () => {
     // Pre-save an in-progress game in localStorage
     const puzzle = makeNearlySolvedPuzzle([1, 2]);
     let savedGame = createGame(puzzle, 'Saved Otter');
@@ -195,29 +195,14 @@ describe('App full integration test', () => {
     render(<App />);
     await enterGame();
 
-    // Resumes in paused state with Pause modal open
-    await waitFor(() => {
-      expect(
-        screen.getByRole('dialog', { name: 'Paused game' }),
-      ).toBeInTheDocument();
-      expect(screen.getByText('Paused')).toBeInTheDocument();
-    });
+    // Continue goes straight to the running game, no Pause modal
+    expect(
+      screen.queryByRole('dialog', { name: 'Paused game' }),
+    ).not.toBeInTheDocument();
+    expect(useGameStore.getState().paused).toBe(false);
 
-    // Board behind is paused/blurred, cell 1 has the saved digit '2'
+    // Cell 1 has the saved digit '2'
     const cell1 = screen.getAllByRole('gridcell')[1];
     expect(cell1).toHaveTextContent('2');
-
-    // Click Play to resume
-    const playBtn = screen.getByRole('button', { name: 'Resume game' });
-    fireEvent.click(playBtn);
-
-    await waitFor(
-      () =>
-        expect(
-          screen.queryByRole('dialog', { name: 'Paused game' }),
-        ).not.toBeInTheDocument(),
-      { timeout: 3000 },
-    );
-    expect(useGameStore.getState().paused).toBe(false);
   });
 });

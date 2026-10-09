@@ -71,13 +71,13 @@ describe('HomeScreen', () => {
     );
   });
 
-  it('shows Continue for a playing save and resumes paused', () => {
+  it('shows Continue for a playing save and resumes running', () => {
     useGameStore.setState({ game: createGame(makePuzzle(), 'Saved Otter') });
     renderHome();
     expect(screen.getByText('Saved Otter')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: /continue/i }));
     expect(useViewStore.getState().view).toBe('game');
-    expect(useGameStore.getState().paused).toBe(true);
+    expect(useGameStore.getState().paused).toBe(false);
   });
 
   it('needs two taps on Start to replace a save', async () => {

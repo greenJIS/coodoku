@@ -47,7 +47,7 @@ export function HomeScreen({
   }, []);
 
   const resume = useCallback(() => {
-    setPaused(true); // Continue always lands on the Pause modal
+    setPaused(false); // Continue goes straight to the running game
     goGame();
   }, [setPaused, goGame]);
 

@@ -42,13 +42,16 @@ describe('App launch flow', () => {
     expect(useViewStore.getState().view).toBe('game');
   });
 
-  it('shows Continue for a saved game and resumes it paused', async () => {
+  it('shows Continue for a saved game and resumes it running', async () => {
     writeKey(GAME_KEY, serialize(createGame(makePuzzle(), 'Saved Otter')));
     render(<App />);
     expect(await screen.findByText('Saved Otter')).toBeInTheDocument();
     expect(generator).not.toHaveBeenCalled();
     await enterGame();
-    expect(useGameStore.getState().paused).toBe(true);
+    expect(useGameStore.getState().paused).toBe(false);
+    expect(
+      screen.queryByRole('dialog', { name: 'Paused game' }),
+    ).not.toBeInTheDocument();
   });
 
   it('the Home button returns to Home with the save intact', async () => {

@@ -63,7 +63,7 @@ export function App() {
   // Release the modal-induced pause in the same batch that closes the modal,
   // otherwise the Pause modal mounts for a render and re-pauses the game.
   // Only in the game view: on Home, `Modal` itself pauses and unpauses around
-  // open and close, and Continue sets `paused: true` explicitly on the way in.
+  // open and close, and Continue sets `paused: false` explicitly on the way in.
   const closeSettings = () => {
     setSettingsOpen(false);
     if (view === 'game' && !helpOpen && pendingDifficulty === null) {
