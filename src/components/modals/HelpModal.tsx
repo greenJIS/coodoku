@@ -178,7 +178,7 @@ export function HelpModal({ open, onClose, topic = 'notes' }: HelpModalProps) {
             <h3 className="m-0 h-8 text-[24px] leading-8 text-ink-900">
               {page.title}
             </h3>
-            <div className="grid h-46 place-items-center py-2">
+            <div className="grid h-46 place-items-center py-2 short:h-32">
               {page.visual}
             </div>
             <p

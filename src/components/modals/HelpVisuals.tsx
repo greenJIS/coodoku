@@ -21,8 +21,8 @@ export function MiniGrid({ cells }: { cells: MiniCell[] }) {
   return (
     <div
       className="
-        grid size-42 grid-cols-3 grid-rows-3 gap-px overflow-hidden rounded-md
-        border-2 border-board-line bg-hairline
+        grid size-42 short:size-28 grid-cols-3 grid-rows-3 gap-px
+        overflow-hidden rounded-md border-2 border-board-line bg-hairline
       "
     >
       {cells.map((c, i) => (

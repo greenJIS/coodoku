@@ -202,7 +202,7 @@ export function Modal({
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         className={`
-          relative max-h-[92vh] w-full max-w-105 overflow-y-auto
+          relative max-h-[calc(100dvh-2rem)] w-full max-w-105 overflow-y-auto
           rounded-[22px] border-2 border-edge bg-white p-6 text-ink-900
           shadow-[0_6px_0_var(--color-edge)] outline-none
           dark:bg-cream-100

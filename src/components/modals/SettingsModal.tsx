@@ -142,7 +142,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         originRef={gearBtnRef}
         label="Settings"
         className="
-          relative flex max-h-[92vh] max-w-105 flex-col px-6! pt-5.5!
+          relative flex max-h-[calc(100dvh-2rem)] max-w-105 flex-col px-6! pt-5.5!
           pb-4.5! text-left
         "
       >
@@ -182,8 +182,8 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
         {/* Scrolling body */}
         <div
           className="
-            -mr-2.5 h-88 max-h-[calc(92vh-200px)] overflow-x-hidden
-            overflow-y-auto pr-2.5
+            -mr-2.5 h-88 max-h-[calc(100dvh-14rem)] short:max-h-[calc(100dvh-10rem)]
+            overflow-x-hidden overflow-y-auto pr-2.5
           "
         >
           {/* TAB 1: Game */}
