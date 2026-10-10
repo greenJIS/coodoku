@@ -90,8 +90,8 @@ export function Board({ className = '' }: BoardProps) {
       aria-label="Sudoku board"
       data-testid="sudoku-board"
       style={{
-        width: 'min(86vw, 66vh, 600px)',
-        height: 'min(86vw, 66vh, 600px)',
+        width: 'var(--board-size)',
+        height: 'var(--board-size)',
         gridTemplateRows:
           'repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr)) 5px repeat(3, minmax(0, 1fr))',
         gridTemplateColumns:

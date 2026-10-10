@@ -93,7 +93,17 @@ export function App() {
       className={`
         flex flex-col items-center px-4.5 pt-3.5 text-ink-900
         transition-colors duration-200
-        ${view === 'home' ? 'h-dvh overflow-hidden pb-3' : 'min-h-screen pb-10'}
+        ${
+          view === 'home'
+            ? 'h-dvh overflow-y-auto pb-3'
+            : `
+              min-h-screen pb-10
+              narrow:h-dvh narrow:min-h-0 narrow:overflow-y-auto narrow:px-3
+              narrow:pb-3
+              short:h-dvh short:min-h-0 short:overflow-y-auto short:px-3
+              short:pt-2 short:pb-2
+            `
+        }
       `}
     >
       {view === 'home' && (
@@ -117,11 +127,14 @@ export function App() {
             className={`
               flex w-full max-w-260 items-center justify-center gap-5.5
               min-[861px]:gap-11
+              narrow:min-h-0 narrow:flex-1 narrow:gap-2
+              short:flex-row short:gap-4
               ${
                 leftHanded
                   ? `
                     flex-col
                     min-[861px]:flex-row-reverse
+                    short:flex-row-reverse
                   `
                   : `
                     flex-col
@@ -133,6 +146,7 @@ export function App() {
             <div
               className={`
                 flex justify-center transition-[filter] duration-200
+                narrow:mt-auto short:mt-0
                 ${isPauseOpen ? 'pointer-events-none blur-sm select-none' : ''}
               `}
             >
@@ -143,11 +157,28 @@ export function App() {
               className="
                 flex w-[min(88vw,380px)] flex-col items-center gap-4.5
                 min-[861px]:w-75
+                narrow:contents
+                short:flex short:h-(--board-size) short:w-[min(44vw,320px)]
+                short:justify-between short:gap-2
               "
             >
-              <NumberPad />
-              <NotesSwitch onHelp={() => setHelpTopic('notes')} />
-              <Toolbar onAboutHint={() => setHelpTopic('hint')} />
+              <NumberPad className="narrow:mb-auto short:my-auto" />
+              <div
+                className="
+                  contents
+                  narrow:flex narrow:w-full narrow:items-center narrow:gap-2
+                  short:flex short:w-full short:items-center short:gap-2
+                "
+              >
+                <NotesSwitch
+                  onHelp={() => setHelpTopic('notes')}
+                  className="tight:min-w-0 tight:flex-1"
+                />
+                <Toolbar
+                  onAboutHint={() => setHelpTopic('hint')}
+                  className="tight:w-auto tight:flex-[1.6]"
+                />
+              </div>
             </aside>
           </main>
         </>
