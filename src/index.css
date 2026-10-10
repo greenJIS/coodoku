@@ -56,6 +56,7 @@
   --color-sel: #ffd98a;
   --color-board-line: #5a4632;
   --color-user: #b45309;
+  --color-icon: var(--color-brand-700);
   --color-match: #ec176c;
   --color-ok: #10b981;
   --color-error: #e11d48;
@@ -289,32 +290,33 @@
   }
 }
 
-/* Dark theme overrides with WCAG AA >= 4.5:1 contrast */
+/* Dark theme overrides. Text tokens >= 4.5:1 on paper and cream-50..200 (see src/theme.test.ts) */
 [data-theme='dark'] {
-  --color-paper: #1d1810;
-  --color-cream-50: #2a2318;
-  --color-cream-100: #352b1c;
-  --color-cream-200: #423624;
-  --color-cream-300: #4f4129;
-  --color-ink-900: #f3e9d6;
+  --color-paper: #14100a;
+  --color-cream-50: #241b10;
+  --color-cream-100: #2e2315;
+  --color-cream-200: #3a2d1b;
+  --color-cream-300: #46371f;
+  --color-ink-900: #f6ecd8;
   --color-ink-600: #d8c39a;
-  --color-ink-500: #b9a98a;
-  --color-slate-500: #b9a98a;
-  --color-slate-400: #9e8f73;
-  --color-slate-300: #4b3f2c;
-  --color-slate-200: #3a2f1e;
-  --color-slate-100: #352b1c;
-  --color-slate-50: #2a2318;
-  --color-edge: #4f4129;
-  --color-hairline: #4b3f2c;
-  --color-peer: #3b2f1b;
-  --color-sel: #7a5416;
-  --color-board-line: #d8c39a;
+  --color-ink-500: #c4b08a;
+  --color-slate-500: #c4b08a;
+  --color-slate-400: #a89a7c;
+  --color-slate-300: #5a4930;
+  --color-slate-200: #3a2d1b;
+  --color-slate-100: #2e2315;
+  --color-slate-50: #241b10;
+  --color-edge: #7d6640;
+  --color-hairline: #5a4930;
+  --color-peer: #47351b;
+  --color-sel: #5e4214;
+  --color-board-line: #9c8559;
   --color-user: #f7b84e;
   --color-match: #ff6aa6;
-  --color-brand-100: #3b2f1b;
+  --color-icon: #f7b84e;
+  --color-brand-100: #47351b;
   --color-brand-300: #6b4b12;
-  --color-error: #f43f5e;
+  --color-error: #ff6b86;
   color-scheme: dark;
 }
 
