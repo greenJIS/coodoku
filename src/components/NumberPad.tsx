@@ -57,7 +57,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
               active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
               dark:bg-cream-100
               tight:w-16 tight:justify-self-center
-              compact:h-11 compact:w-auto compact:aspect-auto compact:text-[24px]
+              compact:h-11 compact:w-auto compact:justify-self-stretch compact:aspect-auto compact:text-[24px]
               ${
                 isDone
                   ? 'pointer-events-none cursor-not-allowed opacity-30'

@@ -4,7 +4,7 @@
 /* Same breakpoint as the design preview: max-width 860px, inclusive */
 @custom-variant narrow (@media (max-width: 860px));
 /* Narrow screens or landscape phones of any width: compact control sizing */
-@custom-variant tight (@media (max-width: 860px), (orientation: landscape) and (max-height: 600px));
+@custom-variant tight (@media (max-width: 860px) or ((orientation: landscape) and (max-height: 600px)));
 /* Portrait phones too short for a 3x3 pad: pad becomes 5+4 with Erase */
 @custom-variant compact (@media (max-width: 860px) and (max-height: 719px) and (orientation: portrait));
 /* Landscape phones and short windows: board left, pad and strip right */
@@ -397,6 +397,7 @@
 
 @media (max-width: 860px) {
   :root {
+    --header-h: 114px;
     --board-size: max(
       180px,
       min(
