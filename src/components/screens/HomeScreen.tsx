@@ -95,29 +95,38 @@ export function HomeScreen({
   return (
     <main
       className="
-        flex min-h-0 w-full flex-1 flex-col items-center justify-center
+        flex w-full flex-1 flex-col items-center justify-center
+        short:flex-row short:gap-8
       "
     >
-      <Otter
-        size={96}
+      <div className="flex flex-col items-center short:flex-1">
+        <Otter
+          size={96}
+          className="
+            animate-bob
+            [@media(max-height:640px)_and_(orientation:portrait)]:hidden
+          "
+        />
+        <h1
+          className="
+            mt-1 text-[50px] leading-none underline decoration-brand-500
+            decoration-wavy decoration-[3px] underline-offset-8
+            short:text-[40px]
+          "
+        >
+          Coodoku
+        </h1>
+        <p className="mt-3 text-[20px] text-slate-500">
+          Quiet sudoku, one otter, no accounts.
+        </p>
+      </div>
+
+      <div
         className="
-          animate-bob
-          [@media(max-height:640px)]:hidden
-        "
-      />
-      <h1
-        className="
-          mt-1 text-[50px] leading-none underline decoration-brand-500
-          decoration-wavy decoration-[3px] underline-offset-8
+          mt-5 flex w-[min(92vw,460px)] flex-col gap-3
+          short:mt-0 short:w-auto short:max-w-md short:flex-1 short:gap-2
         "
       >
-        Coodoku
-      </h1>
-      <p className="mt-3 text-[20px] text-slate-500">
-        Quiet sudoku, one otter, no accounts.
-      </p>
-
-      <div className="mt-5 flex w-[min(92vw,460px)] flex-col gap-3">
         {save ? (
           <ContinueCard game={save} onContinue={resume} />
         ) : (

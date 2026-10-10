@@ -9,7 +9,7 @@ export function HowToPlayCard({ onOpen }: { onOpen: () => void }) {
         ${LIFT}
         flex w-full items-center gap-3 rounded-[18px] border-2 border-edge
         bg-cream-50 px-3 py-2.5 text-left shadow-[0_4px_0_var(--color-edge)]
-        dark:bg-cream-100
+        dark:bg-cream-100 max-[380px]:gap-2 max-[380px]:px-2
       `}
     >
       <span
@@ -21,7 +21,9 @@ export function HowToPlayCard({ onOpen }: { onOpen: () => void }) {
       >
         ?
       </span>
-      <span className="text-[22px] leading-tight">How to play</span>
+      <span className="whitespace-nowrap text-[22px] leading-tight max-[380px]:text-[20px]">
+        How to play
+      </span>
     </button>
   );
 }
