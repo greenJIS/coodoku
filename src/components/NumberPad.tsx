@@ -1,6 +1,7 @@
 import { remainingCount } from '../game/queries';
 import { useGameStore } from '../store/game';
 import { useSettingsStore } from '../store/settings';
+import { EraseButton } from './EraseButton';
 
 const NOTES_RING = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23e0940f' stroke-width='2.6' stroke-dasharray='9 5.45' stroke-linecap='round'/%3E%3C/svg%3E")`;
 
@@ -23,6 +24,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
       className={`
         grid w-full grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5
         min-[861px]:gap-x-4.5 min-[861px]:gap-y-3.5
+        compact:grid-cols-5 compact:gap-2
         ${className}
       `}
     >
@@ -54,7 +56,8 @@ export function NumberPad({ className = '' }: NumberPadProps) {
               focus-visible:outline-brand-400
               active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
               dark:bg-cream-100
-              narrow:w-16 narrow:justify-self-center
+              tight:w-16 tight:justify-self-center
+              compact:h-11 compact:w-auto compact:aspect-auto compact:text-[24px]
               ${
                 isDone
                   ? 'pointer-events-none cursor-not-allowed opacity-30'
@@ -85,6 +88,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
                 className="
                   absolute right-2.5 bottom-2 font-sans text-[11px]
                   text-slate-500
+                  compact:right-1.5 compact:bottom-0.5 compact:text-[9px]
                 "
               >
                 {count}
@@ -93,6 +97,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
           </button>
         );
       })}
+      <EraseButton variant="pad" className="hidden compact:flex" />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Puzzle } from '../engine';
 import { createGame } from '../game/cells';
@@ -109,6 +109,15 @@ describe('NumberPad, NotesSwitch, and Toolbar controls', () => {
       for (const btn of buttons) {
         expect(btn).toBeDisabled();
       }
+    });
+
+    it('renders Erase inside the number pad group for compact screens', () => {
+      useGameStore.setState({ selected: 2 });
+      render(<NumberPad />);
+      const group = screen.getByRole('group', { name: 'Number pad' });
+      expect(
+        within(group).getByRole('button', { name: 'Erase' }),
+      ).not.toBeDisabled();
     });
   });
 
