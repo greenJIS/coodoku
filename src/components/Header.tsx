@@ -43,15 +43,17 @@ export function Header({
     <header
       className={`
         w-full max-w-260 select-none
+        short:mb-2 short:flex short:h-(--header-h) short:items-center short:gap-2
         ${className}
       `}
     >
       {/* Row 1: Inert Home button, Otter + Name, Settings gear */}
-      <div className="mb-2 flex w-full items-center justify-between">
+      <div className="mb-2 flex w-full items-center justify-between short:contents">
         <IconButton
           icon={<HomeIcon />}
           label="Home"
           tooltip="Home"
+          className="short:order-1"
           onClick={exitToHome}
         />
 
@@ -59,6 +61,8 @@ export function Header({
           className="
             flex items-center gap-2.5 text-[29px] tracking-[-0.01em]
             text-ink-900
+            narrow:text-[24px]
+            short:order-2 short:min-w-0 short:flex-1 short:justify-center short:text-[20px]
           "
         >
           <Otter />
@@ -66,6 +70,7 @@ export function Header({
             className="
               underline decoration-brand-500 decoration-wavy decoration-2
               underline-offset-[7px]
+              short:truncate
             "
           >
             {displayName}
@@ -77,6 +82,7 @@ export function Header({
           icon={<GearIcon />}
           label="Settings"
           tooltip="Settings"
+          className="short:order-6"
           onClick={onOpenSettings}
         />
       </div>
@@ -84,19 +90,15 @@ export function Header({
       {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
       <div
         className="
-          mb-2.5 grid w-full grid-cols-1 items-center justify-items-center
-          gap-y-1.5 text-[17px] text-slate-500
-          min-[861px]:grid-cols-[1fr_auto_1fr] min-[861px]:justify-items-stretch
+          mb-2.5 grid w-full grid-cols-[1fr_auto_1fr] items-center
+          justify-items-stretch gap-x-2 text-[17px] text-slate-500
+          narrow:mb-1 narrow:text-[14px]
+          short:contents
         "
       >
         {/* Difficulty indicator (left) */}
-        <div
-          className="
-            order-2
-            min-[861px]:order-1 min-[861px]:justify-self-start
-          "
-        >
-          <span>Difficulty </span>
+        <div className="order-1 justify-self-start short:order-3">
+          <span className="max-[400px]:hidden short:hidden">Difficulty </span>
           <span className="sr-only">{capitalizedDiff}</span>
           <span
             aria-hidden="true"
@@ -117,9 +119,8 @@ export function Header({
         {/* Hearts row (center) */}
         <div
           className={`
-            order-1
-            min-[861px]:order-2 min-[861px]:justify-self-center
-            ${mistakeCheck ? '' : `invisible`}
+            order-2 justify-self-center short:order-4
+            ${mistakeCheck ? '' : 'invisible short:hidden'}
           `}
         >
           <HeartRow />
@@ -127,12 +128,7 @@ export function Header({
 
         {/* Timer & Pause button (right) - removed when showTimer is false */}
         {showTimer ? (
-          <div
-            className="
-              order-3 flex items-center gap-3
-              min-[861px]:justify-self-end
-            "
-          >
+          <div className="order-3 flex items-center gap-3 justify-self-end short:order-5">
             <Timer />
             <IconButton
               id="pauseBtn"
@@ -144,12 +140,7 @@ export function Header({
             />
           </div>
         ) : (
-          <div
-            className="
-              order-3 hidden
-              min-[861px]:block
-            "
-          />
+          <div className="order-3 block" />
         )}
       </div>
     </header>
