@@ -1,3 +1,0 @@
-npm run lint
-npx prettier --check .
-npx vitest run

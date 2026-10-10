@@ -177,6 +177,6 @@ All tests must pass before committing.
 - Protected branches: `main`, `master`, `dev`. Work on feature branches and open a PR.
 - Exception for this project: small changes (a quick fix or tweak) may be committed straight to `main` without a
   branch or PR. Use a feature branch for anything larger. Commit still only when asked.
-- Commit messages follow `type(scope): summary`. Husky enforces it: `commit-msg` runs commitlint, and `pre-commit` runs
-  lint, `prettier --check`, and the tests. Never use `--no-verify`.
+- Commit messages follow `type(scope): summary`. Husky enforces it: `commit-msg` runs commitlint. There is no
+  `pre-commit` hook, so run lint, `prettier --check`, and the tests yourself before committing. Never use `--no-verify`.
 - Commit only when asked.
