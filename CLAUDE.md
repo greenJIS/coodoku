@@ -143,7 +143,10 @@ Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
 - **Motion defaults:** transitions use plain `ease` (`--default-transition-timing-function` in `@theme`) like the
   preview, not Tailwind's material curve. Keyframes (`pop`, `ring`, `selpulse`, `shake`, `wave`, `hit`, `modalIn`,
   `modalOut`) copy the preview's timings. `Modal` stays mounted 240ms after `open` turns false so the exit plays.
-- **Breakpoint:** the preview's `max-width: 860px` is inclusive, so use the `narrow:` variant, not `max-[860px]:`.
+- **Breakpoints:** `narrow:` is `max-width: 860px` inclusive (the preview's breakpoint, not `max-[860px]:`).
+  `compact:` is portrait phones under 720px tall (pad becomes 5+4 with Erase in row 2). `short:` is landscape under
+  600px tall (board left, pad and strip right, one-row header). `tight:` is narrow OR short, used for control sizing. Chrome heights and `--board-size` live in `index.css`.
+  `scripts/responsive-sweep.sh` screenshots every target viewport.
 - **Fonts:** Patrick Hand everywhere (digits, timer and UI; one weight, no bold), self-hosted through the `@fontsource`
   package imported in `src/main.tsx`. Color and font tokens live in the `@theme {}` block of `src/index.css`.
 - **Icons:** own line icons (stroke 2–3, round caps). A small otter mascot beside the game name.
