@@ -63,7 +63,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
                 : `
                   left-12.5 border-edge bg-white text-board-line
                   shadow-[0_3px_0_var(--color-edge)]
-                  dark:bg-[#4a3c25]
+                  dark:bg-cream-300
                 `
             }
           `}

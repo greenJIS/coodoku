@@ -121,7 +121,7 @@ const NAV_BUTTON = `
   grid size-7 cursor-pointer place-items-center rounded-full border-0
   bg-slate-100 p-0 text-board-line
   disabled:cursor-default disabled:opacity-30
-  dark:bg-[#3a2f1e]
+  dark:bg-cream-200
 `;
 
 export function HelpModal({ open, onClose, topic = 'notes' }: HelpModalProps) {

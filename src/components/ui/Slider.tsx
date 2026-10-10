@@ -50,7 +50,7 @@ export function Slider({
         [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-edge
         [&::-moz-range-thumb]:bg-white
         [&::-moz-range-thumb]:shadow-[0_2px_0_var(--color-edge)]
-        dark:[&::-moz-range-thumb]:bg-[#4a3c25]
+        dark:[&::-moz-range-thumb]:bg-cream-300
         [&::-moz-range-track]:h-3 [&::-moz-range-track]:rounded-full
         [&::-moz-range-track]:bg-linear-to-b
         [&::-moz-range-track]:from-brand-900 [&::-moz-range-track]:to-brand-800
@@ -67,7 +67,7 @@ export function Slider({
         [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-edge
         [&::-webkit-slider-thumb]:bg-white
         [&::-webkit-slider-thumb]:shadow-[0_2px_0_var(--color-edge)]
-        dark:[&::-webkit-slider-thumb]:bg-[#4a3c25]
+        dark:[&::-webkit-slider-thumb]:bg-cream-300
         ${className}
       `}
     />

@@ -52,7 +52,7 @@ export function HeartRow({
                     ? 'fill-accent-500 stroke-accent-700 text-accent-500'
                     : `
                       fill-slate-200 stroke-slate-400 text-slate-200
-                      dark:stroke-[#6b5a3c]
+                      dark:stroke-edge
                     `
                 }
               `}

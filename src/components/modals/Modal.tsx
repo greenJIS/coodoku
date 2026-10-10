@@ -205,7 +205,7 @@ export function Modal({
           relative max-h-[92vh] w-full max-w-105 overflow-y-auto
           rounded-[22px] border-2 border-edge bg-white p-6 text-ink-900
           shadow-[0_6px_0_var(--color-edge)] outline-none
-          dark:bg-cream-50
+          dark:bg-cream-100
           ${open ? `animate-modal-in` : `animate-modal-out`}
           ${className}
         `}

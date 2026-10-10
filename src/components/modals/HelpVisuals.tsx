@@ -13,7 +13,7 @@ const NOTE_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const TONE_CLASS: Record<NonNullable<MiniCell['tone']> | 'none', string> = {
   none: 'bg-white dark:bg-cream-50',
   peer: 'bg-peer dark:bg-cream-100',
-  sel: 'bg-sel dark:bg-cream-200',
+  sel: 'bg-sel',
   hit: 'bg-[#ffe9b8] dark:bg-cream-200',
 };
 

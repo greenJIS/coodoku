@@ -47,7 +47,7 @@ export function GameOverModal({
           className={`
             ${CARD_BUTTON}
             bg-slate-100 text-ink-900
-            dark:bg-[#3a2f1e]
+            dark:bg-cream-200
           `}
         >
           Retry puzzle

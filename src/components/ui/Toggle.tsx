@@ -53,7 +53,7 @@ export function Toggle({
             : `
               after:translate-x-0 after:border-2 after:border-edge
               after:bg-white after:shadow-[0_2px_0_var(--color-edge)]
-              dark:after:bg-[#4a3c25]
+              dark:after:bg-cream-300
             `
         }
         focus-visible:outline-3 focus-visible:outline-offset-2
