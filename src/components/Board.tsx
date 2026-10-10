@@ -99,7 +99,7 @@ export function Board({ className = '' }: BoardProps) {
       }}
       className={`
         relative grid shrink-0 overflow-hidden rounded-[14px] border-[3px]
-        border-board-line bg-cream-50 shadow-[0_6px_0_#cdb58a]
+        border-board-line bg-cream-50 shadow-[0_6px_0_#cdb58a] dark:shadow-[0_6px_0_var(--color-edge)]
         ${className}
       `}
     >

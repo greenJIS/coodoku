@@ -61,7 +61,12 @@ export const Cell = memo(function Cell({
   // Base background & highlight
   let bgClasses = 'bg-cream-50';
   if (isSelected) {
-    bgClasses = 'bg-sel';
+    // Dark only: a persistent ring. box-shadow is taken by the hairline and
+    // the selpulse animation, so the ring is a pseudo-element.
+    bgClasses = `bg-sel
+      dark:before:pointer-events-none dark:before:absolute dark:before:inset-0
+      dark:before:border-2 dark:before:border-brand-500
+      dark:before:content-['']`;
   } else if (isPeer) {
     bgClasses = 'bg-peer';
   }
