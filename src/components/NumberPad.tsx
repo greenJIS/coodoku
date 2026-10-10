@@ -24,7 +24,8 @@ export function NumberPad({ className = '' }: NumberPadProps) {
       className={`
         grid w-full grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5
         min-[861px]:gap-x-4.5 min-[861px]:gap-y-3.5
-        compact:grid-cols-5 compact:gap-2
+        narrow:grid-cols-[repeat(5,3.5rem)] narrow:justify-center narrow:gap-2.5
+        min-[600px]:narrow:grid-cols-[repeat(5,4.5rem)] min-[600px]:narrow:gap-3
         ${className}
       `}
     >
@@ -56,8 +57,9 @@ export function NumberPad({ className = '' }: NumberPadProps) {
               focus-visible:outline-brand-400
               active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
               dark:bg-cream-100
-              tight:w-16 tight:justify-self-center
-              compact:h-11 compact:w-auto compact:justify-self-stretch compact:aspect-auto compact:text-[24px]
+              min-[861px]:tight:size-16 min-[861px]:tight:justify-self-center
+              narrow:size-14 narrow:text-[26px]
+              min-[600px]:narrow:size-18 min-[600px]:narrow:text-[32px]
               ${
                 isDone
                   ? 'pointer-events-none cursor-not-allowed opacity-30'
@@ -88,7 +90,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
                 className="
                   absolute right-2.5 bottom-2 font-sans text-[11px]
                   text-slate-500
-                  compact:right-1.5 compact:bottom-0.5 compact:text-[9px]
+                  narrow:right-2 narrow:bottom-1 narrow:text-[9px]
                 "
               >
                 {count}
@@ -97,7 +99,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
           </button>
         );
       })}
-      <EraseButton variant="pad" className="hidden compact:flex" />
+      <EraseButton variant="pad" className="hidden narrow:flex" />
     </div>
   );
 }

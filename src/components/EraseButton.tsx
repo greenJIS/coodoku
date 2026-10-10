@@ -3,16 +3,16 @@ import { EraseIcon } from './icons';
 import { TOOLBAR_BUTTON, TOOLBAR_ICON } from './toolbarButton';
 
 export interface EraseButtonProps {
-  /** `toolbar`: card in the strip. `pad`: round pill in pad row 2 (compact). */
+  /** `toolbar`: card in the strip. `pad`: round icon-only key in pad row 2 (narrow). */
   variant?: 'toolbar' | 'pad';
   className?: string;
 }
 
-// No display utility here: the caller passes `hidden compact:flex`, and two
+// No display utility here: the caller passes `hidden narrow:flex`, and two
 // display utilities on one element have no guaranteed winner.
 const PAD_BUTTON = `
-  h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full
-  border-2 border-edge bg-cream-50 text-[16px] text-ink-900
+  size-14 min-[600px]:size-18 cursor-pointer items-center justify-center gap-1 rounded-full
+  border-2 border-edge bg-cream-50 text-[14px] text-ink-900
   shadow-[0_3px_0_var(--color-edge)] transition-transform duration-90
   hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
   active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-edge)]
@@ -50,7 +50,7 @@ export function EraseButton({
           variant === 'pad' ? 'text-board-line' : `${TOOLBAR_ICON} tight:size-5`
         }
       />
-      <span>Erase</span>
+      {variant === 'toolbar' && <span>Erase</span>}
     </button>
   );
 }

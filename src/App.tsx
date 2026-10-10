@@ -166,7 +166,7 @@ export function App() {
               <div
                 className="
                   contents
-                  narrow:flex narrow:w-full narrow:items-center narrow:gap-2
+                  narrow:flex narrow:w-(--board-size) narrow:items-center narrow:gap-2
                   short:flex short:w-full short:items-center short:gap-2
                 "
               >

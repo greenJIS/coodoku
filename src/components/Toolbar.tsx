@@ -56,8 +56,8 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         <span>Undo</span>
       </button>
 
-      {/* Erase Button (moves into the pad on compact screens) */}
-      <EraseButton className="compact:hidden" />
+      {/* Erase Button (moves into the pad on narrow screens) */}
+      <EraseButton className="narrow:hidden" />
 
       {/* Hint Button with optional "?" badge */}
       <div className="relative flex flex-1">
