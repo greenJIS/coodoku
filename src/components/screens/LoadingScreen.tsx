@@ -30,15 +30,22 @@ export function LoadingScreen({ leaving }: LoadingScreenProps) {
       className={`
         fixed inset-0 z-100 flex flex-col items-center justify-center gap-5
         bg-paper px-5 text-ink-900 transition-opacity duration-240
+        short:grid short:grid-cols-[auto_auto] short:content-center
+        short:justify-center short:gap-x-8 short:gap-y-3
         ${leaving ? 'pointer-events-none opacity-0' : 'opacity-100'}
       `}
     >
-      <Otter size={84} className="animate-bob" />
+      <Otter
+        size={84}
+        className="animate-bob short:col-start-2 short:justify-self-center"
+      />
 
       <div
         className="
           grid aspect-square w-[min(78vw,306px)] grid-cols-9 overflow-hidden
           rounded-[10px] border-[3px] border-board-line bg-cream-50
+          short:col-start-1 short:row-span-4 short:row-start-1
+          short:w-[min(78dvh,306px)]
         "
       >
         {SOLUTION.split('').map((digit, i) => {
@@ -70,10 +77,13 @@ export function LoadingScreen({ leaving }: LoadingScreenProps) {
         })}
       </div>
 
-      <p className="text-[34px] leading-none">Shuffling the pebbles…</p>
+      <p className="text-[34px] leading-none short:col-start-2 short:justify-self-center">
+        Shuffling the pebbles…
+      </p>
       <p
         className="
           min-h-11 max-w-[320px] text-center text-[20px] text-slate-500
+          short:col-start-2 short:justify-self-center
         "
       >
         {TIPS[tip]}
@@ -81,7 +91,7 @@ export function LoadingScreen({ leaving }: LoadingScreenProps) {
       <div
         className="
           h-2.5 w-[min(70vw,260px)] overflow-hidden rounded-full border-2
-          border-edge bg-peer
+          border-edge bg-peer short:col-start-2 short:justify-self-center
         "
       >
         <div className="h-full w-2/5 animate-slide rounded-full bg-brand-500" />
