@@ -3,6 +3,12 @@
 /* Theme follows the data-theme attribute, not the OS setting */
 /* Same breakpoint as the design preview: max-width 860px, inclusive */
 @custom-variant narrow (@media (max-width: 860px));
+/* Narrow screens or landscape phones of any width: compact control sizing */
+@custom-variant tight (@media (max-width: 860px), (orientation: landscape) and (max-height: 600px));
+/* Portrait phones too short for a 3x3 pad: pad becomes 5+4 with Erase */
+@custom-variant compact (@media (max-width: 860px) and (max-height: 719px) and (orientation: portrait));
+/* Landscape phones and short windows: board left, pad and strip right */
+@custom-variant short (@media (orientation: landscape) and (max-height: 600px));
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
@@ -378,4 +384,40 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-brand-400);
+}
+
+/* Responsive game layout. Chrome heights feed --board-size so no total is repeated. */
+:root {
+  --header-h: 84px;
+  --strip-h: 44px;
+  --pad-h: 212px;
+  --chrome-gap: 50px; /* root padding + gaps between header, board, pad, strip */
+  --board-size: min(86vw, 66vh, 600px);
+}
+
+@media (max-width: 860px) {
+  :root {
+    --board-size: max(
+      180px,
+      min(
+        100vw - 24px,
+        100dvh - var(--header-h) - var(--pad-h) - var(--strip-h) -
+          var(--chrome-gap),
+        560px
+      )
+    );
+  }
+}
+
+@media (max-width: 860px) and (max-height: 719px) and (orientation: portrait) {
+  :root {
+    --pad-h: 96px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  :root {
+    --header-h: 40px;
+    --board-size: max(180px, calc(100dvh - var(--header-h) - 24px));
+  }
 }
