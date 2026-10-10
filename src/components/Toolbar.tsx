@@ -1,5 +1,7 @@
-import { EraseIcon, HintIcon, UndoIcon } from './icons';
+import { HintIcon, UndoIcon } from './icons';
 import { useGameStore } from '../store/game';
+import { EraseButton } from './EraseButton';
+import { TOOLBAR_BUTTON, TOOLBAR_ICON } from './toolbarButton';
 
 export interface ToolbarProps {
   onAboutHint?: () => void;
@@ -11,7 +13,6 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
   const selected = useGameStore((s) => s.selected);
   const generating = useGameStore((s) => s.generating);
   const undo = useGameStore((s) => s.undo);
-  const erase = useGameStore((s) => s.erase);
   const hint = useGameStore((s) => s.hint);
 
   const hintsLeft = game?.hintsLeft ?? 0;
@@ -27,7 +28,6 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
       : false;
 
   const isUndoDisabled = generating || historyLen === 0;
-  const isEraseDisabled = generating || selected === null || isSelectedGiven;
   const isHintDisabled =
     generating ||
     hintsLeft <= 0 ||
@@ -50,55 +50,14 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         aria-label="Undo"
         disabled={isUndoDisabled}
         onClick={undo}
-        className="
-          group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
-          border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
-          text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
-          duration-90
-          hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
-          active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
-          disabled:pointer-events-none disabled:transform-none
-          disabled:cursor-default
-          dark:bg-cream-100
-        "
+        className={TOOLBAR_BUTTON}
       >
-        <UndoIcon
-          size={22}
-          className="
-            text-board-line
-            dark:text-ink-600 dark:group-hover:text-icon
-          "
-        />
+        <UndoIcon size={22} className={TOOLBAR_ICON} />
         <span>Undo</span>
       </button>
 
-      {/* Erase Button */}
-      <button
-        type="button"
-        aria-label="Erase"
-        disabled={isEraseDisabled}
-        onClick={erase}
-        className="
-          group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
-          border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
-          text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
-          duration-90
-          hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
-          active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
-          disabled:pointer-events-none disabled:transform-none
-          disabled:cursor-default
-          dark:bg-cream-100
-        "
-      >
-        <EraseIcon
-          size={22}
-          className="
-            text-board-line
-            dark:text-ink-600 dark:group-hover:text-icon
-          "
-        />
-        <span>Erase</span>
-      </button>
+      {/* Erase Button (moves into the pad on compact screens) */}
+      <EraseButton className="compact:hidden" />
 
       {/* Hint Button with optional "?" badge */}
       <div className="relative flex flex-1">
@@ -108,15 +67,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
           disabled={isHintDisabled}
           onClick={hint}
           className={`
-            group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
-            border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
-            text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
-            duration-90
-            hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]
-            active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
-            disabled:pointer-events-none disabled:transform-none
-            disabled:cursor-default
-            dark:bg-cream-100
+            ${TOOLBAR_BUTTON}
             ${hintsLeft <= 0 ? `opacity-40` : ''}
           `}
         >
