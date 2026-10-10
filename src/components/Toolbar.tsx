@@ -40,7 +40,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
       role="toolbar"
       aria-label="Game controls"
       className={`
-        flex w-full gap-3 select-none
+        flex w-full gap-3 select-none tight:gap-2
         ${className}
       `}
     >
@@ -52,7 +52,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         onClick={undo}
         className={TOOLBAR_BUTTON}
       >
-        <UndoIcon size={22} className={TOOLBAR_ICON} />
+        <UndoIcon size={22} className={`${TOOLBAR_ICON} tight:size-5`} />
         <span>Undo</span>
       </button>
 
@@ -73,7 +73,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         >
           <HintIcon
             size={22}
-            className="text-brand-600 dark:text-ink-600 dark:group-hover:text-icon"
+            className="text-brand-600 dark:text-ink-600 dark:group-hover:text-icon tight:size-5"
           />
           <span>Hint x{hintsLeft}</span>
         </button>
@@ -90,6 +90,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
               transition-transform duration-100
               hover:scale-110
               active:scale-95
+              tight:-top-1.5 tight:-right-1 tight:size-5.5 tight:text-[14px] tight:leading-5.5
             "
           >
             ?

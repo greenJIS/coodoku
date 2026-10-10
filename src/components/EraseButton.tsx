@@ -46,7 +46,9 @@ export function EraseButton({
     >
       <EraseIcon
         size={variant === 'pad' ? 20 : 22}
-        className={variant === 'pad' ? 'text-board-line' : TOOLBAR_ICON}
+        className={
+          variant === 'pad' ? 'text-board-line' : `${TOOLBAR_ICON} tight:size-5`
+        }
       />
       <span>Erase</span>
     </button>

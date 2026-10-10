@@ -14,8 +14,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
   return (
     <div
       className={`
-        relative w-[72%] select-none
-        narrow:w-[62%]
+        relative w-[72%] select-none tight:w-auto
         ${className}
       `}
     >
@@ -33,6 +32,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
           focus-visible:outline-brand-400
           disabled:cursor-not-allowed disabled:opacity-40
           dark:bg-cream-100
+          tight:h-11
         `}
       >
         {/* Track groove */}
@@ -43,6 +43,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
             rounded-full bg-brand-800
             shadow-[inset_0_3px_0_var(--color-brand-900)]
             min-[861px]:h-5.5
+            tight:inset-x-8 tight:h-3
           "
         />
 
@@ -54,16 +55,19 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
             place-items-center rounded-full border-2
             [transition:left_.24s_cubic-bezier(.4,1.4,.5,1),background_.2s,color_.2s]
             min-[861px]:size-13.5
+            tight:size-8
             ${
               notesMode
                 ? `
                   left-[calc(100%-50px)] border-[#b45309] bg-brand-500
                   text-brand-900 shadow-[0_3px_0_#b45309]
+                  tight:left-[calc(100%-32px)]
                 `
                 : `
                   left-12.5 border-edge bg-white text-board-line
                   shadow-[0_3px_0_var(--color-edge)]
                   dark:bg-cream-300
+                  tight:left-8
                 `
             }
           `}
@@ -85,6 +89,7 @@ export function NotesSwitch({ onHelp, className = '' }: NotesSwitchProps) {
             transition-transform duration-100
             hover:scale-110
             active:scale-95
+            tight:-top-1.5 tight:-right-1 tight:size-5.5 tight:text-[14px] tight:leading-5.5
           "
         >
           ?

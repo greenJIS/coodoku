@@ -7,6 +7,7 @@ export const TOOLBAR_BUTTON = `
   active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
   disabled:pointer-events-none disabled:transform-none disabled:cursor-default
   dark:bg-cream-100
+  tight:h-11 tight:flex-row tight:justify-center tight:gap-1.5 tight:rounded-xl tight:px-2 tight:py-0 tight:text-[13px]
 `;
 
 /** Icon colors shared by Undo and Erase. */
