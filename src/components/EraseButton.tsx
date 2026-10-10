@@ -3,12 +3,12 @@ import { EraseIcon } from './icons';
 import { TOOLBAR_BUTTON, TOOLBAR_ICON } from './toolbarButton';
 
 export interface EraseButtonProps {
-  /** `toolbar`: card in the strip. `pad`: round icon-only key in pad row 2 (narrow). */
+  /** `toolbar`: card in the strip. `pad`: round icon-only key in pad row 2 (stack). */
   variant?: 'toolbar' | 'pad';
   className?: string;
 }
 
-// No display utility here: the caller passes `hidden narrow:flex`, and two
+// No display utility here: the caller passes `hidden stack:flex`, and two
 // display utilities on one element have no guaranteed winner.
 const PAD_BUTTON = `
   size-14 min-[600px]:size-18 cursor-pointer items-center justify-center gap-1 rounded-full

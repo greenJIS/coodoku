@@ -40,7 +40,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
       role="toolbar"
       aria-label="Game controls"
       className={`
-        flex w-full gap-3 select-none tight:gap-2
+        flex w-full gap-3 select-none tight:gap-2 short:flex-col short:gap-1.5 short:[&>*]:flex-none
         ${className}
       `}
     >
@@ -56,8 +56,8 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         <span>Undo</span>
       </button>
 
-      {/* Erase Button (moves into the pad on narrow screens) */}
-      <EraseButton className="narrow:hidden" />
+      {/* Erase Button (moves into the pad on stacked layouts) */}
+      <EraseButton className="stack:hidden" />
 
       {/* Hint Button with optional "?" badge */}
       <div className="relative flex flex-1">

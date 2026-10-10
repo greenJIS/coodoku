@@ -158,16 +158,17 @@ export function App() {
                 flex w-[min(88vw,380px)] flex-col items-center gap-4.5
                 min-[861px]:w-75
                 narrow:contents
-                short:flex short:h-(--board-size) short:w-[min(44vw,320px)]
-                short:justify-between short:gap-2
+                short:flex short:h-(--board-size) short:w-auto
+                short:flex-row short:items-center short:justify-center short:gap-3
               "
             >
-              <NumberPad className="narrow:mb-auto short:my-auto" />
+              <NumberPad className="stack:mb-auto short:my-auto" />
               <div
                 className="
                   contents
-                  narrow:flex narrow:w-(--board-size) narrow:items-center narrow:gap-2
-                  short:flex short:w-full short:items-center short:gap-2
+                  stack:flex stack:w-(--board-size) stack:items-center stack:gap-2
+                  short:flex short:w-32 short:flex-col short:items-stretch
+                  short:gap-1.5
                 "
               >
                 <NotesSwitch

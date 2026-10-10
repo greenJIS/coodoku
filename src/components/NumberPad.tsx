@@ -24,8 +24,9 @@ export function NumberPad({ className = '' }: NumberPadProps) {
       className={`
         grid w-full grid-cols-[repeat(3,1fr)] gap-x-3 gap-y-2.5
         min-[861px]:gap-x-4.5 min-[861px]:gap-y-3.5
-        narrow:grid-cols-[repeat(5,3.5rem)] narrow:justify-center narrow:gap-2.5
-        min-[600px]:narrow:grid-cols-[repeat(5,4.5rem)] min-[600px]:narrow:gap-3
+        short:w-auto short:grid-cols-[repeat(3,auto)] short:content-center short:gap-2
+        stack:grid-cols-[repeat(5,3.5rem)] stack:justify-center stack:gap-2.5
+        min-[600px]:stack:grid-cols-[repeat(5,4.5rem)] min-[600px]:stack:gap-3
         ${className}
       `}
     >
@@ -57,9 +58,9 @@ export function NumberPad({ className = '' }: NumberPadProps) {
               focus-visible:outline-brand-400
               active:translate-y-0.75 active:shadow-[0_1px_0_var(--color-edge)]
               dark:bg-cream-100
-              min-[861px]:tight:size-16 min-[861px]:tight:justify-self-center
-              narrow:size-14 narrow:text-[26px]
-              min-[600px]:narrow:size-18 min-[600px]:narrow:text-[32px]
+              short:size-[clamp(44px,calc(var(--board-size)*.19),62px)] short:justify-self-center short:text-[26px]
+              stack:size-14 stack:text-[26px]
+              min-[600px]:stack:size-18 min-[600px]:stack:text-[32px]
               ${
                 isDone
                   ? 'pointer-events-none cursor-not-allowed opacity-30'
@@ -90,7 +91,8 @@ export function NumberPad({ className = '' }: NumberPadProps) {
                 className="
                   absolute right-2.5 bottom-2 font-sans text-[11px]
                   text-slate-500
-                  narrow:right-2 narrow:bottom-1 narrow:text-[9px]
+                  stack:right-2 stack:bottom-1 stack:text-[9px]
+                  short:right-1.5 short:bottom-1 short:text-[9px]
                 "
               >
                 {count}
@@ -99,7 +101,7 @@ export function NumberPad({ className = '' }: NumberPadProps) {
           </button>
         );
       })}
-      <EraseButton variant="pad" className="hidden narrow:flex" />
+      <EraseButton variant="pad" className="hidden stack:flex" />
     </div>
   );
 }
