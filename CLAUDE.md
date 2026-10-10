@@ -136,7 +136,7 @@ Colors are copied from the cookie-people app (`frontend/src/assets/main.css`):
 | Cell shading (`peer` / `sel`)                | `#fff1d6` / `#ffd98a`                     |
 | User digits (`user`)                         | `#b45309` (dark `#f7b84e`)                |
 | Same-digit outline (`match`)                 | `#ec176c` (dark `#ff6aa6`)                |
-| Hairlines, tab track (`hairline`)            | `#e6d8bd` (dark `#4b3f2c`)                |
+| Hairlines, tab track (`hairline`)            | `#e6d8bd` (dark `#5a4930`)                |
 
 - **Style:** "sticker" controls — cream face, 2px warm-tan border, solid offset shadow with no blur, press-down on
   active. No gloss gradients, no blurry shadows. Dark theme uses the same brown family.

@@ -1,3 +1,4 @@
+// @ts-expect-error Node fs in Vitest runner
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 
