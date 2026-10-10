@@ -51,7 +51,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         disabled={isUndoDisabled}
         onClick={undo}
         className="
-          flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
+          group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
           border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
           text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
           duration-90
@@ -66,7 +66,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
           size={22}
           className="
             text-board-line
-            dark:text-ink-600
+            dark:text-ink-600 dark:group-hover:text-icon
           "
         />
         <span>Undo</span>
@@ -79,7 +79,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
         disabled={isEraseDisabled}
         onClick={erase}
         className="
-          flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
+          group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
           border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
           text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
           duration-90
@@ -94,7 +94,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
           size={22}
           className="
             text-board-line
-            dark:text-ink-600
+            dark:text-ink-600 dark:group-hover:text-icon
           "
         />
         <span>Erase</span>
@@ -108,7 +108,7 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
           disabled={isHintDisabled}
           onClick={hint}
           className={`
-            flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
+            group flex flex-1 cursor-pointer flex-col items-center gap-1 rounded-2xl
             border-2 border-edge bg-cream-50 px-1.5 py-2.5 text-[14px]
             text-ink-900 shadow-[0_4px_0_var(--color-edge)] transition-transform
             duration-90
@@ -120,7 +120,10 @@ export function Toolbar({ onAboutHint, className = '' }: ToolbarProps) {
             ${hintsLeft <= 0 ? `opacity-40` : ''}
           `}
         >
-          <HintIcon size={22} className="text-brand-600" />
+          <HintIcon
+            size={22}
+            className="text-brand-600 dark:text-ink-600 dark:group-hover:text-icon"
+          />
           <span>Hint x{hintsLeft}</span>
         </button>
 

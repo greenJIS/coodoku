@@ -30,14 +30,14 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     }[size];
 
     let variantClasses =
-      'bg-cream-50 dark:bg-cream-100 text-[#b45309] border-2 border-edge hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]';
+      'bg-cream-50 dark:bg-cream-100 text-icon border-2 border-edge hover:border-brand-600 hover:shadow-[0_4px_0_var(--color-brand-600)]';
 
     if (variant === 'accent') {
       variantClasses =
         'bg-brand-500 text-brand-900 border-2 border-brand-700 shadow-[0_4px_0_var(--color-brand-700)] hover:border-brand-800 hover:shadow-[0_4px_0_var(--color-brand-800)] active:shadow-[0_1px_0_var(--color-brand-700)]';
     } else if (variant === 'close') {
       variantClasses =
-        'bg-cream-50 dark:bg-[#3a2f1e] text-[#b45309] border-2 border-edge hover:border-brand-600 hover:text-brand-600 shadow-[0_3px_0_var(--color-edge)] active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-edge)]';
+        'bg-cream-50 dark:bg-cream-200 text-icon border-2 border-edge hover:border-brand-600 hover:text-brand-600 dark:hover:text-brand-500 shadow-[0_3px_0_var(--color-edge)] active:translate-y-0.5 active:shadow-[0_1px_0_var(--color-edge)]';
     }
 
     return (
