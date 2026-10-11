@@ -393,7 +393,7 @@
   --header-h: 84px;
   --strip-h: 44px;
   --pad-h: 212px;
-  --chrome-gap: 50px; /* root padding + gaps between header, board, pad, strip */
+  --chrome-gap: 62px; /* root padding + gaps between header, board, pad, strip */
   --board-size: min(86vw, 66vh, 600px);
 }
 

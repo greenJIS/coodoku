@@ -29,7 +29,7 @@ export function HeartRow({
       aria-label={`${hearts} of ${maxHearts} hearts remaining`}
       data-testid="heart-row"
       className={`
-        flex items-center gap-1.25
+        flex items-center gap-1.25 max-[599px]:portrait:gap-0.5
         ${className}
       `}
     >
@@ -47,6 +47,7 @@ export function HeartRow({
               size={28}
               filled={isAlive}
               className={`
+                max-[400px]:size-6 max-[340px]:size-5
                 ${
                   isAlive
                     ? 'fill-accent-500 stroke-accent-700 text-accent-500'

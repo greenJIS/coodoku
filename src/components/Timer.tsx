@@ -17,12 +17,17 @@ export function Timer({ elapsedMs: explicitMs, className = '' }: TimerProps) {
       aria-label={`Elapsed time ${formatted}`}
       data-testid="game-timer"
       className={`
-        font-hand text-[40px] leading-[normal] font-normal tracking-[0.01em]
-        text-ink-900 tabular-nums select-none
+        inline-grid justify-items-end font-hand text-[40px] leading-[normal]
+        font-normal tracking-[0.01em] text-ink-900 tabular-nums select-none
+        max-[860px]:text-[28px] max-[420px]:text-[24px] max-[359px]:text-[20px]
         ${className}
       `}
     >
-      {formatted}
+      {/* Sizer reserves the widest reading (H:MM:SS) so neighbors never shift */}
+      <span aria-hidden="true" className="invisible col-start-1 row-start-1">
+        00:00:00
+      </span>
+      <span className="col-start-1 row-start-1">{formatted}</span>
     </span>
   );
 }

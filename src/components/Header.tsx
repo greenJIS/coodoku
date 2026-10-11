@@ -42,67 +42,85 @@ export function Header({
   return (
     <header
       className={`
-        w-full max-w-260 select-none
-        short:mb-2 short:flex short:h-(--header-h) short:items-center short:gap-2
+        w-full max-w-160 select-none
+        short:mb-2 short:flex short:h-(--header-h) short:max-w-none
+        short:items-center short:gap-2.5
         ${className}
       `}
     >
-      {/* Row 1: Inert Home button, Otter + Name, Settings gear */}
+      {/* Row 1: Home, Otter + Name, Settings (landscape phones: one row) */}
       <div className="mb-2 flex w-full items-center justify-between short:contents">
         <IconButton
-          icon={<HomeIcon />}
+          icon={<HomeIcon className="short:size-4.5" />}
           label="Home"
           tooltip="Home"
-          className="short:order-1"
+          className="short:size-9.5! short:shadow-[0_3px_0_var(--color-edge)]"
           onClick={exitToHome}
         />
 
         <div
           className="
-            flex items-center gap-2.5 text-[29px] tracking-[-0.01em]
+            flex min-w-0 items-center gap-2.5 text-[30px] tracking-[-0.01em]
             text-ink-900
-            narrow:text-[24px]
-            short:order-2 short:min-w-0 short:flex-1 short:justify-center short:text-[20px]
+            max-[860px]:text-[24px]
+            short:order-3 short:flex-1 short:justify-start short:text-[20px]
           "
         >
           <Otter />
           <span
             className="
-              underline decoration-brand-500 decoration-wavy decoration-2
-              underline-offset-[7px]
-              short:truncate
+              truncate underline decoration-brand-500 decoration-wavy
+              decoration-2 underline-offset-[7px]
             "
           >
             {displayName}
           </span>
         </div>
 
-        <IconButton
-          id="settingsBtn"
-          icon={<GearIcon />}
-          label="Settings"
-          tooltip="Settings"
-          className="short:order-6"
-          onClick={onOpenSettings}
-        />
+        <div className="short:order-7">
+          <IconButton
+            id="settingsBtn"
+            icon={<GearIcon className="short:size-4.5" />}
+            label="Settings"
+            tooltip="Settings"
+            className="short:size-9.5! short:shadow-[0_3px_0_var(--color-edge)]"
+            onClick={onOpenSettings}
+          />
+        </div>
       </div>
 
-      {/* Row 2: Difficulty left, Hearts center, Timer & Pause right */}
+      {/* Row 2: Hearts left, difficulty chip centered, Timer + Pause right */}
       <div
         className="
-          mb-2.5 grid w-full grid-cols-[1fr_auto_1fr] items-center
-          justify-items-stretch gap-x-2 text-[17px] text-slate-500
-          narrow:mb-1 narrow:text-[14px]
-          short:contents
+          mb-2.5 grid w-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
+          items-center gap-x-2.5
+          short:order-4 short:mb-0 short:flex short:w-auto short:gap-3
         "
       >
-        {/* Difficulty indicator (left) */}
-        <div className="order-1 justify-self-start short:order-3">
-          <span className="max-[400px]:hidden short:hidden">Difficulty </span>
-          <span className="sr-only">{capitalizedDiff}</span>
+        <div
+          className={`
+            justify-self-start short:order-4
+            ${mistakeCheck ? '' : 'invisible short:hidden'}
+          `}
+        >
+          <HeartRow />
+        </div>
+
+        {/* Difficulty chip */}
+        <div
+          className="
+            flex items-center gap-2 rounded-full border-2 border-edge
+            bg-cream-50 px-3 py-0.5 text-[16px] text-brand-700
+            shadow-[0_2px_0_var(--color-edge)]
+            dark:bg-cream-100
+            max-[599px]:portrait:px-2.5
+            short:order-5 short:text-[14px]
+          "
+        >
+          <span>{capitalizedDiff}</span>
           <span
             aria-hidden="true"
-            className="ml-1.5 inline-flex gap-1 align-middle"
+            className="inline-flex gap-1 max-[599px]:portrait:hidden"
           >
             {[1, 2, 3, 4].map((dot) => (
               <i
@@ -116,19 +134,9 @@ export function Header({
           </span>
         </div>
 
-        {/* Hearts row (center) */}
-        <div
-          className={`
-            order-2 justify-self-center short:order-4
-            ${mistakeCheck ? '' : 'invisible short:hidden'}
-          `}
-        >
-          <HeartRow />
-        </div>
-
-        {/* Timer & Pause button (right) - removed when showTimer is false */}
+        {/* Timer & Pause button - removed when showTimer is false */}
         {showTimer ? (
-          <div className="order-3 flex items-center gap-3 justify-self-end short:order-5">
+          <div className="flex items-center gap-2 justify-self-end max-[420px]:gap-1.5 short:order-6">
             <Timer />
             <IconButton
               id="pauseBtn"
@@ -136,11 +144,12 @@ export function Header({
               size="sm"
               label="Pause"
               tooltip="Pause (P)"
+              className="max-[359px]:size-7.5!"
               onClick={onPause}
             />
           </div>
         ) : (
-          <div className="order-3 block" />
+          <div className="block" />
         )}
       </div>
     </header>

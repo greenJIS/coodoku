@@ -99,7 +99,7 @@ export function App() {
             : `
               min-h-screen pb-10
               narrow:h-dvh narrow:min-h-0 narrow:overflow-y-auto narrow:px-3
-              narrow:pb-3
+              narrow:pb-6
               short:h-dvh short:min-h-0 short:overflow-y-auto short:px-3
               short:pt-2 short:pb-2
             `
@@ -162,7 +162,7 @@ export function App() {
                 short:flex-row short:items-center short:justify-center short:gap-3
               "
             >
-              <NumberPad className="stack:mb-auto short:my-auto" />
+              <NumberPad className="stack:mt-3 stack:mb-auto short:my-auto" />
               <div
                 className="
                   contents
