@@ -28,7 +28,12 @@ export interface SettingsStore extends Settings {
 }
 
 function loadInitialSettings(): Settings {
-  return readKey(SETTINGS_KEY, parseSettings) ?? getDefaultSettings();
+  const saved = readKey(SETTINGS_KEY, parseSettings);
+  if (saved) return saved;
+  // First visit: keep the random name so it survives the next refresh
+  const defaults = getDefaultSettings();
+  writeKey(SETTINGS_KEY, defaults);
+  return defaults;
 }
 
 function persist(settings: Settings): void {

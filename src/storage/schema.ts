@@ -1,5 +1,6 @@
 import { DIFFICULTIES } from '../engine';
 import type { Difficulty } from '../engine';
+import { randomName } from '../lib/names';
 
 export type Theme = 'light' | 'dark';
 export type DigitSize = 'normal' | 'large';
@@ -35,7 +36,7 @@ export function getDefaultSettings(): Settings {
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
   return {
-    name: 'Calm Otter',
+    name: randomName(),
     difficulty: 'easy',
     mistakeCheck: true,
     autoRemoveNotes: true,

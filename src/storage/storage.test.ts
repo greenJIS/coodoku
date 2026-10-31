@@ -99,8 +99,15 @@ describe('storage helpers and schema', () => {
 
   it('parseSettings merges defaults field by field', () => {
     const defaults = getDefaultSettings();
-    expect(parseSettings(null)).toEqual(defaults);
-    expect(parseSettings({})).toEqual(defaults);
+    // The default name is random, so compare everything else
+    expect({ ...parseSettings(null), name: '' }).toEqual({
+      ...defaults,
+      name: '',
+    });
+    expect({ ...parseSettings({}), name: '' }).toEqual({
+      ...defaults,
+      name: '',
+    });
 
     // Partial update: only volume and sound
     const partial = { volume: 80, sound: false };

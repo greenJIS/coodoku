@@ -13,7 +13,6 @@ import {
 import { parse, serialize } from '../game/save';
 import type { GameState } from '../game/types';
 import { haptics } from '../lib/haptics';
-import { randomName } from '../lib/names';
 import { sound } from '../lib/sound';
 import { GAME_KEY, readKey, removeKey, writeKey } from '../storage/storage';
 import { engineClient } from './engine';
@@ -354,7 +353,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (prefetchedPuzzle && prefetchedPuzzle.difficulty === targetDiff) {
       const puzzle = prefetchedPuzzle.puzzle;
       prefetchedPuzzle = null;
-      const game = createGame(puzzle, randomName());
+      const game = createGame(puzzle, useSettingsStore.getState().name);
       useSettingsStore.getState().setDifficulty(game.difficulty);
 
       set({
@@ -383,7 +382,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         prefetchDifficulty = null;
         prefetchAbortController = null;
 
-        const game = createGame(puzzle, randomName());
+        const game = createGame(puzzle, useSettingsStore.getState().name);
         useSettingsStore.getState().setDifficulty(game.difficulty);
 
         set({
@@ -436,7 +435,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       }
       currentAbortController = null;
 
-      const game = createGame(puzzle, randomName());
+      const game = createGame(puzzle, useSettingsStore.getState().name);
       useSettingsStore.getState().setDifficulty(game.difficulty);
 
       set({

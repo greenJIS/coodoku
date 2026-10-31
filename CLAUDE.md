@@ -83,7 +83,7 @@ Single-page static app. All state is client-side.
 - **Hints:** 5 per game _(provisional — earned hints not decided)_.
 - **Changing difficulty in Settings starts a new game immediately.** Selecting the current difficulty does nothing.
   Consider a confirm prompt only when the board has progress _(open)_.
-- **New game** generates a fresh random name (adjective + animal). The name is editable in Settings.
+- **Game name** is one persisted setting (`settings.name`, random on first visit, then saved). Every game reuses it, so it stays stable across games and refreshes. Settings edits it or shuffles a random adjective + animal.
 - **Remaining count** on the 1–9 pad counts only correct placements. A pad button dims and disables at 0.
 - **Show timer off** hides the timer and the pause button together, and disables the `P` shortcut. The clock still runs.
 - **Timer pauses** while Settings, Help, or the Pause modal is open. The Pause modal blurs and hides the board.

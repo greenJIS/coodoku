@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { formatTime } from '../../lib/time';
 import { useGameStore } from '../../store/game';
 import { useSettingsStore } from '../../store/settings';
@@ -71,25 +72,28 @@ export function WinModal({ open, onNewGame }: WinModalProps) {
       label="Puzzle Solved!"
       className={CARD_CLASS}
     >
-      {confetti.length > 0 && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-60 overflow-hidden"
-        >
-          {confetti.map((bit, i) => (
-            <div
-              key={i}
-              style={{
-                left: `${bit.left}vw`,
-                animationDelay: `${bit.delay}s`,
-                animationDuration: `${bit.duration}s`,
-                backgroundColor: bit.color,
-              }}
-              className="absolute -top-3 h-3.5 w-2.25 animate-fall"
-            />
-          ))}
-        </div>
-      )}
+      {confetti.length > 0 &&
+        // Portal out of the dialog: its transform and overflow clip a fixed layer
+        createPortal(
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-0 z-60 overflow-hidden"
+          >
+            {confetti.map((bit, i) => (
+              <div
+                key={i}
+                style={{
+                  left: `${bit.left}vw`,
+                  animationDelay: `${bit.delay}s`,
+                  animationDuration: `${bit.duration}s`,
+                  backgroundColor: bit.color,
+                }}
+                className="absolute -top-3 h-3.5 w-2.25 animate-fall"
+              />
+            ))}
+          </div>,
+          document.body,
+        )}
 
       <h2 className="mb-1.5 text-[34px] text-ink-900">Nicely done!</h2>
       <p className="mb-4 text-slate-500">{message}</p>
