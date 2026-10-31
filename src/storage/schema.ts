@@ -182,13 +182,15 @@ export function parseStats(raw: unknown): Stats {
           ? c.solved
           : defaults[diff].solved;
 
+      // Older builds saved fractional times, so round instead of dropping them
       const bestMs =
-        c.bestMs === null ||
-        (typeof c.bestMs === 'number' &&
-          Number.isInteger(c.bestMs) &&
-          c.bestMs > 0)
-          ? c.bestMs
-          : defaults[diff].bestMs;
+        c.bestMs === null
+          ? null
+          : typeof c.bestMs === 'number' &&
+              Number.isFinite(c.bestMs) &&
+              Math.round(c.bestMs) > 0
+            ? Math.round(c.bestMs)
+            : defaults[diff].bestMs;
 
       result[diff] = { solved, bestMs };
     } else {

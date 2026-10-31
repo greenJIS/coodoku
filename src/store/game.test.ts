@@ -132,6 +132,23 @@ describe('game store', () => {
     expect(useGameStore.getState().wave).toBeNull();
   });
 
+  it('ignores a digit key once every copy is placed and the pad is disabled', async () => {
+    await useGameStore.getState().newGame('easy');
+    const game = useGameStore.getState().game!;
+    // Place every correct 1, leave cell 1 (solution 2) empty
+    const values = game.values.map((v, i) => (game.solution[i] === 1 ? 1 : v));
+    useGameStore.setState({ game: { ...game, values }, selected: 1 });
+
+    useGameStore.getState().enter(1);
+    expect(useGameStore.getState().game?.values[1]).toBe(0);
+    expect(useGameStore.getState().game?.hearts).toBe(5);
+
+    // With the remaining count hidden the pad never disables, so keys work
+    useSettingsStore.setState({ showRemaining: false });
+    useGameStore.getState().enter(1);
+    expect(useGameStore.getState().game?.values[1]).toBe(1);
+  });
+
   it('handles notes mode and erase', async () => {
     await useGameStore.getState().newGame('easy');
     const store = useGameStore.getState();

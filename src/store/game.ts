@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 import type { Difficulty, Puzzle } from '../engine';
 import { createGame } from '../game/cells';
-import { completedUnitCells, completedUnits } from '../game/queries';
+import {
+  completedUnitCells,
+  completedUnits,
+  remainingCount,
+} from '../game/queries';
 import {
   erase,
   placeDigit,
@@ -188,6 +192,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
       return;
     }
 
+    // The pad disables a finished digit, so the keyboard must too
+    if (settings.showRemaining && remainingCount(game, digit) <= 0) return;
+
     const prevHearts = game.hearts;
     const opts = {
       mistakeCheck: settings.mistakeCheck,
@@ -267,10 +274,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const { game, selected } = get();
     if (selected === null || !game || game.status !== 'playing') return;
 
-    const nextGame = erase(game, selected);
+    const settings = useSettingsStore.getState();
+    const nextGame = erase(game, selected, {
+      mistakeCheck: settings.mistakeCheck,
+    });
     if (nextGame === game) return;
 
-    const settings = useSettingsStore.getState();
     sound.play('erase', { sound: settings.sound, volume: settings.volume });
     haptics.tap('erase', settings.vibrate);
 

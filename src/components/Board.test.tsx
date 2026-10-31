@@ -93,6 +93,22 @@ describe('Board and Cell components', () => {
     expect(cells[3].querySelector('span')).toHaveClass('text-error');
   });
 
+  it('shows no wrong mark when mistake check is off', () => {
+    let game = createGame(samplePuzzle, 'Calm Otter');
+    game = placeDigit(game, 3, 1, {
+      mistakeCheck: false,
+      autoRemoveNotes: false,
+    });
+    useGameStore.setState({ game });
+    useSettingsStore.setState({ mistakeCheck: false });
+    render(<Board />);
+
+    const cell = screen.getAllByRole('gridcell')[3];
+    expect(cell).toHaveAttribute('aria-label', 'row 1, column 4, 1');
+    expect(cell.querySelector('span')).not.toHaveClass('text-error');
+    useSettingsStore.setState({ mistakeCheck: true });
+  });
+
   it('click selects cell and updates roving tabindex', () => {
     render(<Board />);
     const cells = screen.getAllByRole('gridcell');

@@ -13,8 +13,9 @@ function ConnectedCell({ index }: ConnectedCellProps) {
   const value = useGameStore((s) => s.game?.values[index] ?? 0);
   const notes = useGameStore((s) => s.game?.notes[index] ?? 0);
   const isGiven = useGameStore((s) => (s.game?.givens[index] ?? 0) !== 0);
+  const mistakeCheck = useSettingsStore((s) => s.mistakeCheck);
   const isWrongCell = useGameStore((s) =>
-    s.game ? isWrong(s.game, index) : false,
+    mistakeCheck && s.game ? isWrong(s.game, index) : false,
   );
   const isSelected = useGameStore((s) => s.selected === index);
   const selectedCell = useGameStore((s) => s.selected);

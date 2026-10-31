@@ -1,4 +1,5 @@
 import { clearBit, hasNote, peers, toggleBit } from './cells';
+import { isLockedDigit } from './queries';
 import type { Change, GameState, GameStatus, RuleOptions } from './types';
 
 export function placeDigit(
@@ -103,10 +104,15 @@ export function toggleNote(
   };
 }
 
-export function erase(state: GameState, cell: number): GameState {
+export function erase(
+  state: GameState,
+  cell: number,
+  opts: Pick<RuleOptions, 'mistakeCheck'>,
+): GameState {
   if (state.status !== 'playing') return state;
   if (cell < 0 || cell >= 81) return state;
   if (state.givens[cell] !== 0) return state;
+  if (isLockedDigit(state, cell, opts.mistakeCheck)) return state;
   if (state.values[cell] === 0 && state.notes[cell] === 0) return state;
 
   const change: Change = {

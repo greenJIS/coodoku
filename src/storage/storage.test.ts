@@ -126,6 +126,11 @@ describe('storage helpers and schema', () => {
     expect(fallback.theme).toBe(defaults.theme);
   });
 
+  it('parseStats rounds fractional best times from older builds', () => {
+    const stats = parseStats({ easy: { solved: 1, bestMs: 463250.1 } });
+    expect(stats.easy.bestMs).toBe(463250);
+  });
+
   it('parseStats merges defaults per difficulty', () => {
     const defaults = getDefaultStats();
     expect(parseStats(null)).toEqual(defaults);

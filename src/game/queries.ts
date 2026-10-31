@@ -15,6 +15,17 @@ export function isWrong(state: GameState, cell: number): boolean {
   return val !== 0 && val !== state.solution[cell];
 }
 
+/** A correct player digit is locked while mistake check is on. */
+export function isLockedDigit(
+  state: GameState,
+  cell: number,
+  mistakeCheck: boolean,
+): boolean {
+  if (cell < 0 || cell >= 81) return false;
+  const val = state.values[cell];
+  return mistakeCheck && val !== 0 && val === state.solution[cell];
+}
+
 export function remainingCount(state: GameState, digit: number): number {
   if (digit < 1 || digit > 9) return 0;
   let correctPlaced = 0;

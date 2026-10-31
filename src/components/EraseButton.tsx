@@ -1,4 +1,6 @@
+import { isLockedDigit } from '../game/queries';
 import { useGameStore } from '../store/game';
+import { useSettingsStore } from '../store/settings';
 import { EraseIcon } from './icons';
 import { TOOLBAR_BUTTON, TOOLBAR_ICON } from './toolbarButton';
 
@@ -28,10 +30,17 @@ export function EraseButton({
   const selected = useGameStore((s) => s.selected);
   const generating = useGameStore((s) => s.generating);
   const erase = useGameStore((s) => s.erase);
+  const mistakeCheck = useSettingsStore((s) => s.mistakeCheck);
 
   const isSelectedGiven =
     selected !== null && game ? game.givens[selected] !== 0 : true;
-  const isDisabled = generating || selected === null || isSelectedGiven;
+  // Correct digits are locked so they cannot be erased by accident
+  const isSelectedLocked =
+    selected !== null && game
+      ? isLockedDigit(game, selected, mistakeCheck)
+      : false;
+  const isDisabled =
+    generating || selected === null || isSelectedGiven || isSelectedLocked;
 
   return (
     <button

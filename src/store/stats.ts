@@ -27,6 +27,8 @@ export const useStatsStore = create<StatsStore>((set, get) => ({
   resetArmed: false,
 
   recordWin: (difficulty, ms) => {
+    // Elapsed time is fractional, but saved stats only accept whole ms
+    const wholeMs = Math.round(ms);
     const prevStats = get().stats;
     const currentDiff: DifficultyStats = prevStats[difficulty] ?? {
       solved: 0,
@@ -35,7 +37,9 @@ export const useStatsStore = create<StatsStore>((set, get) => ({
 
     const newSolved = currentDiff.solved + 1;
     const newBestMs =
-      currentDiff.bestMs === null ? ms : Math.min(currentDiff.bestMs, ms);
+      currentDiff.bestMs === null
+        ? wholeMs
+        : Math.min(currentDiff.bestMs, wholeMs);
 
     const newStats: Stats = {
       ...prevStats,

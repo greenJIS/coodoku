@@ -17,6 +17,12 @@ describe('stats store', () => {
     vi.useRealTimers();
   });
 
+  it('rounds fractional win times so they survive a reload', () => {
+    useStatsStore.getState().recordWin('easy', 463250.09999996424);
+    expect(useStatsStore.getState().stats.easy.bestMs).toBe(463250);
+    expect(readKey(STATS_KEY, parseStats)?.easy.bestMs).toBe(463250);
+  });
+
   it('records wins and computes best time', () => {
     const store = useStatsStore.getState();
 

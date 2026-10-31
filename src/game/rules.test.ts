@@ -129,7 +129,7 @@ describe('game rules', () => {
     game = { ...game, status: 'lost' };
     expect(placeDigit(game, 1, 1, defaultOpts)).toBe(game);
     expect(toggleNote(game, 1, 1)).toBe(game);
-    expect(erase(game, 1)).toBe(game);
+    expect(erase(game, 1, defaultOpts)).toBe(game);
   });
 
   it('allows notes only on empty cells', () => {
@@ -160,22 +160,31 @@ describe('game rules', () => {
   it('erase clears value and notes, but is no-op on given', () => {
     let game = makeTestGame();
     // Given cell 0
-    expect(erase(game, 0)).toBe(game);
+    expect(erase(game, 0, defaultOpts)).toBe(game);
 
     // Empty cell with nothing is no-op
-    expect(erase(game, 1)).toBe(game);
+    expect(erase(game, 1, defaultOpts)).toBe(game);
 
     // Placed cell
     game = placeDigit(game, 1, 9, { ...defaultOpts, mistakeCheck: false });
     expect(game.values[1]).toBe(9);
-    let cleared = erase(game, 1);
+    let cleared = erase(game, 1, defaultOpts);
     expect(cleared.values[1]).toBe(0);
 
     // Note cell
     game = toggleNote(cleared, 1, 3);
     expect(game.notes[1]).toBe(1 << 3);
-    cleared = erase(game, 1);
+    cleared = erase(game, 1, defaultOpts);
     expect(cleared.notes[1]).toBe(0);
+  });
+
+  it('erase keeps a correct digit while mistake check is on', () => {
+    let game = makeTestGame();
+    const correct = game.solution[1];
+    game = placeDigit(game, 1, correct, defaultOpts);
+    expect(game.values[1]).toBe(correct);
+    expect(erase(game, 1, { mistakeCheck: true })).toBe(game);
+    expect(erase(game, 1, { mistakeCheck: false }).values[1]).toBe(0);
   });
 
   it('never mutates input state (deep freeze test)', () => {
@@ -190,7 +199,7 @@ describe('game rules', () => {
 
     expect(() => placeDigit(frozen, 1, 1, defaultOpts)).not.toThrow();
     expect(() => toggleNote(frozen, 1, 2)).not.toThrow();
-    expect(() => erase(frozen, 1)).not.toThrow();
+    expect(() => erase(frozen, 1, defaultOpts)).not.toThrow();
     expect(() => undo(frozen)).not.toThrow();
     expect(() => revealHint(frozen, 1)).not.toThrow();
     expect(() => tick(frozen, 100)).not.toThrow();
